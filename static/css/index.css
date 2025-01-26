@@ -1,0 +1,53 @@
+.desktop {
+    background-color: #183884;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.rectangle-intro, .rectangle-menu {
+    background-color: #e8e8e8;
+    border-radius: 50px;
+    width: 85%;
+    height: 80vh;
+    margin-bottom: 50px;
+}
+
+.rectangle-intro {
+    margin-top: 50px;
+}
+
+.rectangle-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons-menu {
+    display: flex;
+    justify-content: center;
+    /*align-items: center;*/
+    flex-direction: row;
+}
+
+button {
+    background-color: #183884;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 20px;
+    margin-bottom: 40px;
+    margin-right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #204aaf;
+}
+
