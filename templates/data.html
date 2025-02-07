@@ -2,19 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ model.name }}</title>
     <link rel="stylesheet" href="../static/css/global.css"/>
     <link rel="stylesheet" href="../static/css/data.css"/>
+
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
 <div class="data-page">
     <div class="parent-cont">
         <div class="form-cont">
-
+            <h1>{{ model.name }}</h1>
+            <form method="get" action="">
+                {% for field in model.fields %}
+                <div class="input-cont">
+                    <label for="data_input">{{ field }}:</label>
+                    <input id="data_input" type="number" name="{{ field|lower }}"/>
+                </div>
+                {% endfor %}
+                <button type="submit" class="submit-btn">Submit data</button>
+            </form>
+            <!--            <a href="/">Back to models</a>-->
         </div>
         <div class="answer-cont">
             <div class="data-graph">
-                <!--        fotka        -->
+                <div id="plot"></div>
+                <script class="plot">
+                    var graph = JSON.parse('{{ graph_json | safe }}');
+                    Plotly.newPlot('plot', graph.data, graph.layout, { responsive: true });
+                </script>
             </div>
             <button class="ai-btn">Analyze graph with AI</button>
         </div>
