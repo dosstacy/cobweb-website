@@ -77,7 +77,7 @@
     transform: translateY(2px);
 }
 
-#data_input {
+.data-input {
     width: 80%;
     padding: 10px 15px;
     border-radius: 30px;

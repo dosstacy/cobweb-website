@@ -16,16 +16,15 @@
     <div class="parent-cont">
         <div class="form-cont">
             <h1>{{ model.name }}</h1>
-            <form method="get" action="">
+            <form id="dataForm">
                 {% for field in model.fields %}
                 <div class="input-cont">
-                    <label for="data_input">{{ field }}:</label>
-                    <input id="data_input" type="number" name="{{ field|lower }}"/>
+                    <label for="{{ field|lower }}">{{ field }}:</label>
+                    <input class="data-input" id="{{ field|lower }}" type="number" name="{{ field|lower }}" min="0" required/>
                 </div>
                 {% endfor %}
                 <button type="submit" class="submit-btn">Submit data</button>
             </form>
-            <!--            <a href="/">Back to models</a>-->
         </div>
         <div class="answer-cont">
             <div class="data-graph">
@@ -39,5 +38,50 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById("dataForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Відміна стандартного надсилання форми
+
+        let formData = {};
+        let inputs = document.querySelectorAll("input[type='number']");
+
+        for (let input of inputs) {
+            let value = parseFloat(input.value);
+            if (value < 0 || isNaN(value)) {
+                alert("Будь ласка, введіть додатне число!");
+                return;
+            }
+            formData[input.name] = value;
+        }
+
+        // Відправка POST-запиту на сервер
+        fetch("/model", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Успішно:", data);
+            alert("Дані надіслано!");
+        })
+        .catch(error => {
+            console.error("Помилка:", error);
+        });
+    });
+
+    // Заборона введення від'ємних значень
+    document.querySelectorAll("input[type='number']").forEach(input => {
+        input.addEventListener("input", function() {
+            if (this.value < 0) {
+                this.value = 0;
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
