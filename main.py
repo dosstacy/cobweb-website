@@ -30,7 +30,7 @@ def model_page_post():
 
     cobweb = Cobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"], data["iterations"], data["initial price"])
 
-    return jsonify({"graph_json": cobweb.find_cobweb()})
+    return jsonify({"graph_json": cobweb.generate_graph(cobweb.find_cobweb())})
 
 def get_model_name():
     model_name = request.args.get("name")

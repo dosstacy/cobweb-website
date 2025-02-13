@@ -63,4 +63,10 @@ class Cobweb:
         # Оформлення
         fig.update_layout(xaxis_title="Price", yaxis_title="Amount", template="plotly_white")
 
+        return fig
+
+    def generate_image(self, fig):
+        fig.write_image("cobweb.png")
+
+    def generate_graph(self, fig):
         return pio.to_json(fig)
