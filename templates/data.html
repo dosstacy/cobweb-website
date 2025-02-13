@@ -1,3 +1,4 @@
+<!--TODO ітерації тільки цілим числом-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,12 +48,7 @@
         let inputs = document.querySelectorAll("input[type='number']");
 
         for (let input of inputs) {
-            let value = parseFloat(input.value);
-            if (value < 0 || isNaN(value)) {
-                alert("Будь ласка, введіть додатне число!");
-                return;
-            }
-            formData[input.name] = value;
+            formData[input.name] = parseFloat(input.value);
         }
 
         // Відправка POST-запиту на сервер
@@ -65,20 +61,13 @@
         })
         .then(response => response.json())
         .then(data => {
-            console.log("Успішно:", data);
-            alert("Дані надіслано!");
+            console.log("Success:", data);
+
+            const graph = JSON.parse(data.graph_json);
+            Plotly.newPlot('plot', graph.data, graph.layout, { responsive: true });
         })
         .catch(error => {
-            console.error("Помилка:", error);
-        });
-    });
-
-    // Заборона введення від'ємних значень
-    document.querySelectorAll("input[type='number']").forEach(input => {
-        input.addEventListener("input", function() {
-            if (this.value < 0) {
-                this.value = 0;
-            }
+            console.error("Error:", error);
         });
     });
 </script>
