@@ -1,23 +1,19 @@
-<!DOCTYPE html>
-<html lang="">
-<head>
-    <meta charset="utf-8"/>
-    <link rel="stylesheet" href="../static/css/global.css"/>
+{% extends "base.html" %}
+
+{% block extra_css %}
     <link rel="stylesheet" href="../static/css/index.css"/>
-    <title></title>
-</head>
-<body>
-<div class="desktop">
-    <div class="rectangle-intro"></div>
-    <div class="rectangle-menu">
-        <div class="buttons-menu">
-            <button class="cobweb-btn" type="button" onclick="window.location.href='/model?name=cobweb'">Cobweb Model</button>
-            <button class="model1-btn" type="button" onclick="window.location.href='/model?name=model1'">Model1</button>
-            <button class="model2-btn" type="button" onclick="window.location.href='/model?name=model2'">Model2</button>
-            <button class="model3-btn" type="button" onclick="window.location.href='/model?name=model3'">Model3</button>
+{% endblock %}
+
+{% block content %}
+    <div class="desktop">
+        <div class="rectangle-intro"></div>
+        <div class="rectangle-menu">
+            <div class="buttons-menu">
+                <button class="main-page-btn" type="button" onclick="window.location.href='/model?name=cobweb'">Cobweb Model</button>
+                <button class="main-page-btn" type="button" onclick="window.location.href='/model?name=model1'">Model1</button>
+                <button class="main-page-btn" type="button" onclick="window.location.href='/model?name=model2'">Model2</button>
+                <button class="main-page-btn" type="button" onclick="window.location.href='/model?name=model3'">Model3</button>
+            </div>
         </div>
     </div>
-</div>
-</body>
-</html>
-
+{% endblock %}

@@ -25,3 +25,74 @@ body {
     border-radius: 20px;
     border: 3px solid #e8e8e8;
 }
+
+.upper-menu {
+    background-color: #e8e8e8;
+    padding: 16px;
+    height: 9vh;
+    width: -webkit-fill-available;
+    display: flex;
+    flex-direction: row;
+    gap: 50%;
+    align-items: center;
+}
+
+.dropdown-btn, .diff-calc {
+    color: black;
+    padding: 16px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-family: sans-serif;
+    font-size: 13px;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropdown-btn, .diff-calc:hover {
+    background-color: #D9D9D9;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.logo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-svg {
+    margin: 10px 10px 10px 20px;
+}
+
+.logo-text {
+    font-size: 26px;
+    font-family: sans-serif;
+}

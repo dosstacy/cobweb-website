@@ -34,7 +34,7 @@
     flex-direction: row;
 }
 
-button {
+.main-page-btn {
     background-color: #183884;
     color: white;
     border: none;
@@ -46,7 +46,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.main-page-btn:hover {
     background-color: #204aaf;
 }
 
