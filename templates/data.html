@@ -5,7 +5,7 @@
 {% block title %}{{ model.name }}{% endblock %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="../static/css/data.css"/>
+<link rel="stylesheet" href="../static/css/data.css"/>
 {% endblock %}
 
 {% block content %}
@@ -41,12 +41,17 @@
 {% block extra_js%}
 <script>
     document.getElementById("dataForm").addEventListener("submit", function (event) {
-        event.preventDefault();  // Відміна стандартного надсилання форми
+        event.preventDefault();
 
         let formData = {};
         let inputs = document.querySelectorAll("input[type='number']");
 
         for (let input of inputs) {
+            if(input.name === "iterations" && input.value % 1 !== 0) {
+                alert("Please enter only a whole number for 'Iterations' field!");
+                event.preventDefault();
+                return;
+            }
             formData[input.name] = parseFloat(input.value);
         }
 
