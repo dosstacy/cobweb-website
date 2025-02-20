@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="../static/css/intros.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="intro_page">
+    <div class="rectangle" id="intro-rectangle">
+        <h1>{{intros.name}}</h1>
+        <p>{{intros.intro}}</p>
+        {% if intros.name == "cobweb" %}
+            <img src="../static/img/cobweb_1.png" alt="">
+            <img src="../static/img/cobweb_2.png" alt="">
+        {% elif intros.name == "adapt_exp" %}
+            <!-- код для "another_value" -->
+        {% else %}
+            <!-- код для всіх інших випадків -->
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}
