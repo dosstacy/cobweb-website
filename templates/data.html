@@ -44,16 +44,22 @@
         let formData = {};
         let inputs = document.querySelectorAll("input[type='number']");
 
+        const params = new URLSearchParams(window.location.search);
+        const modelName = params.get("name");
+        console.log(modelName);
+
         for (let input of inputs) {
-            if(input.name === "iterations" && input.value % 1 !== 0) {
-                alert("Please enter only a whole number for 'Iterations' field!");
+            let fieldsName = input.name;
+            if ((fieldsName === "iterations" || fieldsName === "periods") && input.value % 1 !== 0) {
+                alert("Please enter only a whole number for '" + fieldsName + "' field!");
                 event.preventDefault();
                 return;
             }
+
             formData[input.name] = parseFloat(input.value);
         }
 
-        fetch("/cobweb", {
+        fetch("/model?name=" + modelName, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
