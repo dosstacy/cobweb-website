@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{%block extra_css%}
+    <link rel="stylesheet" href="../static/css/calculator.css"/>
+{% endblock %}
+
+{% block content %}
+<div class="calculator-page">
+    <div class="rectangle" id="calc-rect">
+        <div class="form-container">
+            <form>
+                <label for="equation-input">Please write your difference equation: </label>
+                <input class="data-input" id="equation-input" required/>
+                <button class="btn" id="eq-btn" type="submit">Solve</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

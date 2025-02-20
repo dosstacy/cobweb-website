@@ -1,0 +1,41 @@
+.calculator-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#calc-rect {
+    margin-top: 50px;
+    height: 73vh;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+label {
+    font-family: sans-serif;
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+#eq-btn {
+    padding: 10px 55px;
+}
+
+#equation-input {
+    width: 40%;
+    height: 5%;
+    font-size: 1.2rem;
+}
+
