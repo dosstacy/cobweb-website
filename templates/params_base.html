@@ -7,8 +7,15 @@
 {% block content %}
 <div class="params_page">
     <div class="rectangle" id="params-rectangle">
-        <h1>{{intros.name}}</h1>
-        <p>{{intros.intro}}</p>
+        <h1>{{params.name}}</h1>
+        <ul>
+            {% for param in params.params %}
+            <li>
+                <b>{{ param }}</b>
+                <p style="font-size: smaller;">{{ params.descriptions[loop.index0] }}</p>
+            </li>
+            {% endfor %}
+        </ul>
     </div>
 </div>
 {% endblock %}
