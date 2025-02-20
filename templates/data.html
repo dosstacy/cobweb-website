@@ -1,5 +1,3 @@
-<!--TODO ітерації тільки цілим числом-->
-
 {% extends "base.html" %}
 
 {% block title %}{{ model.name }}{% endblock %}
@@ -21,7 +19,7 @@
                            step="any" required/>
                 </div>
                 {% endfor %}
-                <button type="submit" class="submit-btn">Submit data</button>
+                <button type="submit" class="btn" id="submit-btn">Submit data</button>
             </form>
         </div>
         <div class="answer-cont">
@@ -32,7 +30,7 @@
                     Plotly.newPlot('plot', graph.data, graph.layout, {responsive: true});
                 </script>
             </div>
-            <button class="ai-btn">Analyze graph with AI</button>
+            <button class="btn" id="ai-btn">Analyze graph with AI</button>
         </div>
     </div>
 </div>
@@ -55,8 +53,7 @@
             formData[input.name] = parseFloat(input.value);
         }
 
-        // Відправка POST-запиту на сервер
-        fetch("/model", {
+        fetch("/cobweb", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

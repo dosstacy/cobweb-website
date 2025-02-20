@@ -1,5 +1,5 @@
 .desktop {
-    background-color: #183884;
+    /*background-color: #183884;*/
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -9,19 +9,11 @@
     box-sizing: border-box;
 }
 
-.rectangle-intro, .rectangle-menu {
-    background-color: #e8e8e8;
-    border-radius: 50px;
-    width: 85%;
-    height: 80vh;
-    margin-bottom: 50px;
-}
-
-.rectangle-intro {
+#rectangle-intro {
     margin-top: 50px;
 }
 
-.rectangle-menu {
+#rectangle-menu {
     display: flex;
     flex-direction: column;
     justify-content: center;

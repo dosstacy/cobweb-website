@@ -1,4 +1,5 @@
 html, body {
+    background-color: #183884;
     margin: 0;
     padding: 0;
 }
@@ -9,6 +10,45 @@ html {
 
 body {
     height: 100%;
+}
+
+.rectangle {
+    background-color: #e8e8e8;
+    border-radius: 50px;
+    width: 85%;
+    height: 80vh;
+    margin-bottom: 50px;
+}
+
+.btn {
+    background-color: #183884;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    margin-top: 20px;
+    cursor: pointer;
+    box-shadow: 3px 7px 15px black;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn:hover {
+    background-color: #204aaf;
+}
+
+.btn:active {
+    box-shadow: 1px 3px 8px black;
+    transform: translateY(2px);
+}
+
+.data-input {
+    width: 80%;
+    padding: 10px 15px;
+    border-radius: 30px;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: none;
+    outline: none;
 }
 
 /* Works on Chrome, Edge, and Safari */
