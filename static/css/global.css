@@ -73,7 +73,8 @@ body {
     width: -webkit-fill-available;
     display: flex;
     flex-direction: row;
-    gap: 50%;
+    /*gap: 50%;*/
+    gap: 60%;
     align-items: center;
 }
 
