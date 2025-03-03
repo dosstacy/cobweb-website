@@ -47,6 +47,8 @@ params = {
 cobweb = 0
 adapt_exp = 0
 
+##ку-ку
+
 @app.route("/")
 def home():
     return render_template("index.html")
