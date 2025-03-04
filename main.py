@@ -1,11 +1,12 @@
 from flask import Flask, request, render_template, jsonify
-from cobweb import *
+from cobweb_equations import *
 from adaptive_expectations import *
 
 app = Flask(__name__)
 
 models = {
     "cobweb": {"name": "Cobweb Model", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Iterations", "Initial price"]},
+    "cobweb_functions": {"name": "Cobweb with function", "fields": []},
     "adapt_exp": {"name": "Adaptive expectations", "fields": ["Previous price", "Normal price", "Adjustment factor", "Periods"]},
 }
 
@@ -75,8 +76,8 @@ def model_post_page():
         print("Data obtained:", data)
 
     if model_name == "cobweb":
-        cobweb = Cobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"], data["iterations"], data["initial price"])
-        return jsonify({"graph_json": cobweb.generate_graph(cobweb.find_cobweb())})
+        cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"], data["iterations"], data["initial price"])
+        return jsonify({"graph_json": cobweb.generate_graph(cobweb.find_eq_cobweb())})
     else:
         adapt_exp = AdaptiveExpectations(data["previous price"], data["normal price"], data["adjustment factor"], data["periods"])
         time_steps, prices = adapt_exp.ad_exp()

@@ -15,7 +15,7 @@
                 {% for field in model.fields %}
                 <div class="input-cont">
                     <label for="{{ field|lower }}">{{ field }}:</label>
-                    <input class="data-input" id="{{ field|lower }}" type="number" name="{{ field|lower }}" min="0"
+                    <input class="data-input" id="{{ field|lower }}" type="number" name="{{ field|lower }}"
                            step="any" required/>
                 </div>
                 {% endfor %}
