@@ -20,16 +20,13 @@ class EqCobweb:
         self.initial_price = initial_price
 
     def eq_price(self):
-        pe = (self.d_shift + self.s_shift ) / (self.s_slope + self.d_slope )
-        print(f"Eequilibrium price: {pe}")
+        pe = (self.d_shift + (self.s_shift * -1)) / (self.s_slope + self.d_slope)
         return pe
 
     def demand(self, price):
-        print("Demand ", self.d_shift - self.d_slope * price)
         return self.d_shift - self.d_slope * price 
 
     def supply(self, price):
-        print("Supply ", self.s_shift + self.s_slope * price)
         return self.s_shift + self.s_slope * price
 
     def find_eq_cobweb(self):
@@ -51,9 +48,9 @@ class EqCobweb:
             go.Scatter(x=p_range, y=self.supply(p_range), mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
 
 
-        q_equilibrium = self.d_shift + self.d_slope * pe
+        q_equilibrium = self.s_shift + (self.s_slope * pe)
         fig.add_trace(
-            go.Scatter(x=[q_equilibrium], y=[pe],
+            go.Scatter(x=[pe], y=[q_equilibrium],
                     mode='markers', marker=dict(color="green", size=10),
                     name="Equilibrium"))
 
@@ -68,6 +65,7 @@ class EqCobweb:
                 mode='lines', line=dict(color="black", dash="dash"),
                 showlegend=False
             ))
+            print(f"Coordinates: x={q_demand, q_demand}, y={prices[i], prices[i + 1]}")
 
             if i < len(prices) - 1:
                 q_next = self.d_shift + self.d_slope * prices[i + 1]
@@ -77,6 +75,7 @@ class EqCobweb:
                     mode='lines', line=dict(color="black", dash="dash"),
                     showlegend=False
                 ))
+                print(f"Coordinates_2: x={q_demand, q_next}, y={prices[i+1], prices[i + 1]}")
 
         fig.update_layout(
             xaxis_title="Amount",
@@ -89,14 +88,14 @@ class EqCobweb:
     def generate_graph(self, fig):
         return fig.to_plotly_json()
 
-# model = EqCobweb(
-#     d_shift=50,    # вільний член кривої попиту
-#     d_slope=-2,     # нахил кривої попиту
-#     s_shift=-10,     # вільний член кривої пропозиції
-#     s_slope=3,     # нахил кривої пропозиції
-#     n_iterations=4,
-#     initial_price=12
-# )
+model = EqCobweb(
+    d_shift=50,    # вільний член кривої попиту
+    d_slope=2,     # нахил кривої попиту
+    s_shift=-10,     # вільний член кривої пропозиції
+    s_slope=3,     # нахил кривої пропозиції
+    n_iterations=4,
+    initial_price=12
+)
 
-# fig = model.find_eq_cobweb()
-# fig.show()
+fig = model.find_eq_cobweb()
+fig.show()
