@@ -2,14 +2,6 @@ import plotly.graph_objs as go
 import numpy as np
 import plotly.io as pio
 
-# d_shift = 100
-# d_slope = -3
-# s_shift = 20
-# s_slope = 2
-
-# p0 = 12
-# n = 4
-
 class EqCobweb: 
     def __init__(self, d_shift, d_slope, s_shift, s_slope, n_iterations, initial_price):
         self.d_shift = d_shift
@@ -20,17 +12,17 @@ class EqCobweb:
         self.initial_price = initial_price
 
     def eq_price(self):
-        pe = (self.d_shift + (self.s_shift * -1)) / (self.s_slope + self.d_slope)
+        pe = (self.s_shift - self.d_shift) / (self.d_slope - self.s_slope)
         return pe
 
     def demand(self, price):
-        return self.d_shift - self.d_slope * price 
+        return self.d_shift + self.d_slope * price 
 
     def supply(self, price):
         return self.s_shift + self.s_slope * price
 
     def find_eq_cobweb(self):
-        prices = []
+        prices = [self.initial_price]
 
         pe = self.eq_price()
 
@@ -38,44 +30,42 @@ class EqCobweb:
             price = (self.initial_price - pe) * (self.s_slope / self.d_slope) ** i + pe
             prices.append(price)
 
-        p_range = np.linspace(0, max(prices) * 1.2, 100)
+        print(prices)
+        p_min = min(prices) - (max(prices) - min(prices)) * 0.5 
+        p_max = max(prices) + (max(prices) - min(prices)) * 0.5
+        p_range = np.linspace(p_min, p_max, 200)
 
         fig = go.Figure()
 
         fig.add_trace(
-            go.Scatter(x=p_range, y=self.demand(p_range), mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
+            go.Scatter(x=self.demand(p_range), y=p_range, mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
         fig.add_trace(
-            go.Scatter(x=p_range, y=self.supply(p_range), mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
-
+            go.Scatter(x=self.supply(p_range), y=p_range, mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
 
         q_equilibrium = self.s_shift + (self.s_slope * pe)
         fig.add_trace(
-            go.Scatter(x=[pe], y=[q_equilibrium],
+            go.Scatter(x=[q_equilibrium], y=[pe],
                     mode='markers', marker=dict(color="green", size=10),
                     name="Equilibrium"))
 
-
-        prices = [self.initial_price] + prices  
         for i in range(len(prices) - 1):
-            q_demand = self.d_shift + self.d_slope * prices[i]
-
+            #horizontal
             fig.add_trace(go.Scatter(
-                x=[q_demand, q_demand],
-                y=[prices[i], prices[i + 1]],
+                x=[self.demand(prices[i]), self.supply(prices[i])],
+                y=[prices[i], prices[i]],
                 mode='lines', line=dict(color="black", dash="dash"),
                 showlegend=False
             ))
-            print(f"Coordinates: x={q_demand, q_demand}, y={prices[i], prices[i + 1]}")
+            print(f"Coordinates: x=[", self.demand(prices[i]), self.demand(prices[i]), "], y=[",prices[i], prices[i + 1],"]")
 
+            #vertical
             if i < len(prices) - 1:
-                q_next = self.d_shift + self.d_slope * prices[i + 1]
                 fig.add_trace(go.Scatter(
-                    x=[q_demand, q_next],
-                    y=[prices[i + 1], prices[i + 1]],
+                    x=[self.supply(prices[i]), self.demand(prices[i+1])],
+                    y=[prices[i], prices[i + 1]],
                     mode='lines', line=dict(color="black", dash="dash"),
                     showlegend=False
                 ))
-                print(f"Coordinates_2: x={q_demand, q_next}, y={prices[i+1], prices[i + 1]}")
 
         fig.update_layout(
             xaxis_title="Amount",
@@ -88,14 +78,14 @@ class EqCobweb:
     def generate_graph(self, fig):
         return fig.to_plotly_json()
 
-model = EqCobweb(
-    d_shift=50,    # вільний член кривої попиту
-    d_slope=2,     # нахил кривої попиту
-    s_shift=-10,     # вільний член кривої пропозиції
-    s_slope=3,     # нахил кривої пропозиції
-    n_iterations=4,
-    initial_price=12
-)
+# model = EqCobweb(
+#     d_shift=100,    # Початковий попит
+#     d_slope=5,      # Чутливість попиту до зміни ціни
+#     s_shift=20,     # Початкова пропозиція
+#     s_slope=3,      # Чутливість пропозиції до зміни ціни
+#     n_iterations=20, # Кількість ітерацій павутиння
+#     initial_price=50
+# )
 
-fig = model.find_eq_cobweb()
-fig.show()
+# fig = model.find_eq_cobweb()
+# fig.show()
