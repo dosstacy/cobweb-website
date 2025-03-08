@@ -27,6 +27,7 @@ class FuncCobweb:
 
         intersection_points = solve(expr - x_sym, x_sym)
         intersections = [float(point.evalf()) for point in intersection_points if point.is_real]
+        print(intersections)
 
         x_values = np.linspace(self.x_min, self.x_max, 1000)
         y_values = func(x_values)

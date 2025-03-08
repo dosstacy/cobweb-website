@@ -42,7 +42,7 @@
         event.preventDefault();
 
         let formData = {};
-        let inputs = document.querySelectorAll("input[type='number']");
+        let inputs = document.querySelectorAll("input[class='data-input']");
 
         const params = new URLSearchParams(window.location.search);
         const modelName = params.get("name");
@@ -50,13 +50,16 @@
 
         for (let input of inputs) {
             let fieldsName = input.name;
+            let fieldValue = input.value;
+
             if ((fieldsName === "iterations" || fieldsName === "periods") && input.value % 1 !== 0) {
                 alert("Please enter only a whole number for '" + fieldsName + "' field!");
                 event.preventDefault();
                 return;
             }
 
-            formData[input.name] = parseFloat(input.value);
+            //formData[input.name] = parseFloat(input.value);
+            formData[fieldsName] = isNaN(fieldValue) || fieldValue.trim() === "" ? fieldValue : parseFloat(fieldValue);
         }
 
         fetch("/model?name=" + modelName, {

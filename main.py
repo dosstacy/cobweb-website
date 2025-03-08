@@ -77,7 +77,7 @@ def model_post_page():
     if model_name == "cobweb":
         eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"], data["iterations"], data["initial price"])
         return jsonify({"graph_json": eq_cobweb.generate_graph(eq_cobweb.find_eq_cobweb())})
-    elif model_name == "cobweb_funct":
+    elif model_name == "cobweb_func":
         func_cobweb = FuncCobweb(data["function"], data["min value on x-axis"], data["max value on x-axis"], data["min value on y-axis"], data["max value on y-axis"], data["seed"], data["iterations"])
         return jsonify({"graph_json": func_cobweb.generate_graph(func_cobweb.find_func_cobweb())})
     else:
