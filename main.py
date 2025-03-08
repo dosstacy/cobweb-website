@@ -1,12 +1,13 @@
 from flask import Flask, request, render_template, jsonify
 from cobweb_equations import *
 from adaptive_expectations import *
+from cobweb_functions import *
 
 app = Flask(__name__)
 
 models = {
     "cobweb": {"name": "Cobweb Model", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Iterations", "Initial price"]},
-    "cobweb_functions": {"name": "Cobweb with function", "fields": []},
+    "cobweb_func": {"name": "Cobweb with function", "fields": ["Function", "Min value on X-axis", "Max value on X-axis", "Min value on Y-axis", "Max value on Y-axis", "Seed", "Iterations"]},
     "adapt_exp": {"name": "Adaptive expectations", "fields": ["Previous price", "Normal price", "Adjustment factor", "Periods"]},
 }
 
@@ -48,8 +49,6 @@ params = {
 cobweb = 0
 adapt_exp = 0
 
-##ку-ку
-
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -76,8 +75,11 @@ def model_post_page():
         print("Data obtained:", data)
 
     if model_name == "cobweb":
-        cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"], data["iterations"], data["initial price"])
-        return jsonify({"graph_json": cobweb.generate_graph(cobweb.find_eq_cobweb())})
+        eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"], data["iterations"], data["initial price"])
+        return jsonify({"graph_json": eq_cobweb.generate_graph(eq_cobweb.find_eq_cobweb())})
+    elif model_name == "cobweb_funct":
+        func_cobweb = FuncCobweb(data["function"], data["min value on x-axis"], data["max value on x-axis"], data["min value on y-axis"], data["max value on y-axis"], data["seed"], data["iterations"])
+        return jsonify({"graph_json": func_cobweb.generate_graph(func_cobweb.find_func_cobweb())})
     else:
         adapt_exp = AdaptiveExpectations(data["previous price"], data["normal price"], data["adjustment factor"], data["periods"])
         time_steps, prices = adapt_exp.ad_exp()
