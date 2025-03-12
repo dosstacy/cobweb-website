@@ -1,6 +1,4 @@
-import plotly.graph_objs as go
-import numpy as np
-import plotly.io as pio
+from models import go, np, pio
 
 ## TODO: price field must be positive, in opposite way there will be exception in math.log
 
@@ -60,6 +58,3 @@ class DemandSupply:
         fig.update_layout(xaxis_title="Quantity", yaxis_title="Price", template="plotly_white")
 
         return fig
-
-    def generate_graph(self, fig):
-        return pio.to_json(fig)

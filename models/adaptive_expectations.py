@@ -1,5 +1,4 @@
-import plotly.io as pio
-import plotly.graph_objs as go
+from models import go, pio
 
 class AdaptiveExpectations:
     def __init__(self, p0, pN, c, periods):
@@ -22,6 +21,3 @@ class AdaptiveExpectations:
         figure = go.Figure(data=[trace], layout=layout)
 
         return figure
-
-    def generate_graph(self, fig):
-        return pio.to_json(fig)

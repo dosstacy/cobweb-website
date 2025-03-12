@@ -67,9 +67,12 @@
             formData[fieldsName] = isNaN(fieldValue) || fieldValue.trim() === "" ? fieldValue : parseFloat(fieldValue);
         }
 
+
         let functionInput = document.querySelector("select.func-selection");
-        console.log(functionInput);
-        formData[functionInput.name] = functionInput.value;
+        if(functionInput){
+            console.log(functionInput);
+            formData[functionInput.name] = functionInput.value;
+        }
 
         const modelName = "{{ model_name }}";
         console.log("Model Name:", modelName);

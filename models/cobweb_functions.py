@@ -1,8 +1,4 @@
-import numpy as np
-import plotly.graph_objects as go
-import plotly.io as pio
-from sympy import symbols, sympify, lambdify, solve
-
+from models import symbols, sympify, lambdify, solve, pio, go, np
 
 ##TODO: 1. make the length of the window with parameters depend on the number of fields;
 ##TODO: 2. add some limits for fields;
@@ -100,9 +96,6 @@ class FuncCobweb:
         )
 
         return fig
-
-    def generate_graph(self, fig):
-        return pio.to_json(fig)
 
 
 # if __name__ == "__main__":

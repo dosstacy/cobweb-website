@@ -1,6 +1,4 @@
-import plotly.graph_objs as go
-import numpy as np
-import plotly.io as pio
+from models import go, pio, np
 
 class EqCobweb: 
     def __init__(self, d_shift, d_slope, s_shift, s_slope, n_iterations, initial_price):
@@ -68,10 +66,6 @@ class EqCobweb:
         fig.update_layout(xaxis_title="Quantity", yaxis_title="Price", template="plotly_white")
 
         return fig
-        
-    def generate_graph(self, fig):
-        return pio.to_json(fig)
-
 # model = EqCobweb(
 #     d_shift=100,    # Початковий попит
 #     d_slope=5,      # Чутливість попиту до зміни ціни
