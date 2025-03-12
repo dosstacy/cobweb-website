@@ -9,7 +9,7 @@
 }
 
 .parent-cont {
-    height: 100vh;
+    height: fit-content;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -22,7 +22,7 @@
 .form-cont, .answer-cont {
     background-color: #e8e8e8;
     border-radius: 50px;
-    height: 100vh;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,9 +31,11 @@
 
 .form-cont {
     width: 25%;
+    padding: 25px 15px;
 }
 
 .answer-cont {
+    padding: 60px 0;
     width: 60%;
 }
 

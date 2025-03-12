@@ -51,7 +51,7 @@ class EqCobweb:
             fig.add_trace(go.Scatter(
                 x=[self.demand(prices[i]), self.supply(prices[i])],
                 y=[prices[i], prices[i]],
-                mode='lines', line=dict(color="black", dash="dash"),
+                mode='lines', line=dict(color="black"),
                 showlegend=False
             ))
             #print(f"Coordinates: x=[", self.demand(prices[i]), self.demand(prices[i]), "], y=[",prices[i], prices[i + 1],"]")
@@ -61,7 +61,7 @@ class EqCobweb:
                 fig.add_trace(go.Scatter(
                     x=[self.supply(prices[i]), self.demand(prices[i+1])],
                     y=[prices[i], prices[i + 1]],
-                    mode='lines', line=dict(color="black", dash="dash"),
+                    mode='lines', line=dict(color="black"),
                     showlegend=False
                 ))
 

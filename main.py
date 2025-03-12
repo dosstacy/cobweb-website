@@ -9,6 +9,7 @@ models = {
     "cobweb": {"name": "Cobweb Model", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Iterations", "Initial price"]},
     "cobweb_func": {"name": "Cobweb with function", "fields": ["Function", "Min value on X-axis", "Max value on X-axis", "Min value on Y-axis", "Max value on Y-axis", "Seed", "Iterations"]},
     "adapt_exp": {"name": "Adaptive expectations", "fields": ["Previous price", "Normal price", "Adjustment factor", "Periods"]},
+    "supply&demand":{"name": "Supply and Demand", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Price"], "functions": ["linear", "cos", "exp", "ln"]},
 }
 
 intros = {
@@ -53,17 +54,22 @@ adapt_exp = 0
 def home():
     return render_template("index.html")
 
-@app.route("/model", methods=["GET"])
-def model_get_page():
-    model_name, model = check_model()
+@app.route("/model/<model_name>", methods=["GET"])
+def model_get_page(model_name):
+    graph_json = 0
+    model = check_model(model_name)
 
-    graph_json = cobweb if model_name == "cobweb" else adapt_exp
+    match model_name:
+        case "cobweb":
+            graph_json = cobweb
+        case "adapt_exp":
+            graph_json = adapt_exp
 
-    return render_template("data.html", model=model, graph_json=graph_json)
+    return render_template("data.html", model=model, model_name=model_name, graph_json=graph_json)
 
-@app.route("/model", methods=["POST"])
-def model_post_page():
-    model_name, model = check_model()
+@app.route("/model/<model_name>", methods=["POST"])
+def model_post_page(model_name):
+    model = check_model(model_name)
     print("model name: ", model_name)
     print("model: ", model)
 
@@ -100,8 +106,7 @@ def params_get_page():
 def calc_page():
     return render_template("calculator.html")
 
-def check_model():
-    model_name = request.args.get('name')
+def check_model(model_name):
     if not model_name:
         return jsonify({"error": "Missing model name"}), 400
 
@@ -110,7 +115,7 @@ def check_model():
     if not model:
         return jsonify({"error": "Unknown model"}), 400
 
-    return model_name, model
+    return model
 
 def check_intro():
     intro_name = request.args.get('name')

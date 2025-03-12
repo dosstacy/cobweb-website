@@ -12,6 +12,14 @@
         <div class="form-cont">
             <h1>{{ model.name }}</h1>
             <form id="dataForm">
+                {% if model.functions is defined %}
+                    {% for func in model.functions %}
+                        <label for="{{ func|lower }}">Function:</label>
+                        <select class="func-selection" id="{{ func|lower }}" name="{{ func|lower }}" onchange="updateFormula()">
+                            <option value="{{ func }}">{{ func }}</option>
+                        </select>
+                    {% endfor %}
+                {% endif %}
                 {% for field in model.fields %}
                 <div class="input-cont">
                     <label for="{{ field|lower }}">{{ field }}:</label>
@@ -44,10 +52,6 @@
         let formData = {};
         let inputs = document.querySelectorAll("input[class='data-input']");
 
-        const params = new URLSearchParams(window.location.search);
-        const modelName = params.get("name");
-        console.log(modelName);
-
         for (let input of inputs) {
             let fieldsName = input.name;
             let fieldValue = input.value;
@@ -62,7 +66,10 @@
             formData[fieldsName] = isNaN(fieldValue) || fieldValue.trim() === "" ? fieldValue : parseFloat(fieldValue);
         }
 
-        fetch("/model?name=" + modelName, {
+        const modelName = "{{ model_name }}";
+        console.log("Model Name:", modelName);
+
+        fetch("/model/" + modelName, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
