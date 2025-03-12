@@ -30,7 +30,7 @@
 }
 
 .form-cont {
-    width: 25%;
+    width: 22%;
     padding: 25px 15px;
 }
 
@@ -57,7 +57,8 @@
     padding: 20px;
 }
 
-.input-cont {
+.input-cont, .select-cont {
+    width: 100%;
     margin-bottom: 15px;
     font-family: sans-serif;
     display: flex;
@@ -85,4 +86,13 @@ label {
     width: 100%;
     height: 100%;
     clip-path: inset(0 round 50px);
+}
+
+.func-selection {
+    border-radius: 10px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: none;
+    outline: none;
 }

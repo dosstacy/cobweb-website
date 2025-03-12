@@ -13,12 +13,14 @@
             <h1>{{ model.name }}</h1>
             <form id="dataForm">
                 {% if model.functions is defined %}
-                    {% for func in model.functions %}
-                        <label for="{{ func|lower }}">Function:</label>
-                        <select class="func-selection" id="{{ func|lower }}" name="{{ func|lower }}" onchange="updateFormula()">
-                            <option value="{{ func }}">{{ func }}</option>
-                        </select>
-                    {% endfor %}
+                <div class="select-cont">
+                    <label for="{{ func|lower }}">Function:</label>
+                    <select class="func-selection" id="{{ func|lower }}" name="functions">
+                        {% for func in model.functions %}
+                        <option value="{{ func }}">{{ func }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 {% endif %}
                 {% for field in model.fields %}
                 <div class="input-cont">
@@ -38,7 +40,7 @@
                     Plotly.newPlot('plot', graph.data, graph.layout, {responsive: true});
                 </script>
             </div>
-<!--            <button class="btn" id="ai-btn">Analyze graph with AI</button>-->
+            <!--            <button class="btn" id="ai-btn">Analyze graph with AI</button>-->
         </div>
     </div>
 </div>
@@ -62,12 +64,16 @@
                 return;
             }
 
-            //formData[input.name] = parseFloat(input.value);
             formData[fieldsName] = isNaN(fieldValue) || fieldValue.trim() === "" ? fieldValue : parseFloat(fieldValue);
         }
 
+        let functionInput = document.querySelector("select.func-selection");
+        console.log(functionInput);
+        formData[functionInput.name] = functionInput.value;
+
         const modelName = "{{ model_name }}";
         console.log("Model Name:", modelName);
+        console.log("FormData: ", formData);
 
         fetch("/model/" + modelName, {
             method: "POST",

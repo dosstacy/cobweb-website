@@ -9,7 +9,7 @@ models = {
     "cobweb": {"name": "Cobweb Model", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Iterations", "Initial price"]},
     "cobweb_func": {"name": "Cobweb with function", "fields": ["Function", "Min value on X-axis", "Max value on X-axis", "Min value on Y-axis", "Max value on Y-axis", "Seed", "Iterations"]},
     "adapt_exp": {"name": "Adaptive expectations", "fields": ["Previous price", "Normal price", "Adjustment factor", "Periods"]},
-    "supply&demand":{"name": "Supply and Demand", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Price"], "functions": ["linear", "cos", "exp", "ln"]},
+    "demand_supply":{"name": "Supply and Demand", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Price"], "functions": ["linear", "cos", "exp", "ln"]},
 }
 
 intros = {
@@ -47,9 +47,6 @@ params = {
     }
 }
 
-cobweb = 0
-adapt_exp = 0
-
 @app.route("/")
 def home():
     return render_template("index.html")
@@ -58,12 +55,6 @@ def home():
 def model_get_page(model_name):
     graph_json = 0
     model = check_model(model_name)
-
-    match model_name:
-        case "cobweb":
-            graph_json = cobweb
-        case "adapt_exp":
-            graph_json = adapt_exp
 
     return render_template("data.html", model=model, model_name=model_name, graph_json=graph_json)
 
@@ -80,17 +71,7 @@ def model_post_page(model_name):
     else:
         print("Data obtained:", data)
 
-    if model_name == "cobweb":
-        eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"], data["iterations"], data["initial price"])
-        return jsonify({"graph_json": eq_cobweb.generate_graph(eq_cobweb.find_eq_cobweb())})
-    elif model_name == "cobweb_func":
-        func_cobweb = FuncCobweb(data["function"], data["min value on x-axis"], data["max value on x-axis"], data["min value on y-axis"], data["max value on y-axis"], data["seed"], data["iterations"])
-        return jsonify({"graph_json": func_cobweb.generate_graph(func_cobweb.find_func_cobweb())})
-    else:
-        adapt_exp = AdaptiveExpectations(data["previous price"], data["normal price"], data["adjustment factor"], data["periods"])
-        time_steps, prices = adapt_exp.ad_exp()
-        figure = adapt_exp.draw_graph(time_steps, prices)
-        return jsonify({"graph_json": adapt_exp.generate_graph(figure)})
+    find_and_choose_model(model_name, data)
 
 @app.route("/intro", methods=["GET"])
 def intro_get_page():
@@ -140,6 +121,34 @@ def check_params():
         return jsonify({"error": "Unknown params"}), 400
 
     return params_name, param
+
+def find_and_choose_model(model_name, data):
+    if model_name == "cobweb":
+        choose_eq_cobweb(data)
+    elif model_name == "cobweb_func":
+        choose_func_cobweb(data)
+    elif model_name == "adapt_exp":
+        choose_adapt_expect(data)
+    elif model_name == "demand_supply":
+        demand_suppy = 0
+
+def choose_eq_cobweb(data):
+    eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
+                         data["iterations"], data["initial price"])
+    return jsonify({"graph_json": eq_cobweb.generate_graph(eq_cobweb.find_eq_cobweb())})
+
+def choose_func_cobweb(data):
+    func_cobweb = FuncCobweb(data["function"], data["min value on x-axis"], data["max value on x-axis"],
+                             data["min value on y-axis"], data["max value on y-axis"], data["seed"], data["iterations"])
+    return jsonify({"graph_json": func_cobweb.generate_graph(func_cobweb.find_func_cobweb())})
+
+def choose_adapt_expect(data):
+    adapt_exp = AdaptiveExpectations(data["previous price"], data["normal price"], data["adjustment factor"],
+                                     data["periods"])
+    time_steps, prices = adapt_exp.ad_exp()
+    figure = adapt_exp.draw_graph(time_steps, prices)
+    return jsonify({"graph_json": adapt_exp.generate_graph(figure)})
+
 
 if __name__ == "__main__":
     app.run(debug=True)
