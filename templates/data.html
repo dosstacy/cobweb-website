@@ -25,9 +25,12 @@
                 {% for field in model.fields %}
                 <div class="input-cont">
                     <label for="{{ field|lower }}">{{ field }}:</label>
-                    {% if field == "Demand slope" %}
+                    {% if field == "Price" or field == "Start price" or field == "End price" or field == "Initial price" or field == "Previous price" or field == "Normal price" %}
                         <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                               step="any" max="0" required oninput="validateDemandSlope(this)"/>
+                               step="any" max="0" required oninput="validatePositiveNumbers(this)"/>
+                    {% elif field == "Iterations" or field == "Periods" %}
+                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
+                               step="any" max="0" required oninput="validateWholeNumbers(this)"/>
                     {% else %}
                         <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
                                step="any" required/>
@@ -63,11 +66,11 @@
             let fieldsName = input.name;
             let fieldValue = input.value;
 
-            if ((fieldsName === "iterations" || fieldsName === "periods") && input.value % 1 !== 0) {
-                alert("Please enter only a whole number for '" + fieldsName + "' field!");
-                event.preventDefault();
-                return;
-            }
+            // if ((fieldsName === "iterations" || fieldsName === "periods") && input.value % 1 !== 0) {
+            //     alert("Please enter only a whole number for '" + fieldsName + "' field!");
+            //     event.preventDefault();
+            //     return;
+            // }
 
             formData[fieldsName] = isNaN(fieldValue) || fieldValue.trim() === "" ? fieldValue : parseFloat(fieldValue);
         }
@@ -102,9 +105,17 @@
             });
     });
 
-    function validateDemandSlope(input) {
-        if (parseFloat(input.value) >= 0) {
-            input.setCustomValidity("'Demand slope' must be a negative value!");
+    function validatePositiveNumbers(input) {
+        if (parseFloat(input.value) <= 0) {
+            input.setCustomValidity("In this field must be a positive value!");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
+
+    function validateWholeNumbers(input) {
+        if (parseFloat(input.value) % 1 !== 0) {
+            input.setCustomValidity("This field should contains be a whole number!");
         } else {
             input.setCustomValidity("");
         }
