@@ -25,8 +25,13 @@
                 {% for field in model.fields %}
                 <div class="input-cont">
                     <label for="{{ field|lower }}">{{ field }}:</label>
-                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                           step="any" required/>
+                    {% if field == "Demand slope" %}
+                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
+                               step="any" max="0" required oninput="validateDemandSlope(this)"/>
+                    {% else %}
+                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
+                               step="any" required/>
+                    {% endif %}
                 </div>
                 {% endfor %}
                 <button type="submit" class="btn" id="submit-btn">Submit data</button>
@@ -69,7 +74,7 @@
 
 
         let functionInput = document.querySelector("select.func-selection");
-        if(functionInput){
+        if (functionInput) {
             console.log(functionInput);
             formData[functionInput.name] = functionInput.value;
         }
@@ -96,5 +101,13 @@
                 console.error("Error:", error);
             });
     });
+
+    function validateDemandSlope(input) {
+        if (parseFloat(input.value) >= 0) {
+            input.setCustomValidity("'Demand slope' must be a negative value!");
+        } else {
+            input.setCustomValidity("");
+        }
+    }
 </script>
 {% endblock %}
