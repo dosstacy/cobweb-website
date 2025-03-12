@@ -65,7 +65,7 @@ class EqCobweb:
                     showlegend=False
                 ))
 
-        fig.update_layout(xaxis_title="Amount", yaxis_title="Price", template="plotly_white")
+        fig.update_layout(xaxis_title="Quantity", yaxis_title="Price", template="plotly_white")
 
         return fig
         

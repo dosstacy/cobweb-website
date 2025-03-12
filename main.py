@@ -2,6 +2,7 @@ from flask import Flask, request, render_template, jsonify
 from cobweb_equations import *
 from adaptive_expectations import *
 from cobweb_functions import *
+from demand_and_supply import *
 
 app = Flask(__name__)
 
@@ -9,7 +10,7 @@ models = {
     "cobweb": {"name": "Cobweb Model", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Iterations", "Initial price"]},
     "cobweb_func": {"name": "Cobweb with function", "fields": ["Function", "Min value on X-axis", "Max value on X-axis", "Min value on Y-axis", "Max value on Y-axis", "Seed", "Iterations"]},
     "adapt_exp": {"name": "Adaptive expectations", "fields": ["Previous price", "Normal price", "Adjustment factor", "Periods"]},
-    "demand_supply":{"name": "Supply and Demand", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Price"], "functions": ["linear", "cos", "exp", "ln"]},
+    "demand_supply":{"name": "Supply and Demand", "fields": ["Demand shift", "Demand slope", "Supply shift", "Supply slope", "Start price", "End price"], "functions": ["linear", "cos", "exp", "ln"]},
 }
 
 intros = {
@@ -71,7 +72,7 @@ def model_post_page(model_name):
     else:
         print("Data obtained:", data)
 
-    find_and_choose_model(model_name, data)
+    return find_and_choose_model(model_name, data)
 
 @app.route("/intro", methods=["GET"])
 def intro_get_page():
@@ -124,13 +125,13 @@ def check_params():
 
 def find_and_choose_model(model_name, data):
     if model_name == "cobweb":
-        choose_eq_cobweb(data)
+        return choose_eq_cobweb(data)
     elif model_name == "cobweb_func":
-        choose_func_cobweb(data)
+        return choose_func_cobweb(data)
     elif model_name == "adapt_exp":
-        choose_adapt_expect(data)
+        return choose_adapt_expect(data)
     elif model_name == "demand_supply":
-        demand_suppy = 0
+        return choose_demand_supply(data)
 
 def choose_eq_cobweb(data):
     eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
@@ -149,6 +150,10 @@ def choose_adapt_expect(data):
     figure = adapt_exp.draw_graph(time_steps, prices)
     return jsonify({"graph_json": adapt_exp.generate_graph(figure)})
 
+def choose_demand_supply(data):
+    demand_supply = DemandSupply(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
+                                 data["start price"], data["end price"], data["functions"])
+    return jsonify({"graph_json": demand_supply.generate_graph(demand_supply.find_demand_supply())})
 
 if __name__ == "__main__":
     app.run(debug=True)
