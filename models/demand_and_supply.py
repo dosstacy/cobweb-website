@@ -1,4 +1,4 @@
-from models import go, np, pio
+from models import go, np
 
 ## TODO: price field must be positive, in opposite way there will be exception in math.log
 

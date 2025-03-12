@@ -1,4 +1,4 @@
-from models import symbols, sympify, lambdify, solve, pio, go, np
+from models import symbols, sympify, lambdify, solve, go, np
 
 ##TODO: 1. make the length of the window with parameters depend on the number of fields;
 ##TODO: 2. add some limits for fields;

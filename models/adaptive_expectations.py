@@ -1,4 +1,4 @@
-from models import go, pio
+from models import go
 
 class AdaptiveExpectations:
     def __init__(self, p0, pN, c, periods):

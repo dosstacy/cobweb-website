@@ -1,4 +1,4 @@
-from models import go, pio, np
+from models import go, np
 
 class EqCobweb: 
     def __init__(self, d_shift, d_slope, s_shift, s_slope, n_iterations, initial_price):
