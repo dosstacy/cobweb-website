@@ -11,7 +11,7 @@ params = {
              "This is the price of a commodity at the very beginning of the simulation, which is the starting point for analyzing changes in supply and demand. It can be used to determine the initial equilibrium in the market."]
 
     },
-    "adapt_exp": {
+    "normal_price": {
         "name": "Adaptive expectations",
         "params": ["Previous price", "Normal price", "Adjustment factor", "Periods"],
         "descriptions": ["",]

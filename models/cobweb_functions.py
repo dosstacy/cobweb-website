@@ -4,6 +4,7 @@ from models import symbols, sympify, lambdify, solve, go, np
 ##TODO: 2. add some limits for adjustment factor, maybe seed;
 ##TODO: 3. add language change
 ##TODO: 4. add a scrolling graph to cobweb
+##TODO: 5. how to use adaptive expectations - what to do with them???
 
 
 class FuncCobweb:

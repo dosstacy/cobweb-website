@@ -1,6 +1,6 @@
 from models import go
 
-class AdaptiveExpectations:
+class NormalPrice:
     def __init__(self, p0, pN, c, periods):
         self.p0 = p0
         self.pN = pN

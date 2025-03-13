@@ -1,6 +1,6 @@
 from models import go, np
 
-## TODO: price field must be positive, in opposite way there will be exception in math.log
+## TODO: check if cos and ln are drawing correct
 
 class DemandSupply:
     def __init__(self, d_shift, d_slope, s_shift, s_slope, start_price, end_price, function):
