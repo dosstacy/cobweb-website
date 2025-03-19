@@ -1,9 +1,10 @@
+from models.adaptive_expectations import AdaptiveExpectations
 from models.cobweb_equations import *
 from models.normal_price import *
 from models.cobweb_functions import *
 from models.demand_and_supply import *
-from models import generate_graph
 from utils import jsonify
+from models import *
 
 def find_model_solution(model_name, data):
     if model_name == "cobweb":
@@ -14,6 +15,8 @@ def find_model_solution(model_name, data):
         return find_normal_price_solution(data)
     elif model_name == "demand_supply":
         return find_demand_supply_solution(data)
+    elif model_name == "adapt_exp":
+        return find_adapt_exp_solution(data)
 
 def find_eq_cobweb_solution(data):
     eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
@@ -29,7 +32,13 @@ def find_normal_price_solution(data):
     normal_price = NormalPrice(data["previous price"], data["normal price"], data["adjustment factor"],
                                data["periods"])
     time_steps, prices = normal_price.ad_exp()
-    figure = normal_price.draw_graph(time_steps, prices)
+    figure = draw_graph(time_steps, prices)
+    return jsonify({"graph_json": generate_graph(figure)})
+
+def find_adapt_exp_solution(data):
+    adapt_exp = AdaptiveExpectations(data["previous expected price"], data["previous actual price"], data["adaptation coefficient"])
+    periods, prices = adapt_exp.find_adapt_expectation()
+    figure = draw_graph(periods, prices)
     return jsonify({"graph_json": generate_graph(figure)})
 
 def find_demand_supply_solution(data):

@@ -66,15 +66,8 @@
             let fieldsName = input.name;
             let fieldValue = input.value;
 
-            // if ((fieldsName === "iterations" || fieldsName === "periods") && input.value % 1 !== 0) {
-            //     alert("Please enter only a whole number for '" + fieldsName + "' field!");
-            //     event.preventDefault();
-            //     return;
-            // }
-
             formData[fieldsName] = isNaN(fieldValue) || fieldValue.trim() === "" ? fieldValue : parseFloat(fieldValue);
         }
-
 
         let functionInput = document.querySelector("select.func-selection");
         if (functionInput) {
