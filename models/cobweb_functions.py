@@ -16,6 +16,7 @@ class FuncCobweb:
         self.y_max = y_max
         self.seed = seed
         self.iterates = iterates
+        self.prices = []
 
     def find_func_cobweb(self):
         x_sym = symbols('x')
@@ -49,6 +50,7 @@ class FuncCobweb:
             iteration_points_x.append(x_current)
             iteration_points_y.append(x_current)
 
+        self.prices = iteration_points_y
         fig = go.Figure()
 
         fig.add_trace(go.Scatter(
@@ -98,6 +100,8 @@ class FuncCobweb:
 
         return fig
 
+    def return_periods_and_prices(self):
+        return self.iterates, self.prices
 
 # if __name__ == "__main__":
 #     model = FuncCobweb(
@@ -107,7 +111,7 @@ class FuncCobweb:
 #         y_min=0,
 #         y_max=1.2,
 #         seed=0.1,
-#         iterates=20
+#         iterates=5
 #     )
 #
 #     fig = model.find_func_cobweb()

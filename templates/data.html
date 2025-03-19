@@ -25,15 +25,16 @@
                 {% for field in model.fields %}
                 <div class="input-cont">
                     <label for="{{ field|lower }}">{{ field }}:</label>
-                    {% if field == "Price" or field == "Start price" or field == "End price" or field == "Initial price" or field == "Previous price" or field == "Normal price" %}
-                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                               step="any" max="0" required oninput="validatePositiveNumbers(this)"/>
+                    {% if field == "Price" or field == "Start price" or field == "End price" or field == "Initial price"
+                    or field == "Previous price" or field == "Normal price" %}
+                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
+                           step="any" max="0" required oninput="validatePositiveNumbers(this)"/>
                     {% elif field == "Iterations" or field == "Periods" %}
-                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                               step="any" max="0" required oninput="validateWholeNumbers(this)"/>
+                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
+                           step="any" max="0" required oninput="validateWholeNumbers(this)"/>
                     {% else %}
-                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                               step="any" required/>
+                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
+                           step="any" required/>
                     {% endif %}
                 </div>
                 {% endfor %}
@@ -41,13 +42,33 @@
             </form>
         </div>
         <div class="answer-cont">
+            {% if "Cobweb" in model.name %}
+            <div class="graphs-container">
+                <div class="cobweb-graph">
+                    <div id="plot"></div>
+                    <script class="plot">
+                        var graph = JSON.parse('{{ graph_json | safe }}');
+                        Plotly.newPlot('plot', graph.data, graph.layout, {responsive: true});
+                    </script>
+                </div>
+                <div class="pp-graph">
+                    <div id="pp-plot"></div>
+                    <script class="pp-plot">
+                        var pp_graph = JSON.parse('{{ pp_graph_json | safe }}');
+                        Plotly.newPlot('pp-plot', pp_graph.data, pp_graph.layout, {responsive: true});
+                    </script>
+                </div>
+            </div>
+            {% else %}
             <div class="data-graph">
                 <div id="plot"></div>
                 <script class="plot">
                     var graph = JSON.parse('{{ graph_json | safe }}');
                     Plotly.newPlot('plot', graph.data, graph.layout, {responsive: true});
+                    console.log("this is one plot")
                 </script>
             </div>
+            {% endif %}
             <!--            <button class="btn" id="ai-btn">Analyze graph with AI</button>-->
         </div>
     </div>
@@ -92,6 +113,9 @@
 
                 const graph = JSON.parse(data.graph_json);
                 Plotly.newPlot('plot', graph.data, graph.layout, {responsive: true});
+
+                const pp_graph = JSON.parse(data.pp_graph_json);
+                Plotly.newPlot('pp-plot', pp_graph.data, pp_graph.layout, {responsive: true});
             })
             .catch(error => {
                 console.error("Error:", error);

@@ -5,7 +5,11 @@ def configure_models(app):
     @app.route("/model/<model_name>", methods=["GET"])
     def model_get_page(model_name):
         graph_json = 0
+        pp_graph_json = 0
         model = check_model(model_name)
+
+        if "cobweb" in model_name:
+            return render_template("data.html", model=model, model_name=model_name, graph_json=graph_json, pp_graph_json=pp_graph_json)
 
         return render_template("data.html", model=model, model_name=model_name, graph_json=graph_json)
 

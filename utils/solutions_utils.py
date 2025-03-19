@@ -3,6 +3,7 @@ from models.cobweb_equations import *
 from models.normal_price import *
 from models.cobweb_functions import *
 from models.demand_and_supply import *
+from models.prices_periods_dependency import PPDependency
 from utils import jsonify
 from models import *
 
@@ -21,12 +22,28 @@ def find_model_solution(model_name, data):
 def find_eq_cobweb_solution(data):
     eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
                          data["iterations"], data["initial price"])
-    return jsonify({"graph_json": generate_graph(eq_cobweb.find_eq_cobweb())})
+
+    graph_json = generate_graph(eq_cobweb.find_eq_cobweb())
+    pp_graph_json = find_pp_dep(eq_cobweb)
+
+    print("Перший графік:", graph_json)
+    print("Другий графік:", pp_graph_json)
+
+    return jsonify({
+        "graph_json": graph_json,
+        "pp_graph_json": pp_graph_json
+    })
 
 def find_func_cobweb_solution(data):
     func_cobweb = FuncCobweb(data["function"], data["min value on x-axis"], data["max value on x-axis"],
                              data["min value on y-axis"], data["max value on y-axis"], data["seed"], data["iterations"])
-    return jsonify({"graph_json": generate_graph(func_cobweb.find_func_cobweb())})
+
+    graph_json = generate_graph(func_cobweb.find_func_cobweb())
+
+    return jsonify({
+        "graph_json": graph_json,
+        "pp_graph_json": find_pp_dep(func_cobweb)
+    })
 
 def find_normal_price_solution(data):
     normal_price = NormalPrice(data["previous price"], data["normal price"], data["adjustment factor"],
@@ -45,3 +62,8 @@ def find_demand_supply_solution(data):
     demand_supply = DemandSupply(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
                                  data["start price"], data["end price"], data["functions"])
     return jsonify({"graph_json": generate_graph(demand_supply.find_demand_supply())})
+
+def find_pp_dep(cobweb_model):
+    [periods, prices] = cobweb_model.return_periods_and_prices()
+    pp_dep = PPDependency(periods, prices)
+    return generate_graph(pp_dep.find_pp_dependency())
