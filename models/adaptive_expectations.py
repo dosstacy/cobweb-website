@@ -15,11 +15,9 @@ class AdaptiveExpectations:
             expected_prices.append(p_e_t)
             periods.append(t)
 
-
+        expected_prices.pop(0)
         print("expected prices: ", expected_prices)
         return periods, expected_prices
-
-    ##неправильно малюється графік
 
     def parse_prices(self, prices):
         return [float(x) for x in prices.split(",")]
