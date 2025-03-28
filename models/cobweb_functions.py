@@ -1,11 +1,10 @@
 from models import symbols, sympify, lambdify, solve, go, np
 
-##TODO: 1. make the length of the window with parameters depend on the number of fields;
-##TODO: 2. add some limits for adjustment factor, maybe seed, adapt. coefficient;
-##TODO: 3. add language change
-##TODO: 4. add a scrolling graph to cobweb
-##TODO: 5. how to use adaptive expectations - what to do with them???
-
+##TODO: 1. add some limits for adjustment factor, maybe seed, adapt. coefficient;
+##TODO: 2. add language change
+##TODO: 3. how to use adaptive expectations - what to do with them???
+##TODO: 4. check supply and demand plots
+##TODO: 5. make calculator
 
 class FuncCobweb:
     def __init__(self, str_func, x_min, x_max, y_min, y_max, seed, iterates):
