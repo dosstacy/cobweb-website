@@ -34,7 +34,8 @@
                            step="any" type="number" required oninput="validateWholeNumbers(this)"/>
                     {% elif field == "Function" %}
                     <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                           step="any" required readonly oninput="validateFunctionField(this)"/>
+                           step="any" required readonly/>
+                    <div class="error-message" id="errorField"></div>
                     <div class="dropdown-math">
                         <input type="checkbox" id="dropdownToggle" class="dropdown-checkbox">
                         <label for="dropdownToggle" class="dropdown-math-btn"><u>Math symbols and functions</u>▼</label>
@@ -104,6 +105,7 @@
                     <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
                            step="any" type="number" required/>
                     {% endif %}
+                    <div class="error-message" id="errorField"></div>
                 </div>
                 {% endfor %}
                 <button type="submit" class="btn" id="submit-btn">Submit data</button>
@@ -195,15 +197,24 @@
             formData[fieldsName] = isNaN(fieldValue) || fieldValue.trim() === "" ? fieldValue : parseFloat(fieldValue);
         }
 
+        const functionField = document.querySelector('#function');
+        const errorField = document.getElementById('errorField');
+
+        if (functionField) {
+            if (!validateScopes(functionField.value)) {
+                errorField.textContent = "Bracket mismatch!";
+                return;
+            } else {
+                errorField.textContent = "";
+            }
+        }
+
         let functionInput = document.querySelector("select.func-selection");
         if (functionInput) {
-            console.log(functionInput);
             formData[functionInput.name] = functionInput.value;
         }
 
         const modelName = "{{ model_name }}";
-        console.log("Model Name:", modelName);
-        console.log("FormData: ", formData);
 
         fetch("/model/" + modelName, {
             method: "POST",
@@ -224,22 +235,27 @@
             })
             .catch(error => {
                 console.error("Error:", error);
+                alert("Sorry, we can't find solution for your function. Please try another one.")
             });
     });
 
     function validatePositiveNumbers(input) {
+        const errorField = document.getElementById('errorField');
+
         if (parseFloat(input.value) <= 0) {
-            input.setCustomValidity("In this field must be a positive value!");
+            errorField.textContent = "In this field must be a positive value!";
         } else {
-            input.setCustomValidity("");
+            errorField.textContent = "";
         }
     }
 
     function validateWholeNumbers(input) {
+        const errorField = document.getElementById('errorField');
+
         if (parseFloat(input.value) % 1 !== 0) {
-            input.setCustomValidity("This field should contains be a whole number!");
+            errorField.textContent = "This field should contains be a whole number!";
         } else {
-            input.setCustomValidity("");
+            errorField.textContent = "";
         }
     }
 
@@ -252,5 +268,28 @@
         let inputField = document.querySelector('#function');
         inputField.value = '';
     }
+
+    function validateScopes(value) {
+        if (value === null || value === undefined || value.trim() === '') {
+            return true;
+        }
+
+        const stringValue = String(value);
+        let stack = [];
+
+        for (let i = 0; i < stringValue.length; i++) {
+            const char = stringValue[i];
+            if (char === "(") {
+                stack.push(char);
+            } else if (char === ")") {
+                if (stack.length === 0) {
+                    return false;
+                }
+                stack.pop();
+            }
+        }
+        return stack.length === 0; // Змінено на строге порівняння
+    }
+
 </script>
 {% endblock %}

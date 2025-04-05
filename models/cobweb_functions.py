@@ -1,4 +1,6 @@
 from models import symbols, sympify, lambdify, solve, go, np
+import re
+from sympy import nsolve
 
 ##TODO: 1. add some limits for adjustment factor, maybe seed, adapt. coefficient;
 ##TODO: 2. add language change
@@ -19,12 +21,9 @@ class FuncCobweb:
 
     def find_func_cobweb(self):
         x_sym = symbols('x')
-        expr = sympify(self.str_func)
+        expr = sympify(self.convert_to_sympy(self.str_func))
+        print(expr)
         func = lambdify(x_sym, expr, "numpy")
-
-        intersection_points = solve(expr - x_sym, x_sym)
-        intersections = [float(point.evalf()) for point in intersection_points if point.is_real]
-        print(intersections)
 
         x_values = np.linspace(self.x_min, self.x_max, 1000)
         y_values = func(x_values)
@@ -79,15 +78,6 @@ class FuncCobweb:
             showlegend=False
         ))
 
-        if intersections:
-            fig.add_trace(go.Scatter(
-                x=intersections,
-                y=intersections,
-                mode='markers',
-                marker=dict(color="green", size=10),
-                showlegend=False
-            ))
-
         fig.update_layout(
             xaxis=dict(range=[self.x_min, self.x_max]),
             yaxis=dict(range=[self.y_min, self.y_max]),
@@ -98,6 +88,21 @@ class FuncCobweb:
         )
 
         return fig
+
+    def convert_to_sympy(self, expression):
+        replacements = {
+            r'\btg\b': 'tan',  # Заміна tg на tan
+            r'\bctg\b': '1/tan',  # Заміна ctg на 1/tan (бо SymPy не має ctg)
+            r'\bln\b': 'log',  # ln → log (бо SymPy використовує log для натурального логарифма)
+            r'√': 'sqrt',  # Заміна √ на sqrt
+            r'\^': '**'  # Піднесення до степеня: ^ → **
+        }
+
+        # Виконуємо всі заміни
+        for pattern, replacement in replacements.items():
+            expression = re.sub(pattern, replacement, expression)
+
+        return expression
 
     def return_periods_and_prices(self):
         return self.iterates, self.prices
