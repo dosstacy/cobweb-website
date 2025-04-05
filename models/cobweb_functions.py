@@ -1,6 +1,5 @@
-from models import symbols, sympify, lambdify, solve, go, np
+from models import symbols, sympify, lambdify, go, np
 import re
-from sympy import nsolve
 
 ##TODO: 1. add some limits for adjustment factor, maybe seed, adapt. coefficient;
 ##TODO: 2. add language change
