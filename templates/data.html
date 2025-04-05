@@ -33,8 +33,7 @@
                     <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
                            step="any" type="number" required oninput="validateWholeNumbers(this)"/>
                     {% elif field == "Function" %}
-                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                           step="any" required readonly/>
+                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" required readonly/>
                     <div class="error-message" id="errorField"></div>
                     <div class="dropdown-math">
                         <input type="checkbox" id="dropdownToggle" class="dropdown-checkbox">
@@ -261,8 +260,18 @@
 
     function removeLastSymbol() {
         let inputField = document.querySelector('#function');
-        inputField.value = inputField.value.slice(0, -1);
+
+        const start = inputField.selectionStart;
+        const end = inputField.selectionEnd;
+
+        if (start === end && start > 0) {
+            inputField.value = inputField.value.slice(0, start - 1) + inputField.value.slice(end);
+            inputField.setSelectionRange(start - 1, start - 1);
+        }
+
+        inputField.focus();
     }
+
 
     function removeAllFromField() {
         let inputField = document.querySelector('#function');
