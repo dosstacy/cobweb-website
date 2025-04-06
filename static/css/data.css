@@ -209,5 +209,16 @@ label {
     font-weight: bold;
     font-size: 0.8rem;
     padding-left: 15px;
+    max-width: 90%;
+    display: inline-block;
+}
+
+.input-cont .error-message {
+    height: 7px;
+    visibility: hidden;
+}
+
+.input-cont .error-message.show {
+    visibility: visible;
 }
 

@@ -45,22 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
             let formData = {};
             let inputs = document.querySelectorAll("input[class='data-input']");
             let isValid = true;
-            document.querySelectorAll(".error-message").forEach(msg => msg.textContent = "");
 
             for (let input of inputs) {
                 let fieldsName = input.name;
                 let fieldValue = input.value;
-                const errorDiv = input.parentElement.querySelector('.error-message');
+                hideError(input);
 
                 if (fieldValue === "") {
-                    errorDiv.textContent = "This field is required!";
+                    showError(input, "This field is required!");
                     isValid = false;
                     continue;
                 }
 
                 if (fieldsName.includes("price") && fieldsName !== "previous actual price") {
                     if (parseFloat(fieldValue) <= 0) {
-                        errorDiv.textContent = "Value must be positive!";
+                        showError(input, "Value must be positive!");
                         isValid = false;
                         continue;
                     }
@@ -70,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const values = fieldValue.split(',').map(v => v.trim());
                     for (let numberStr of values) {
                         if (parseFloat(numberStr) <= 0) {
-                            errorDiv.textContent = "In this field must be a positive value!";
+                            showError(input, "Value must be positive!");
                             isValid = false;
                             continue;
                         }
@@ -79,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (fieldsName === "iterations" || fieldsName === "periods") {
                     if (parseFloat(fieldValue) % 1 !== 0) {
-                        errorDiv.textContent = "This field should contains be a whole number!";
+                        showError(input, "Value must be a whole number!");
                         isValid = false;
                         continue;
                     }
@@ -87,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (fieldsName === "adjustment factor" || fieldsName === "adaptation coefficient") {
                     if (parseFloat(fieldValue) < 0 || parseFloat(fieldValue) > 1) {
-                        errorDiv.textContent = "Value must be between 0 and 1!";
+                        showError(input, "Value must be between 0 and 1!");
                         isValid = false;
                         continue;
                     }
@@ -98,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const functionField = document.querySelector('#function');
             if (functionField && !validateScopes(functionField.value)) {
-                functionField.parentElement.querySelector('.error-message').textContent = "Bracket mismatch!";
+                showError(functionField, "Bracket mismatch!");
                 isValid = false;
             }
 
@@ -183,3 +182,15 @@ function validateScopes(value) {
     }
     return stack.length === 0;
 }
+
+function showError(inputElement, message) {
+    const errorMessage = inputElement.nextElementSibling;
+    errorMessage.textContent = message;
+    errorMessage.classList.add('show');
+}
+
+function hideError(inputElement) {
+    const errorMessage = inputElement.nextElementSibling;
+    errorMessage.classList.remove('show');
+}
+
