@@ -3,13 +3,14 @@
 {% block title %}{{ model.name }}{% endblock %}
 
 {% block extra_css %}<link rel="stylesheet" href="../static/css/data.css"/>{% endblock %}
-{% block extra_js %}<script src="../static/js/data.js"></script>{% endblock %}
+{% block extra_js %}<script src="../static/js/data.js" defer></script>{% endblock %}
 
 {% block content %}
 <div class="data-page">
     <div class="parent-cont">
         <div class="form-cont">
             <h1>{{ model.name }}</h1>
+            <div id="model-container" data-model="{{ model_name }}"></div>
             <form id="dataForm">
                 {% if model.functions is defined %}
                 <div class="select-cont">
@@ -24,88 +25,79 @@
                 {% for field in model.fields %}
                 <div class="input-cont">
                     <label for="{{ field|lower }}">{{ field }}:</label>
-                    {% if field == "Price" or field == "Start price" or field == "End price" or field == "Initial price"
-                    or field == "Normal price" %}
-                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                           step="any" type="number" required oninput="validatePositiveNumbers(this)"/>
-                    {% elif field == "Previous actual price"%}
-                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" step="any" type="text" required oninput="validatePositiveNumbersArray(this)"/>
-                    {% elif field == "Iterations" or field == "Periods" %}
-                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                           step="any" type="number" required oninput="validateWholeNumbers(this)"/>
-                    {% elif field == "Function" %}
-                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" required readonly/>
-                    <div class="error-message" id="errorField"></div>
-                    <div class="dropdown-math">
-                        <input type="checkbox" id="dropdownToggle" class="dropdown-checkbox">
-                        <label for="dropdownToggle" class="dropdown-math-btn"><u>Math symbols and functions</u>▼</label>
-                        <div class="dropdown-math-content">
-                            <div class="math-table-container">
-                                <button type="button" id="toggle-view" class="toggle-button">Show functions</button>
-                                <table class="math-table">
-                                    <tr class="fixed-row">
-                                        <td><button type="button" class="table-button" id="removeAll" onclick="removeAllFromField()">C</button></td>
-                                        <td><button type="button" class="table-button">/</button></td>
-                                        <td><button type="button" class="table-button">*</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button" id="remove" onclick="removeLastSymbol()">⌫</button></td>
-                                    </tr>
-                                    <!-- Basic symbols -->
-                                    <tbody id="basic-symbols">
-                                    <tr>
-                                        <td><button type="button" class="table-button">7</button></td>
-                                        <td><button type="button" class="table-button">8</button></td>
-                                        <td><button type="button" class="table-button">9</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button">-</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button type="button" class="table-button">4</button></td>
-                                        <td><button type="button" class="table-button">5</button></td>
-                                        <td><button type="button" class="table-button">6</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button">+</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button type="button" class="table-button">1</button></td>
-                                        <td><button type="button" class="table-button">2</button></td>
-                                        <td><button type="button" class="table-button">3</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button">(</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button type="button" class="table-button">,</button></td>
-                                        <td><button type="button" class="table-button">0</button></td>
-                                        <td><button type="button" class="table-button">x</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button">)</button></td>
-                                    </tr>
-                                    </tbody>
-                                    <!-- Function symbols -->
-                                    <tbody id="function-symbols" style="display: none;">
-                                    <tr>
-                                        <td><button type="button" class="table-button">cos</button></td>
-                                        <td><button type="button" class="table-button">sin</button></td>
-                                        <td><button type="button" class="table-button">tg</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button">-</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button type="button" class="table-button">ctg</button></td>
-                                        <td><button type="button" class="table-button">ln</button></td>
-                                        <td><button type="button" class="table-button">e</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button">+</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td><button type="button" class="table-button">√</button></td>
-                                        <td><button type="button" class="table-button">^</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button">(</button></td>
-                                        <td class="fixed-column"><button type="button" class="table-button">)</button></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                    {% if field == "Function" %}
+                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" readonly/>
+                        <div class="error-message" id="errorField"></div>
+                        <div class="dropdown-math">
+                            <input type="checkbox" id="dropdownToggle" class="dropdown-checkbox">
+                            <label for="dropdownToggle" class="dropdown-math-btn"><u>Math symbols and functions</u>▼</label>
+                            <div class="dropdown-math-content">
+                                <div class="math-table-container">
+                                    <button type="button" id="toggle-view" class="toggle-button">Show functions</button>
+                                    <table class="math-table">
+                                        <tr class="fixed-row">
+                                            <td><button type="button" class="table-button" id="removeAll" onclick="removeAllFromField()">C</button></td>
+                                            <td><button type="button" class="table-button">/</button></td>
+                                            <td><button type="button" class="table-button">*</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button" id="remove" onclick="removeLastSymbol()">⌫</button></td>
+                                        </tr>
+                                        <!-- Basic symbols -->
+                                        <tbody id="basic-symbols">
+                                        <tr>
+                                            <td><button type="button" class="table-button">7</button></td>
+                                            <td><button type="button" class="table-button">8</button></td>
+                                            <td><button type="button" class="table-button">9</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button">-</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="button" class="table-button">4</button></td>
+                                            <td><button type="button" class="table-button">5</button></td>
+                                            <td><button type="button" class="table-button">6</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button">+</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="button" class="table-button">1</button></td>
+                                            <td><button type="button" class="table-button">2</button></td>
+                                            <td><button type="button" class="table-button">3</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button">(</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="button" class="table-button">,</button></td>
+                                            <td><button type="button" class="table-button">0</button></td>
+                                            <td><button type="button" class="table-button">x</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button">)</button></td>
+                                        </tr>
+                                        </tbody>
+                                        <!-- Function symbols -->
+                                        <tbody id="function-symbols" style="display: none;">
+                                        <tr>
+                                            <td><button type="button" class="table-button">cos</button></td>
+                                            <td><button type="button" class="table-button">sin</button></td>
+                                            <td><button type="button" class="table-button">tg</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button">-</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="button" class="table-button">ctg</button></td>
+                                            <td><button type="button" class="table-button">ln</button></td>
+                                            <td><button type="button" class="table-button">e</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button">+</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="button" class="table-button">√</button></td>
+                                            <td><button type="button" class="table-button">^</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button">(</button></td>
+                                            <td class="fixed-column"><button type="button" class="table-button">)</button></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {% else %}
-                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
-                           step="any" type="number" required/>
+                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
+                               step="any" type="number"/>
                     {% endif %}
-                    <div class="error-message" id="errorField"></div>
+                    <div class="error-message"></div>
                 </div>
                 {% endfor %}
                 <button type="submit" class="btn" id="submit-btn">Submit data</button>
@@ -143,4 +135,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}

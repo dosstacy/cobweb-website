@@ -64,6 +64,7 @@
     font-family: sans-serif;
     display: flex;
     flex-direction: column;
+    gap: 7px;
 }
 
 form {
@@ -75,7 +76,7 @@ form {
 }
 
 label {
-    margin-bottom: 10px;
+    padding-left: 10px;
 }
 
 .plot {
@@ -207,7 +208,6 @@ label {
     color: red;
     font-weight: bold;
     font-size: 0.8rem;
-    margin-top: 8px;
     padding-left: 15px;
 }
 

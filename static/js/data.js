@@ -44,81 +44,104 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let formData = {};
             let inputs = document.querySelectorAll("input[class='data-input']");
+            let isValid = true;
+            document.querySelectorAll(".error-message").forEach(msg => msg.textContent = "");
 
             for (let input of inputs) {
                 let fieldsName = input.name;
                 let fieldValue = input.value;
+                const errorDiv = input.parentElement.querySelector('.error-message');
+
+                if (fieldValue === "") {
+                    errorDiv.textContent = "This field is required!";
+                    isValid = false;
+                    continue;
+                }
+
+                if (fieldsName.includes("price") && fieldsName !== "previous actual price") {
+                    if (parseFloat(fieldValue) <= 0) {
+                        errorDiv.textContent = "Value must be positive!";
+                        isValid = false;
+                        continue;
+                    }
+                }
+
+                if (fieldsName === "previous actual price") {
+                    const values = fieldValue.split(',').map(v => v.trim());
+                    for (let numberStr of values) {
+                        if (parseFloat(numberStr) <= 0) {
+                            errorDiv.textContent = "In this field must be a positive value!";
+                            isValid = false;
+                            continue;
+                        }
+                    }
+                }
+
+                if (fieldsName === "iterations" || fieldsName === "periods") {
+                    if (parseFloat(fieldValue) % 1 !== 0) {
+                        errorDiv.textContent = "This field should contains be a whole number!";
+                        isValid = false;
+                        continue;
+                    }
+                }
+
+                if (fieldsName === "adjustment factor" || fieldsName === "adaptation coefficient") {
+                    if (parseFloat(fieldValue) < 0 || parseFloat(fieldValue) > 1) {
+                        errorDiv.textContent = "Value must be between 0 and 1!";
+                        isValid = false;
+                        continue;
+                    }
+                }
 
                 formData[fieldsName] = isNaN(fieldValue) || fieldValue.trim() === "" ? fieldValue : parseFloat(fieldValue);
             }
 
             const functionField = document.querySelector('#function');
-            const errorField = document.getElementById('errorField');
+            if (functionField && !validateScopes(functionField.value)) {
+                functionField.parentElement.querySelector('.error-message').textContent = "Bracket mismatch!";
+                isValid = false;
+            }
 
-            if (functionField) {
-                if (!validateScopes(functionField.value)) {
-                    errorField.textContent = "Bracket mismatch!";
-                    return;
-                } else {
-                    errorField.textContent = "";
+
+            if (isValid) {
+                let functionInput = document.querySelector("select.func-selection");
+                if (functionInput) {
+                    formData[functionInput.name] = functionInput.value;
                 }
-            }
 
-            let functionInput = document.querySelector("select.func-selection");
-            if (functionInput) {
-                formData[functionInput.name] = functionInput.value;
-            }
 
-            const modelName = "{{ model_name }}";
+                const modelName = document.getElementById('model-container').dataset.model;
+                console.log(modelName);
 
-            fetch("/model/" + modelName, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(formData)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Success:", data);
-
-                    if (data.graph_json) {
-                        const graph = JSON.parse(data.graph_json);
-                        Plotly.newPlot('plot', graph.data, graph.layout, {responsive: true});
-                    }
-
-                    if (data.pp_graph_json) {
-                        const pp_graph = JSON.parse(data.pp_graph_json);
-                        Plotly.newPlot('pp-plot', pp_graph.data, pp_graph.layout, {responsive: true});
-                    }
+                fetch("/model/" + modelName, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
                 })
-                .catch(error => {
-                    console.error("Error:", error);
-                    alert("Sorry, we can't find solution for your function. Please try another one.")
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Success:", data);
+
+                        if (data.graph_json) {
+                            const graph = JSON.parse(data.graph_json);
+                            Plotly.newPlot('plot', graph.data, graph.layout, {responsive: true});
+                        }
+
+                        if (data.pp_graph_json) {
+                            const pp_graph = JSON.parse(data.pp_graph_json);
+                            Plotly.newPlot('pp-plot', pp_graph.data, pp_graph.layout, {responsive: true});
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("Sorry, we can't find solution for your function. Please try another one.")
+                    });
+            }
         });
     }
 });
-
-function validatePositiveNumbers(input) {
-    const errorField = document.getElementById('errorField');
-
-    if (parseFloat(input.value) <= 0) {
-        errorField.textContent = "In this field must be a positive value!";
-    } else {
-        errorField.textContent = "";
-    }
-}
-
-function validateWholeNumbers(input) {
-    const errorField = document.getElementById('errorField');
-
-    if (parseFloat(input.value) % 1 !== 0) {
-        errorField.textContent = "This field should contains be a whole number!";
-    } else {
-        errorField.textContent = "";
-    }
-}
 
 function removeLastSymbol() {
     let inputField = document.querySelector('#function');
@@ -159,14 +182,4 @@ function validateScopes(value) {
         }
     }
     return stack.length === 0;
-}
-
-function validatePositiveNumbersArray(input) {
-    const values = input.value.split(',').map(v => v.trim());
-
-    for (let numberStr of values) {
-        validatePositiveNumbers(numberStr);
-    }
-
-    return values;
 }
