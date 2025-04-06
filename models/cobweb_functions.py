@@ -1,7 +1,6 @@
 from models import symbols, sympify, lambdify, go, np
 import re
 
-##TODO: 1. add some limits for adjustment factor, adapt. coefficient;
 ##TODO: 2. add language change
 ##TODO: 3. how to use adaptive expectations - what to do with them???
 ##TODO: 4. check supply and demand plots

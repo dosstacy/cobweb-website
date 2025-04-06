@@ -66,10 +66,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
 
                 if (fieldsName === "previous actual price") {
+                    fieldValue = fieldValue.replace(/,$/, '');
                     const values = fieldValue.split(',').map(v => v.trim());
+                    const regex = /^[0-9,.+\-]*$/;
+
                     for (let numberStr of values) {
-                        if (parseFloat(numberStr) <= 0) {
-                            showError(input, "Value must be positive!");
+                        if (regex.test(numberStr)) {
+                            if (parseFloat(numberStr) <= 0) {
+                                showError(input, "Value must be positive!");
+                                isValid = false;
+                                continue;
+                            }
+                        } else {
+                            showError(input, "Field must contains numbers!");
                             isValid = false;
                             continue;
                         }

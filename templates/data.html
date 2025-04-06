@@ -93,6 +93,9 @@
                                 </div>
                             </div>
                         </div>
+                    {% elif field == "Previous actual price" %}
+                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
+                               step="any" type="text"/>
                     {% else %}
                         <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}"
                                step="any" type="number"/>
