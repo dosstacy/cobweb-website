@@ -1,7 +1,12 @@
 document.querySelectorAll('.table-button').forEach(button => {
     button.addEventListener('click', function () {
         if (button.id !== 'remove' && button.id !== 'removeAll') {
-            let inputField = document.querySelector('#function');
+            let inputField;
+            if (document.querySelector('#function')) {
+                inputField = document.querySelector('#function');
+            } else if (document.querySelector('#equation-input')) {
+                inputField = document.querySelector('#equation-input');
+            }
             let cursorPos = inputField.selectionStart;
             let textBefore = inputField.value.substring(0, cursorPos);
             let textAfter = inputField.value.substring(cursorPos);
@@ -75,12 +80,10 @@ document.addEventListener("DOMContentLoaded", function () {
                             if (parseFloat(numberStr) <= 0) {
                                 showError(input, "Value must be positive!");
                                 isValid = false;
-                                continue;
                             }
                         } else {
                             showError(input, "Field must contains numbers!");
                             isValid = false;
-                            continue;
                         }
                     }
                 }
@@ -152,7 +155,12 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function removeLastSymbol() {
-    let inputField = document.querySelector('#function');
+    let inputField;
+    if (document.querySelector('#function')) {
+        inputField = document.querySelector('#function');
+    } else if (document.querySelector('#equation-input')) {
+        inputField = document.querySelector('#equation-input');
+    }
 
     const start = inputField.selectionStart;
     const end = inputField.selectionEnd;
@@ -166,7 +174,12 @@ function removeLastSymbol() {
 }
 
 function removeAllFromField() {
-    let inputField = document.querySelector('#function');
+    let inputField;
+    if (document.querySelector('#function')) {
+        inputField = document.querySelector('#function');
+    } else if (document.querySelector('#equation-input')) {
+        inputField = document.querySelector('#equation-input');
+    }
     inputField.value = '';
 }
 

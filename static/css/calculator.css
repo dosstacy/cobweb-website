@@ -11,31 +11,81 @@
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
+.form-container {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+
 form {
-    width: fit-content;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 40px 0;
+    gap: 35px;
 }
 
 label {
     font-family: sans-serif;
     font-size: 18px;
-    margin-bottom: 15px;
+}
+
+.input-group {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 #eq-btn {
     padding: 10px 55px;
+    margin: 0 10px;
 }
 
 #equation-input {
-    width: 40%;
-    height: 5%;
+    margin-top: 2px;
+    width: 36%;
     font-size: 1.2rem;
+    transition: all 0.5s ease-in-out
+}
+
+#equation-input:focus {
+    box-shadow: 0 7px 5px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.calc-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 19px;
+    width: 45%;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.math-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.table-button, .toggle-button {
+    width: 99%;
+    border: none;
+    border-radius: 5px;
+    padding: 7px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin: 1px;
+    cursor: pointer;
+}
+
+.table-button:hover, .toggle-button:hover {
+    background-color: lightgrey;
 }
 

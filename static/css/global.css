@@ -28,7 +28,7 @@ body {
     font-size: 1.1rem;
     margin-top: 20px;
     cursor: pointer;
-    box-shadow: 3px 7px 15px black;
+    box-shadow: 3px 6px 17px dimgray;
     transition: all 0.2s ease-in-out;
 }
 
@@ -72,8 +72,7 @@ body {
     width: -webkit-fill-available;
     display: flex;
     flex-direction: row;
-    /*gap: 50%;*/
-    gap: 60%;
+    gap: 53%;
     align-items: center;
 }
 

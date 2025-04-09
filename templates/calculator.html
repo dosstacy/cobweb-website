@@ -1,18 +1,22 @@
 {% extends "base.html" %}
 
-{%block extra_css%}
-    <link rel="stylesheet" href="../static/css/calculator.css"/>
-{% endblock %}
+{%block extra_css%}<link rel="stylesheet" href="../static/css/calculator.css"/>{% endblock %}
+{% block extra_js %}<script src="../static/js/data.js" defer></script>{% endblock %}
 
 {% block content %}
 <div class="calculator-page">
     <div class="rectangle" id="calc-rect">
         <div class="form-container">
             <form>
-                <label for="equation-input">Please write your difference equation: </label>
-                <input class="data-input" id="equation-input" required/>
-                <button class="btn" id="eq-btn" type="submit">Solve</button>
+                <label for="equation-input" style="display: block;">Please write your difference equation: </label>
+                <div class="input-group">
+                    <input class="data-input" id="equation-input" required readonly/>
+                    <button class="btn" id="eq-btn" type="submit">Solve</button>
+                </div>
             </form>
+        </div>
+        <div class="calc-container">
+            {% include 'partials/math_table.html' %}
         </div>
     </div>
 </div>
