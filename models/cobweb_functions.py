@@ -1,10 +1,12 @@
 from models import symbols, sympify, lambdify, go, np
 import re
 
+##TODO: 1. edit text pages
 ##TODO: 2. add language change
-##TODO: 3. how to use adaptive expectations - what to do with them???
-##TODO: 4. check supply and demand plots
-##TODO: 5. make calculator
+##TODO: 3. add pomocku to function field
+##TODO: 4. add modal window for solution error -> якщо рівняння не розв'язується, дописати знизу, що проблема може бути з полем function
+##TODO: 6. make calculator
+##TODO: 7. edit main page
 
 class FuncCobweb:
     def __init__(self, str_func, x_min, x_max, y_min, y_max, seed, iterates):
