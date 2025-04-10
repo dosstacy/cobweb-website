@@ -10,8 +10,18 @@
     height: 73vh;
     margin-bottom: 30px;
     display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+.eq-cont {
+    width: 40%;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 45px 0 0;
 }
 
 .form-container {
@@ -21,13 +31,12 @@
 }
 
 form {
-    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 40px 0;
-    gap: 35px;
+    gap: 11px;
+    width: 100%;
 }
 
 label {
@@ -35,22 +44,14 @@ label {
     font-size: 18px;
 }
 
-.input-group {
-    display: flex;
-    width: 100%;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-
 #eq-btn {
-    padding: 10px 55px;
-    margin: 0 10px;
+    padding: 10px 35px;
+    margin: 20px 10px;
 }
 
 #equation-input {
     margin-top: 2px;
-    width: 36%;
+    width: 65%;
     font-size: 1.2rem;
     transition: all 0.5s ease-in-out
 }
@@ -64,9 +65,10 @@ label {
     background-color: white;
     padding: 10px;
     border-radius: 19px;
-    width: 45%;
+    width: 55%;
     max-width: 100%;
     overflow-x: auto;
+    margin-top: 32px;
 }
 
 .math-table {
@@ -89,3 +91,23 @@ label {
     background-color: lightgrey;
 }
 
+.eq-answer-cont {
+    background-color: white;
+    width: 35%;
+    border-radius: 50px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.eq-answer {
+    display: inline-block;      /* Щоб розмір підлаштовувався під вміст */
+    padding: 10px;              /* Відступ всередині */
+    background-color: #f0f0f0;  /* Просто для краси */
+    border-radius: 8px;
+    max-width: 70%;            /* Щоб не виходив за межі екрана */
+    word-wrap: break-word;      /* Переносить довгі слова */
+    white-space: normal;        /* Дозволяє переносити рядки */
+}

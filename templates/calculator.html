@@ -1,22 +1,28 @@
 {% extends "base.html" %}
 
-{%block extra_css%}<link rel="stylesheet" href="../static/css/calculator.css"/>{% endblock %}
-{% block extra_js %}<script src="../static/js/data.js" defer></script>{% endblock %}
+{%block extra_css%}
+<link rel="stylesheet" href="../static/css/calculator.css"/>{% endblock %}
+{% block extra_js %}
+<script src="../static/js/data.js" defer></script>{% endblock %}
 
 {% block content %}
 <div class="calculator-page">
     <div class="rectangle" id="calc-rect">
-        <div class="form-container">
+        <div class="eq-cont">
             <form>
                 <label for="equation-input" style="display: block;">Please write your difference equation: </label>
-                <div class="input-group">
-                    <input class="data-input" id="equation-input" required readonly/>
-                    <button class="btn" id="eq-btn" type="submit">Solve</button>
-                </div>
+                <input class="data-input" id="equation-input" required readonly/>
             </form>
+            <div class="calc-container">
+                {% include 'partials/math_table.html' %}
+            </div>
+            <button class="btn" id="eq-btn" type="submit">Solve</button>
         </div>
-        <div class="calc-container">
-            {% include 'partials/math_table.html' %}
+        <div class="eq-answer-cont">
+            <p>Equation result: </p>
+            <div class="eq-answer">
+                Це дуже довгий текст, який має автоматично переноситись і не виходити за межі блоку. Це дуже довгий текст, який має автоматично переноситись і не виходити за межі блоку.
+            </div>
         </div>
     </div>
 </div>
