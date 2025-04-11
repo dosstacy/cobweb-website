@@ -16,12 +16,17 @@
     gap: 100px;
 }
 
+.dropdown-math-content {
+    height: 100%;
+}
+
 .eq-cont {
     width: 40%;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 45px 0 0;
+    height: 85%;
 }
 
 .form-container {
@@ -65,18 +70,20 @@ label {
     background-color: white;
     padding: 10px;
     border-radius: 19px;
-    width: 55%;
+    /* width: 100%; */
     max-width: 100%;
     overflow-x: auto;
+    height: 65%;
     margin-top: 32px;
 }
 
 .math-table {
+    height: 100%;
     width: 100%;
     table-layout: fixed;
 }
 
-.table-button, .toggle-button {
+.table-button {
     width: 99%;
     border: none;
     border-radius: 5px;
@@ -85,6 +92,7 @@ label {
     font-size: 16px;
     margin: 1px;
     cursor: pointer;
+    height: 90%;
 }
 
 .table-button:hover, .toggle-button:hover {
@@ -103,11 +111,11 @@ label {
 }
 
 .eq-answer {
-    display: inline-block;      /* Щоб розмір підлаштовувався під вміст */
-    padding: 10px;              /* Відступ всередині */
-    background-color: #f0f0f0;  /* Просто для краси */
+    display: inline-block; /* Щоб розмір підлаштовувався під вміст */
+    padding: 10px; /* Відступ всередині */
+    background-color: #f0f0f0; /* Просто для краси */
     border-radius: 8px;
-    max-width: 70%;            /* Щоб не виходив за межі екрана */
-    word-wrap: break-word;      /* Переносить довгі слова */
-    white-space: normal;        /* Дозволяє переносити рядки */
+    max-width: 70%; /* Щоб не виходив за межі екрана */
+    word-wrap: break-word; /* Переносить довгі слова */
+    white-space: normal; /* Дозволяє переносити рядки */
 }
