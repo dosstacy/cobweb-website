@@ -7,7 +7,7 @@
 
 #calc-rect {
     margin-top: 50px;
-    height: 73vh;
+    height: fit-content;
     margin-bottom: 30px;
     display: flex;
     flex-direction: row;
@@ -51,7 +51,7 @@ label {
 
 #eq-btn {
     padding: 10px 35px;
-    margin: 20px 10px;
+    margin: 0px 10px 30px;
 }
 
 #equation-input {
@@ -61,7 +61,7 @@ label {
     transition: all 0.5s ease-in-out
 }
 
-#equation-input:focus {
+#equation-input:focus, #p0:focus, #p1:focus {
     box-shadow: 0 7px 5px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
 }
@@ -70,9 +70,9 @@ label {
     background-color: white;
     padding: 10px;
     border-radius: 19px;
-    /* width: 100%; */
-    max-width: 100%;
-    overflow-x: auto;
+    width: 80%;
+    /* max-width: 100%; */
+    /* overflow-x: auto; */
     height: 65%;
     margin-top: 32px;
 }
@@ -101,9 +101,9 @@ label {
 
 .eq-answer-cont {
     background-color: white;
-    width: 35%;
+    width: 30%;
     border-radius: 50px;
-    height: 80%;
+    height: 65vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -111,11 +111,29 @@ label {
 }
 
 .eq-answer {
-    display: inline-block; /* Щоб розмір підлаштовувався під вміст */
-    padding: 10px; /* Відступ всередині */
-    background-color: #f0f0f0; /* Просто для краси */
+    display: inline-block;
+    padding: 10px;
+    background-color: #f0f0f0;
     border-radius: 8px;
-    max-width: 70%; /* Щоб не виходив за межі екрана */
-    word-wrap: break-word; /* Переносить довгі слова */
-    white-space: normal; /* Дозволяє переносити рядки */
+    max-width: 70%;
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.init-cond {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 27px;
+    /* gap: 13px; */
+}
+
+#p0, #p1 {
+    margin: 7px 0 23px;
+    transition: all 0.5s ease-in-out
+}
+
+label {
+    font-size: 1rem;
 }

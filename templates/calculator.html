@@ -9,19 +9,24 @@
 <div class="calculator-page">
     <div class="rectangle" id="calc-rect">
         <div class="eq-cont">
-            <form>
+            <form id="calc-form">
                 <label for="equation-input" style="display: block;">Please write your difference equation: </label>
                 <input class="data-input" id="equation-input" required readonly/>
             </form>
             <div class="calc-container">
                 {% include 'partials/math_table_calc.html' %}
             </div>
+            <div class="init-cond">
+                <label for="p0">Initial condition p0:</label><input class="data-input" id="p0"/>
+                <label for="p1">Initial condition p1:</label><input class="data-input" id="p1"/>
+            </div>
             <button class="btn" id="eq-btn" type="submit">Solve</button>
         </div>
         <div class="eq-answer-cont">
             <p>Equation result: </p>
             <div class="eq-answer">
-                Це дуже довгий текст, який має автоматично переноситись і не виходити за межі блоку. Це дуже довгий текст, який має автоматично переноситись і не виходити за межі блоку.
+                Це дуже довгий текст, який має автоматично переноситись і не виходити за межі блоку. Це дуже довгий
+                текст, який має автоматично переноситись і не виходити за межі блоку.
             </div>
         </div>
     </div>
