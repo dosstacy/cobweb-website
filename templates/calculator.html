@@ -11,16 +11,27 @@
         <div class="eq-cont">
             <form id="calc-form">
                 <label for="equation-input" style="display: block;">Please write your difference equation: </label>
-                <input class="data-input" id="equation-input" required readonly/>
+                <div class="eq-input-cont">
+                    <input class="eq-input" id="equation-input" required readonly/>
+                    <div class="error-message"></div>
+                </div>
+                <div class="calc-container">
+                    {% include 'partials/math_table_calc.html' %}
+                </div>
+                <div class="init-cond">
+                    <label for="p0">Initial condition p0:</label>
+                    <div class="eq-input-cont">
+                        <input class="eq-input" type="number" id="p0"/>
+                        <div class="error-message"></div>
+                    </div>
+                    <label for="p1">Initial condition p1:</label>
+                    <div class="eq-input-cont">
+                        <input class="eq-input" type="number" id="p1"/>
+                        <div class="error-message"></div>
+                    </div>
+                </div>
+                <button class="btn" id="eq-btn" type="submit">Solve</button>
             </form>
-            <div class="calc-container">
-                {% include 'partials/math_table_calc.html' %}
-            </div>
-            <div class="init-cond">
-                <label for="p0">Initial condition p0:</label><input class="data-input" id="p0"/>
-                <label for="p1">Initial condition p1:</label><input class="data-input" id="p1"/>
-            </div>
-            <button class="btn" id="eq-btn" type="submit">Solve</button>
         </div>
         <div class="eq-answer-cont">
             <p>Equation result: </p>

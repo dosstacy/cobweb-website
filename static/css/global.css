@@ -41,7 +41,7 @@ body {
     transform: translateY(2px);
 }
 
-.data-input {
+.data-input, .eq-input {
     padding: 10px 15px;
     border-radius: 30px;
     font-size: 1rem;
@@ -133,5 +133,15 @@ body {
 
 .logo-text {
     font-size: 26px;
+    font-family: sans-serif;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    font-size: 0.7rem;
+    padding-left: 15px;
+    max-width: 90%;
+    display: inline-block;
     font-family: sans-serif;
 }

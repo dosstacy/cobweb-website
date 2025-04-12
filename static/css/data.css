@@ -204,15 +204,6 @@ label {
     background-color: lightgrey;
 }
 
-.error-message {
-    color: red;
-    font-weight: bold;
-    font-size: 0.7rem;
-    padding-left: 15px;
-    max-width: 90%;
-    display: inline-block;
-}
-
 .input-cont .error-message {
     height: 7px;
     visibility: hidden;

@@ -55,8 +55,8 @@ label {
 }
 
 #equation-input {
-    margin-top: 2px;
-    width: 65%;
+    margin-bottom: 7px;
+    width: 100%;
     font-size: 1.2rem;
     transition: all 0.5s ease-in-out
 }
@@ -74,7 +74,7 @@ label {
     /* max-width: 100%; */
     /* overflow-x: auto; */
     height: 65%;
-    margin-top: 32px;
+    margin-top: 14px;
 }
 
 .math-table {
@@ -136,4 +136,19 @@ label {
 
 label {
     font-size: 1rem;
+}
+
+.eq-cont .error-message {
+    height: 7px;
+    visibility: hidden;
+}
+
+.eq-cont .error-message.show {
+    visibility: visible;
+}
+
+.eq-input-cont {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
 }
