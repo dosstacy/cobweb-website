@@ -11,22 +11,19 @@
     margin-bottom: 30px;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
-    gap: 100px;
 }
 
 .dropdown-math-content {
-    height: 100%;
 }
 
 .eq-cont {
-    width: 40%;
+    /* width: 40%; */
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 45px 0 0;
-    height: 85%;
 }
 
 .form-container {
@@ -41,7 +38,6 @@ form {
     justify-content: center;
     align-items: center;
     gap: 11px;
-    width: 100%;
 }
 
 label {
@@ -51,15 +47,20 @@ label {
 
 #eq-btn {
     padding: 10px 35px;
-    margin: 0px 10px 30px;
+    margin: 15px 10px 30px;
 }
 
-#equation-input {
+#equation-input, #p0, #p1 {
     margin-bottom: 7px;
-    width: 100%;
+    /*width: 100%;*/
     font-size: 1.2rem;
     transition: all 0.5s ease-in-out
 }
+
+/*#p0, #p1 {*/
+/*    margin: 7px 0 23px;*/
+/*    transition: all 0.5s ease-in-out*/
+/*}*/
 
 #equation-input:focus, #p0:focus, #p1:focus {
     box-shadow: 0 7px 5px rgba(0, 0, 0, 0.1);
@@ -70,29 +71,23 @@ label {
     background-color: white;
     padding: 10px;
     border-radius: 19px;
-    width: 80%;
-    /* max-width: 100%; */
-    /* overflow-x: auto; */
-    height: 65%;
     margin-top: 14px;
 }
 
 .math-table {
-    height: 100%;
-    width: 100%;
     table-layout: fixed;
 }
 
 .table-button {
-    width: 99%;
+    width: 50px;
     border: none;
+    outline: none;
     border-radius: 5px;
-    padding: 7px;
     box-sizing: border-box;
     font-size: 16px;
-    margin: 1px;
+    margin: 0px;
     cursor: pointer;
-    height: 90%;
+    height: 32px;
 }
 
 .table-button:hover, .toggle-button:hover {
@@ -126,12 +121,7 @@ label {
     justify-content: center;
     align-items: center;
     margin-top: 27px;
-    /* gap: 13px; */
-}
-
-#p0, #p1 {
-    margin: 7px 0 23px;
-    transition: all 0.5s ease-in-out
+     gap: 7px;
 }
 
 label {
@@ -139,7 +129,7 @@ label {
 }
 
 .eq-cont .error-message {
-    height: 7px;
+    /*height: 7px;*/
     visibility: hidden;
 }
 
@@ -149,6 +139,17 @@ label {
 
 .eq-input-cont {
     width: 80%;
+}
+
+.eq-init-cond {
+    width: 185px;
+}
+
+.eq-input-cont, .eq-init-cond {
     display: flex;
     flex-direction: column;
 }
+
+/*.eq-init-cond {*/
+/*    align-items: center;*/
+/*}*/

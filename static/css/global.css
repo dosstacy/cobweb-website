@@ -16,8 +16,6 @@ body {
     background-color: #e8e8e8;
     border-radius: 50px;
     width: 85%;
-    height: 80vh;
-    margin-bottom: 50px;
 }
 
 .btn {
@@ -68,12 +66,11 @@ body {
 .upper-menu {
     background-color: #e8e8e8;
     padding: 16px;
-    height: 9vh;
     width: -webkit-fill-available;
     display: flex;
     flex-direction: row;
-    gap: 53%;
     align-items: center;
+    justify-content: space-between;
 }
 
 .dropdown-btn, .diff-calc {
@@ -140,8 +137,7 @@ body {
     color: red;
     font-weight: bold;
     font-size: 0.7rem;
-    padding-left: 15px;
-    max-width: 90%;
     display: inline-block;
     font-family: sans-serif;
+    text-align: center;
 }

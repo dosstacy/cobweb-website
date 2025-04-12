@@ -1,11 +1,12 @@
-from models.adaptive_expectations import AdaptiveExpectations
-from models.cobweb_equations import *
-from models.normal_price import *
-from models.cobweb_functions import *
-from models.demand_and_supply import *
-from models.prices_periods_dependency import PPDependency
+from tools.models.adaptive_expectations import AdaptiveExpectations
+from tools.models.demand_and_supply import DemandSupply
+from tools.models.normal_price import NormalPrice
+from tools.models.prices_periods_dependency import PPDependency
+from tools.models.cobweb_equations import EqCobweb
+from tools.models.cobweb_functions import FuncCobweb
 from utils import jsonify
-from models import *
+from tools.models import *
+from tools.diff_calculator import Calculator
 
 def find_model_solution(model_name, data):
     if model_name == "cobweb":
@@ -26,8 +27,8 @@ def find_eq_cobweb_solution(data):
     graph_json = generate_graph(eq_cobweb.find_eq_cobweb())
     pp_graph_json = find_pp_dep(eq_cobweb)
 
-    print("Перший графік:", graph_json)
-    print("Другий графік:", pp_graph_json)
+    print("First plot:", graph_json)
+    print("Second plot:", pp_graph_json)
 
     return jsonify({
         "graph_json": graph_json,
@@ -67,3 +68,7 @@ def find_pp_dep(cobweb_model):
     [periods, prices] = cobweb_model.return_periods_and_prices()
     pp_dep = PPDependency(periods, prices)
     return generate_graph(pp_dep.find_pp_dependency())
+
+def calculate_eq(data):
+    calculator = Calculator(data["equation"], data["p0"], data["p1"])
+    return calculator.calculate_diff_eq()
