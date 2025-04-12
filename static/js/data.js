@@ -154,6 +154,80 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+    const calcForm = document.getElementById("calc-form");
+
+    if (calcForm) {
+        calcForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            let equation = document.getElementById("equation-input");
+            let p0 = document.getElementById("p0");
+            let p1 = document.getElementById("p1");
+            let isValid = true;
+            let eqData = {};
+
+            hideError(equation);
+            hideError(p0);
+            hideError(p1);
+
+            if (!equation.value.includes("=")) {
+                showError(equation, "Please add the right side of equation");
+                isValid = false;
+            } else {
+                if ((equation.value.split("=").length - 1) > 1) {
+                    showError(equation, "Duplicates of '='");
+                    isValid = false;
+                }
+            }
+
+            if (!validateScopes(equation.value)) {
+                showError(equation, "Bracket mismatch!");
+                isValid = false;
+            }
+
+            const maxOrder = getMaxOrder(equation.value);
+            if (maxOrder > 2) {
+                console.log(maxOrder);
+                showError(equation, "Maximum allowed order - (n±2)");
+                isValid = false;
+            } else {
+                if (maxOrder === 1 && p1.value.trim() !== "") {
+                    showError(p1, "Equation of the 1 order must have only p0 initial condition");
+                    isValid = false;
+                } else if (maxOrder === 0 && (p1.value.trim() !== "" || p1.value.trim() !== "")) {
+                    showError(p0, "Equation don't need initial conditions");
+                    showError(p1, "Equation don't need initial conditions");
+                    isValid = false;
+                }
+            }
+
+            if (isValid) {
+                eqData["equation"] = equation.value;
+                eqData["p0"] = p0.value;
+                eqData["p1"] = p1.value;
+
+                fetch("/calculator", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(eqData)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Success:", data);
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("Sorry, we can't find solution for your function. Please try another one.")
+                    });
+            }
+
+        });
+    }
+});
+
 function removeLastSymbol() {
     let inputField;
     if (document.querySelector('#function')) {
@@ -214,5 +288,21 @@ function showError(inputElement, message) {
 function hideError(inputElement) {
     const errorMessage = inputElement.nextElementSibling;
     errorMessage.classList.remove('show');
+}
+
+function getMaxOrder(equationStr) {
+    const regex = /[a-zA-Z]\(n([+-]\d+)?\)/g;
+    let match;
+    let maxOrder = 0;
+
+    while ((match = regex.exec(equationStr)) !== null) {
+        const offsetStr = match[1];  // Група зі зсувом (±d)
+        const offset = offsetStr ? parseInt(offsetStr) : 0;
+        if (offset > maxOrder) {
+            maxOrder = offset;
+        }
+    }
+    console.log(maxOrder);
+    return maxOrder;
 }
 
