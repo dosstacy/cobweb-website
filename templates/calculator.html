@@ -3,7 +3,10 @@
 {%block extra_css%}
 <link rel="stylesheet" href="../static/css/calculator.css"/>{% endblock %}
 {% block extra_js %}
-<script src="../static/js/data.js" defer></script>{% endblock %}
+<script src="../static/js/data.js" defer></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+{% endblock %}
 
 {% block content %}
 <div class="calculator-page">
@@ -35,9 +38,9 @@
         </div>
         <div class="eq-answer-cont">
             <p>Equation result: </p>
-            <div class="eq-answer">
-                Це дуже довгий текст, який має автоматично переноситись і не виходити за межі блоку. Це дуже довгий
-                текст, який має автоматично переноситись і не виходити за межі блоку.
+            <div class="eq-answer" id="solution-container">
+<!--                Це дуже довгий текст, який має автоматично переноситись і не виходити за межі блоку. Це дуже довгий-->
+<!--                текст, який має автоматично переноситись і не виходити за межі блоку.-->
             </div>
         </div>
     </div>

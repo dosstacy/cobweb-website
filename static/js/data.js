@@ -209,100 +209,107 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 fetch("/calculator", {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
+                    headers: {"Content-Type": "application/json"},
                     body: JSON.stringify(eqData)
                 })
                     .then(response => response.json())
                     .then(data => {
-                        console.log("Success:", data);
+                        if (data.error) {
+                            alert("Помилка: " + data.error);
+                        } else {
+                            // Вставка HTML з MathJax
+                            document.getElementById("solution-container").innerHTML = data.html;
+                            // Якщо MathJax не оновився автоматично:
+                            if (window.MathJax) {
+                                MathJax.typeset();
+                            }
+                        }
                     })
                     .catch(error => {
                         console.error("Error:", error);
-                        alert("Sorry, we can't find solution for your function. Please try another one.")
+                        alert("Сталася помилка. Спробуйте інше рівняння.");
                     });
-            }
 
+            }
         });
     }
 });
 
-function removeLastSymbol() {
-    let inputField;
-    if (document.querySelector('#function')) {
-        inputField = document.querySelector('#function');
-    } else if (document.querySelector('#equation-input')) {
-        inputField = document.querySelector('#equation-input');
+    function removeLastSymbol() {
+        let inputField;
+        if (document.querySelector('#function')) {
+            inputField = document.querySelector('#function');
+        } else if (document.querySelector('#equation-input')) {
+            inputField = document.querySelector('#equation-input');
+        }
+
+        const start = inputField.selectionStart;
+        const end = inputField.selectionEnd;
+
+        if (start === end && start > 0) {
+            inputField.value = inputField.value.slice(0, start - 1) + inputField.value.slice(end);
+            inputField.setSelectionRange(start - 1, start - 1);
+        }
+
+        inputField.focus();
     }
 
-    const start = inputField.selectionStart;
-    const end = inputField.selectionEnd;
-
-    if (start === end && start > 0) {
-        inputField.value = inputField.value.slice(0, start - 1) + inputField.value.slice(end);
-        inputField.setSelectionRange(start - 1, start - 1);
+    function removeAllFromField() {
+        let inputField;
+        if (document.querySelector('#function')) {
+            inputField = document.querySelector('#function');
+        } else if (document.querySelector('#equation-input')) {
+            inputField = document.querySelector('#equation-input');
+        }
+        inputField.value = '';
     }
 
-    inputField.focus();
-}
+    function validateScopes(value) {
+        if (value === null || value === undefined || value.trim() === '') {
+            return true;
+        }
 
-function removeAllFromField() {
-    let inputField;
-    if (document.querySelector('#function')) {
-        inputField = document.querySelector('#function');
-    } else if (document.querySelector('#equation-input')) {
-        inputField = document.querySelector('#equation-input');
-    }
-    inputField.value = '';
-}
+        const stringValue = String(value);
+        let stack = [];
 
-function validateScopes(value) {
-    if (value === null || value === undefined || value.trim() === '') {
-        return true;
-    }
-
-    const stringValue = String(value);
-    let stack = [];
-
-    for (let i = 0; i < stringValue.length; i++) {
-        const char = stringValue[i];
-        if (char === "(") {
-            stack.push(char);
-        } else if (char === ")") {
-            if (stack.length === 0) {
-                return false;
+        for (let i = 0; i < stringValue.length; i++) {
+            const char = stringValue[i];
+            if (char === "(") {
+                stack.push(char);
+            } else if (char === ")") {
+                if (stack.length === 0) {
+                    return false;
+                }
+                stack.pop();
             }
-            stack.pop();
         }
+        return stack.length === 0;
     }
-    return stack.length === 0;
-}
 
-function showError(inputElement, message) {
-    const errorMessage = inputElement.nextElementSibling;
-    errorMessage.textContent = message;
-    errorMessage.classList.add('show');
-}
+    function showError(inputElement, message) {
+        const errorMessage = inputElement.nextElementSibling;
+        errorMessage.textContent = message;
+        errorMessage.classList.add('show');
+    }
 
-function hideError(inputElement) {
-    const errorMessage = inputElement.nextElementSibling;
-    errorMessage.classList.remove('show');
-}
+    function hideError(inputElement) {
+        const errorMessage = inputElement.nextElementSibling;
+        errorMessage.classList.remove('show');
+    }
 
-function getMaxOrder(equationStr) {
-    const regex = /[a-zA-Z]\(n([+-]\d+)?\)/g;
-    let match;
-    let maxOrder = 0;
+    function getMaxOrder(equationStr) {
+        const regex = /[a-zA-Z]\(n([+-]\d+)?\)/g;
+        let match;
+        let maxOrder = 0;
 
-    while ((match = regex.exec(equationStr)) !== null) {
-        const offsetStr = match[1];  // Група зі зсувом (±d)
-        const offset = offsetStr ? parseInt(offsetStr) : 0;
-        if (offset > maxOrder) {
-            maxOrder = offset;
+        while ((match = regex.exec(equationStr)) !== null) {
+            const offsetStr = match[1];  // Група зі зсувом (±d)
+            const offset = offsetStr ? parseInt(offsetStr) : 0;
+            if (offset > maxOrder) {
+                maxOrder = offset;
+            }
         }
+        console.log(maxOrder);
+        return maxOrder;
     }
-    console.log(maxOrder);
-    return maxOrder;
-}
 
