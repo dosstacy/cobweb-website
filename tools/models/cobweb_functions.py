@@ -1,5 +1,5 @@
-from models import symbols, sympify, lambdify, go, np
-import re
+from tools.models import symbols, sympify, lambdify, go, np
+from tools import convert_to_sympy
 
 ##TODO: 1. edit text pages
 ##TODO: 2. add language change
@@ -21,7 +21,7 @@ class FuncCobweb:
 
     def find_func_cobweb(self):
         x_sym = symbols('x')
-        expr = sympify(self.convert_to_sympy(self.str_func))
+        expr = sympify(convert_to_sympy(self.str_func))
         print(expr)
         func = lambdify(x_sym, expr, "numpy")
 
@@ -88,21 +88,6 @@ class FuncCobweb:
         )
 
         return fig
-
-    def convert_to_sympy(self, expression):
-        replacements = {
-            r'\btg\b': 'tan',  # Заміна tg на tan
-            r'\bctg\b': '1/tan',  # Заміна ctg на 1/tan (бо SymPy не має ctg)
-            r'\bln\b': 'log',  # ln → log (бо SymPy використовує log для натурального логарифма)
-            r'√': 'sqrt',  # Заміна √ на sqrt
-            r'\^': '**'  # Піднесення до степеня: ^ → **
-        }
-
-        # Виконуємо всі заміни
-        for pattern, replacement in replacements.items():
-            expression = re.sub(pattern, replacement, expression)
-
-        return expression
 
     def return_periods_and_prices(self):
         return self.iterates, self.prices

@@ -1,4 +1,4 @@
-from models import go
+from tools.models import go
 
 
 class PPDependency:

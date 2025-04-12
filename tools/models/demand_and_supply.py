@@ -1,4 +1,4 @@
-from models import go, np
+from tools.models import go, np
 
 class DemandSupply:
     def __init__(self, d_shift, d_slope, s_shift, s_slope, start_price, end_price, function):
