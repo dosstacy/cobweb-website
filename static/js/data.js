@@ -202,6 +202,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
 
+            if (hasInvalidAsterisk(equation.value)) {
+                showError(equation, "The expression contains an invalid * before the brackets with n or n");
+                isValid = false;
+            }
+
             if (isValid) {
                 eqData["equation"] = equation.value;
                 eqData["p0"] = p0.value;
@@ -291,7 +296,7 @@ function getMaxOrder(equationStr) {
     let maxOrder = 0;
 
     while ((match = regex.exec(equationStr)) !== null) {
-        const offsetStr = match[1];  // Група зі зсувом (±d)
+        const offsetStr = match[1];
         const offset = offsetStr ? parseInt(offsetStr) : 0;
         if (offset > maxOrder) {
             maxOrder = offset;
@@ -299,6 +304,12 @@ function getMaxOrder(equationStr) {
     }
     console.log(maxOrder);
     return maxOrder;
+}
+
+function hasInvalidAsterisk(expression) {
+    const pattern1 = /\*\s*\(.*?n.*?\)/;
+
+    return pattern1.test(expression);
 }
 
 function generateAnswerContainer(data) {
