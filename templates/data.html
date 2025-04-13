@@ -26,7 +26,7 @@
                 <div class="input-cont">
                     <label for="{{ field|lower }}">{{ field }}:</label>
                     {% if field == "Function" %}
-                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" readonly/>
+                        <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" readonly placeholder="4*x*(1-x)"/>
                         <div class="error-message" id="errorField"></div>
                         <div class="dropdown-math">
                             <input type="checkbox" id="dropdownToggle" class="dropdown-checkbox">
