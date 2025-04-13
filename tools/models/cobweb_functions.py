@@ -7,6 +7,7 @@ from tools import convert_to_sympy
 ##TODO: 4. add modal window for solution error -> якщо рівняння не розв'язується, дописати знизу, що проблема може бути з полем function
 ##TODO: 6. make calculator
 ##TODO: 7. edit main page
+##TODO: 8. коли користувач не задає n+1.... - виводити помилку під інпутом
 
 class FuncCobweb:
     def __init__(self, str_func, x_min, x_max, y_min, y_max, seed, iterates):

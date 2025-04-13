@@ -4,13 +4,12 @@
 <link rel="stylesheet" href="../static/css/calculator.css"/>{% endblock %}
 {% block extra_js %}
 <script src="../static/js/data.js" defer></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 {% endblock %}
 
 {% block content %}
 <div class="calculator-page">
-    <div class="rectangle" id="calc-rect">
+    <div class="rectangle calc-rect before">
         <div class="eq-cont">
             <form id="calc-form">
                 <label for="equation-input" style="display: block;">Please write your difference equation: </label>
@@ -36,13 +35,12 @@
                 <button class="btn" id="eq-btn" type="submit">Solve</button>
             </form>
         </div>
-        <div class="eq-answer-cont">
-            <p>Equation result: </p>
-            <div class="eq-answer" id="solution-container">
-<!--                Це дуже довгий текст, який має автоматично переноситись і не виходити за межі блоку. Це дуже довгий-->
-<!--                текст, який має автоматично переноситись і не виходити за межі блоку.-->
-            </div>
-        </div>
+<!--        <div class="general-eq-cont">-->
+<!--            <div class="eq-answer-cont">-->
+<!--                <div class="eq-answer" id="solution-container">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 {% endblock %}

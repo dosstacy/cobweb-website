@@ -213,18 +213,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     body: JSON.stringify(eqData)
                 })
                     .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert("Помилка: " + data.error);
-                        } else {
-                            // Вставка HTML з MathJax
-                            document.getElementById("solution-container").innerHTML = data.html;
-                            // Якщо MathJax не оновився автоматично:
-                            if (window.MathJax) {
-                                MathJax.typeset();
-                            }
-                        }
-                    })
+                    .then(data => generateAnswerContainer(data))
                     .catch(error => {
                         console.error("Error:", error);
                         alert("Сталася помилка. Спробуйте інше рівняння.");
@@ -235,81 +224,109 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-    function removeLastSymbol() {
-        let inputField;
-        if (document.querySelector('#function')) {
-            inputField = document.querySelector('#function');
-        } else if (document.querySelector('#equation-input')) {
-            inputField = document.querySelector('#equation-input');
-        }
-
-        const start = inputField.selectionStart;
-        const end = inputField.selectionEnd;
-
-        if (start === end && start > 0) {
-            inputField.value = inputField.value.slice(0, start - 1) + inputField.value.slice(end);
-            inputField.setSelectionRange(start - 1, start - 1);
-        }
-
-        inputField.focus();
+function removeLastSymbol() {
+    let inputField;
+    if (document.querySelector('#function')) {
+        inputField = document.querySelector('#function');
+    } else if (document.querySelector('#equation-input')) {
+        inputField = document.querySelector('#equation-input');
     }
 
-    function removeAllFromField() {
-        let inputField;
-        if (document.querySelector('#function')) {
-            inputField = document.querySelector('#function');
-        } else if (document.querySelector('#equation-input')) {
-            inputField = document.querySelector('#equation-input');
-        }
-        inputField.value = '';
+    const start = inputField.selectionStart;
+    const end = inputField.selectionEnd;
+
+    if (start === end && start > 0) {
+        inputField.value = inputField.value.slice(0, start - 1) + inputField.value.slice(end);
+        inputField.setSelectionRange(start - 1, start - 1);
     }
 
-    function validateScopes(value) {
-        if (value === null || value === undefined || value.trim() === '') {
-            return true;
-        }
+    inputField.focus();
+}
 
-        const stringValue = String(value);
-        let stack = [];
+function removeAllFromField() {
+    let inputField;
+    if (document.querySelector('#function')) {
+        inputField = document.querySelector('#function');
+    } else if (document.querySelector('#equation-input')) {
+        inputField = document.querySelector('#equation-input');
+    }
+    inputField.value = '';
+}
 
-        for (let i = 0; i < stringValue.length; i++) {
-            const char = stringValue[i];
-            if (char === "(") {
-                stack.push(char);
-            } else if (char === ")") {
-                if (stack.length === 0) {
-                    return false;
-                }
-                stack.pop();
+function validateScopes(value) {
+    if (value === null || value === undefined || value.trim() === '') {
+        return true;
+    }
+
+    const stringValue = String(value);
+    let stack = [];
+
+    for (let i = 0; i < stringValue.length; i++) {
+        const char = stringValue[i];
+        if (char === "(") {
+            stack.push(char);
+        } else if (char === ")") {
+            if (stack.length === 0) {
+                return false;
             }
+            stack.pop();
         }
-        return stack.length === 0;
     }
+    return stack.length === 0;
+}
 
-    function showError(inputElement, message) {
-        const errorMessage = inputElement.nextElementSibling;
-        errorMessage.textContent = message;
-        errorMessage.classList.add('show');
-    }
+function showError(inputElement, message) {
+    const errorMessage = inputElement.nextElementSibling;
+    errorMessage.textContent = message;
+}
 
-    function hideError(inputElement) {
-        const errorMessage = inputElement.nextElementSibling;
-        errorMessage.classList.remove('show');
-    }
+function hideError(inputElement) {
+    const errorMessage = inputElement.nextElementSibling;
+    errorMessage.textContent = '';
+}
 
-    function getMaxOrder(equationStr) {
-        const regex = /[a-zA-Z]\(n([+-]\d+)?\)/g;
-        let match;
-        let maxOrder = 0;
+function getMaxOrder(equationStr) {
+    const regex = /[a-zA-Z]\(n([+-]\d+)?\)/g;
+    let match;
+    let maxOrder = 0;
 
-        while ((match = regex.exec(equationStr)) !== null) {
-            const offsetStr = match[1];  // Група зі зсувом (±d)
-            const offset = offsetStr ? parseInt(offsetStr) : 0;
-            if (offset > maxOrder) {
-                maxOrder = offset;
-            }
+    while ((match = regex.exec(equationStr)) !== null) {
+        const offsetStr = match[1];  // Група зі зсувом (±d)
+        const offset = offsetStr ? parseInt(offsetStr) : 0;
+        if (offset > maxOrder) {
+            maxOrder = offset;
         }
-        console.log(maxOrder);
-        return maxOrder;
     }
+    console.log(maxOrder);
+    return maxOrder;
+}
+
+function generateAnswerContainer(data) {
+    const targetElement = document.querySelector('.rectangle.calc-rect.before');
+
+    if (targetElement) {
+        const generalEqCont = document.createElement('div');
+        generalEqCont.className = 'general-eq-cont';
+
+        const eqAnswerCont = document.createElement('div');
+        eqAnswerCont.className = 'eq-answer-cont';
+
+        const eqAnswer = document.createElement('div');
+        eqAnswer.className = 'eq-answer';
+        eqAnswer.id = 'solution-container';
+
+        eqAnswerCont.appendChild(eqAnswer);
+        generalEqCont.appendChild(eqAnswerCont);
+
+        targetElement.appendChild(generalEqCont);
+
+        targetElement.classList.remove('before');
+        targetElement.classList.add('after');
+    }
+
+    document.getElementById("solution-container").innerHTML = data.html;
+    if (window.MathJax && window.MathJax.typeset) {
+        MathJax.typeset();
+    }
+}
 

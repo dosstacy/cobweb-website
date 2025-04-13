@@ -1,5 +1,5 @@
 from api import render_template, request, calculate_eq, jsonify
-from sympy import latex
+from sympy import latex, sympify
 
 
 def configure_calculator(app):
@@ -13,9 +13,28 @@ def configure_calculator(app):
         if not data:
             return jsonify({"error": "JSON is not found"}), 400
 
-        solution = calculate_eq(data)  # Отримуєте розв'язок
-        latex_solution = latex(solution)  # Перетворюєте у LaTeX (не забудьте from sympy import latex)
-        return jsonify({
-            "solution": latex_solution,
-            "html": f"<p>Розв'язок: $${latex_solution}$$</p>"
-        })
+        result = calculate_eq(data)
+
+        if isinstance(result, tuple):
+            general_result, final_result = result
+
+            latex_general = latex(sympify(general_result))
+            latex_final = latex(sympify(final_result))
+            html_output = f"<p>General solution: $${latex_general}$$</p>"
+            html_output += f"<p>Partial solution: $${latex_final}$$</p>"
+
+            return jsonify({
+                "general_solution": latex_general,
+                "final_solution": latex_final,
+                "html": html_output
+            })
+        else:
+            general_result = result
+
+            latex_general = latex(sympify(general_result))
+            html_output = f"<p>General solution: $${latex_general}$$</p>"
+
+            return jsonify({
+                "general_solution": latex_general,
+                "html": html_output
+            })

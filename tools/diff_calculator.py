@@ -11,7 +11,6 @@ class Calculator:
     def calculate_diff_eq(self):
         n = symbols('n', integer=True)
         x = Function('x')
-        final_result = ""
 
         eq_str = convert_to_sympy(self.equation)
         left_side, right_side = eq_str.split("=")
@@ -25,20 +24,22 @@ class Calculator:
         print("Equation:", eq)
         general_solution = rsolve(eq, x(n))
         print("General solution", general_solution)
-        final_result = str(general_solution)
+        general_result = str(general_solution)
 
         if self.p0 is "" and self.p1 is "":
-            return final_result
+            return general_result
 
         C0, C1 = symbols('C0 C1')
         x_general = general_solution.subs({'C0': C0, 'C1': C1})
 
         equations = []
 
-        if self.p0 is not "":
+        if self.p0.strip() is not "":
+            self.p0 = float(self.p0)
             equations.append(Eq(x_general.subs(n, 0), self.p0))
 
-        if self.p1 is not "":
+        if self.p1.strip() is not "":
+            self.p1 = float(self.p1)
             equations.append(Eq(x_general.subs(n, 1), self.p1))
 
         constants = (C0, C1) if len(equations) == 2 else (C0,) if len(equations) == 1 else ()
@@ -50,4 +51,4 @@ class Calculator:
         print(particular_simple)
         final_result = str(particular_simple)
 
-        return final_result
+        return general_result, final_result

@@ -5,25 +5,36 @@
     align-items: center;
 }
 
-#calc-rect {
+.rectangle.calc-rect {
     margin-top: 50px;
     height: fit-content;
     margin-bottom: 30px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     align-items: center;
+    gap: 55px;
+}
+
+.rectangle.calc-rect.before {
+    justify-content: center;
+}
+
+.rectangle.calc-rect.after {
+    justify-content: start;
+
+    .eq-cont {
+        margin-left: 45px;
+    }
 }
 
 .dropdown-math-content {
 }
 
 .eq-cont {
-    /* width: 40%; */
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 45px 0 0;
+    margin-top: 45px;
 }
 
 .form-container {
@@ -96,13 +107,15 @@ label {
 
 .eq-answer-cont {
     background-color: white;
-    width: 30%;
+    /* width: -webkit-fill-available; */
     border-radius: 50px;
-    height: 65vh;
+    /* height: 340px; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-right: 45px;
+    padding: 30px;
 }
 
 .eq-answer {
@@ -110,9 +123,10 @@ label {
     padding: 10px;
     background-color: #f0f0f0;
     border-radius: 8px;
-    max-width: 70%;
+    /* max-width: 70%; */
     word-wrap: break-word;
     white-space: normal;
+    font-size: 20px;
 }
 
 .init-cond {
@@ -126,15 +140,6 @@ label {
 
 label {
     font-size: 1rem;
-}
-
-.eq-cont .error-message {
-    /*height: 7px;*/
-    visibility: hidden;
-}
-
-.eq-cont .error-message.show {
-    visibility: visible;
 }
 
 .eq-input-cont {
@@ -153,3 +158,9 @@ label {
 /*.eq-init-cond {*/
 /*    align-items: center;*/
 /*}*/
+
+.general-eq-cont {
+    width: -webkit-fill-available;
+    display: flex;
+    justify-content: center;
+}
