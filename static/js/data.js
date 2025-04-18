@@ -207,10 +207,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 isValid = false;
             }
 
-            if (containsOnlyValidNForms(equation.value)) {
-                showError(equation, "The equation must contain n, (n), (n+1), (n-2), etc.");
-                isValid = false;
-            }
+            // if (containsOnlyValidNForms(equation.value)) {
+            //     showError(equation, "The equation must contain n, (n), (n+1), (n-2), etc.");
+            //     isValid = false;
+            // }
 
             if (isValid) {
                 eqData["equation"] = equation.value;
@@ -346,17 +346,17 @@ function generateAnswerContainer(data) {
     }
 }
 
-function containsOnlyValidNForms(expression) {
-    const allowedPattern = /\b(n|\(n(\s*[\+\-]\s*\d+)?\))\b/g;
-
-    // Знайдемо всі підозрілі "n", навіть неправильні
-    const allNLike = expression.match(/\b\(?n[\+\-\d\s]*\)?\b/g) || [];
-
-    // Знайдемо тільки валідні
-    const validNLike = expression.match(allowedPattern) || [];
-
-    // Якщо кількість "n"-подібних частин = кількість валідних — усе ок
-    return allNLike.length === validNLike.length;
-}
+// function containsOnlyValidNForms(expression) {
+//     const allowedPattern = /\b(n|\(n(\s*[\+\-]\s*\d+)?\))\b/g;
+//
+//     // Знайдемо всі підозрілі "n", навіть неправильні
+//     const allNLike = expression.match(/\b\(?n[\+\-\d\s]*\)?\b/g) || [];
+//
+//     // Знайдемо тільки валідні
+//     const validNLike = expression.match(allowedPattern) || [];
+//
+//     // Якщо кількість "n"-подібних частин = кількість валідних — усе ок
+//     return allNLike.length === validNLike.length;
+// }
 
 
