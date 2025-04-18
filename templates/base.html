@@ -26,35 +26,80 @@
 
     <div class="dropdown-container">
         <div class="dropdown">
-            <button class="dropdown-btn"><u>Visualization</u></button>
+            {% if language == "en" %}
+                <button class="dropdown-btn"><u>Visualization</u></button>
+            {% else %}
+                <button class="dropdown-btn"><u>Vizualizácia</u></button>
+            {%endif%}
             <div class="dropdown-content">
-                <a href="/model/cobweb">Cobweb</a>
-                <a href="/model/cobweb_func">Cobweb with function</a>
-                <a href="/model/adapt_exp">Adaptive Expectations</a>
-                <a href="/model/normal_price">Normal price</a>
-                <a href="/model/demand_supply">Demand and Supply</a>
+                {% if language == "en" %}
+                    <a href="/model/cobweb">Cobweb</a>
+                    <a href="/model/cobweb_func">Cobweb with function</a>
+                    <a href="/model/adapt_exp">Adaptive expectations</a>
+                    <a href="/model/normal_price">Normal price</a>
+                    <a href="/model/demand_supply">Demand and supply</a>
+                {% else %}
+                    <a href="/model/cobweb">Pavučinový model</a>
+                    <a href="/model/cobweb_func">Pavučinový model s funkciou</a>
+                    <a href="/model/adapt_exp">Adaptívne očakávania</a>
+                    <a href="/model/normal_price">Normálna cena</a>
+                    <a href="/model/demand_supply">Ponuka a dopyt</a>
+                {%endif%}
             </div>
         </div>
 
         <div class="dropdown">
-            <button class="dropdown-btn"><u>Introduction</u></button>
+            {% if language == "en" %}
+                <button class="dropdown-btn"><u>Introduction</u></button>
+            {% else %}
+                <button class="dropdown-btn"><u>Úvod</u></button>
+            {%endif%}
             <div class="dropdown-content">
-                <a href="/intro?name=cobweb">Cobweb</a>
-                <a href="/intro?name=adapt_exp">Adaptive Expectations</a>
-                <a href="/intro?name=diff_eq">Difference equations</a>
+                {% if language == "en" %}
+                    <a href="/intro/cobweb">Cobweb</a>
+                    <a href="/intro/adapt_exp">Adaptive expectations</a>
+                    <a href="/intro/normal_price">Normal price</a>
+                    <a href="/intro/demand_supply">Demand and supply</a>
+                    <a href="/intro/diff_eq">Difference equations</a>
+                {% else %}
+                    <a href="/intro/cobweb">Pavučinový model</a>
+                    <a href="/intro/adapt_exp">Adaptívne očakávania</a>
+                    <a href="/intro/normal_price">Normálna cena</a>
+                    <a href="/intro/demand_supply">Ponuka a dopyt</a>
+                    <a href="/intro/diff_eq">Diferenčné rovnice</a>
+                {%endif%}
             </div>
         </div>
 
         <div class="dropdown">
-            <button class="dropdown-btn"><u>Parameters use</u></button>
+            {% if language == "en" %}
+                <button class="dropdown-btn"><u>Parameters use</u></button>
+            {% else %}
+                <button class="dropdown-btn"><u>Použitie parametrov</u></button>
+            {%endif%}
             <div class="dropdown-content">
-                <a href="/params?name=cobweb">Cobweb</a>
-                <a href="/params?name=adapt_exp">Adaptive Expectations</a>
+                {% if language == "en" %}
+                    <a href="/params/cobweb">Cobweb</a>
+                    <a href="/params/adapt_exp">Adaptive expectations</a>
+                    <a href="/params/normal_price">Normal price</a>
+                    <a href="/params/demand_supply">Demand and supply</a>
+                    <a href="/params/diff_eq">DE calculator</a>
+                {% else %}
+                    <a href="/params/cobweb">Pavučinový model</a>
+                    <a href="/params/adapt_exp">Adaptívne očakávania</a>
+                    <a href="/params/normal_price">Normálna cena</a>
+                    <a href="/params/demand_supply">Ponuka a dopyt</a>
+                    <a href="/params/diff_eq">DR kalkulačka</a>
+                {%endif%}
             </div>
         </div>
 
         <a href="/calculator">
-            <button class="diff-calc"><u>DR Calculator</u></button>
+            {% if language == "en" %}
+                <button class="diff-calc"><u>DE calculator</u></button>
+            {% else %}
+                <button class="diff-calc"><u>Kalkulačka DR</u></button>
+            {%endif%}
         </a>
 
         <a href="?lang=en"><button class="diff-calc"><u>EN</u></button></a>|<a href="?lang=sk"><button class="diff-calc"><u>SK</u></button></a>
