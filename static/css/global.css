@@ -11,6 +11,9 @@ html {
 body {
     height: 100%;
 }
+ h1 {
+     text-align: center;
+ }
 
 .rectangle {
     background-color: #e8e8e8;

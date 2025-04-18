@@ -4,7 +4,7 @@ from tools.models.normal_price import NormalPrice
 from tools.models.prices_periods_dependency import PPDependency
 from tools.models.cobweb_equations import EqCobweb
 from tools.models.cobweb_functions import FuncCobweb
-from utils import jsonify
+from utils import jsonify, session
 from tools.models import *
 from tools.diff_calculator import Calculator
 
@@ -21,8 +21,12 @@ def find_model_solution(model_name, data):
         return find_adapt_exp_solution(data)
 
 def find_eq_cobweb_solution(data):
+    #if session['lang'] == 'en':
     eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
                          data["iterations"], data["initial price"])
+    # else:
+    #     eq_cobweb = EqCobweb(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"], data["sklon ponuky"],
+    #                          data["iterácie"], data["počiatočná cena"])
 
     graph_json = generate_graph(eq_cobweb.find_eq_cobweb())
     pp_graph_json = find_pp_dep(eq_cobweb)

@@ -3,11 +3,14 @@ from dictionaries.intros_dictionary import *
 from dictionaries.models_dictionary import *
 from dictionaries.params_dictionary import *
 
-def check_model(model_name):
+def check_model(model_name, lang="en"):
     if not model_name:
         return jsonify({"error": "Missing model name"}), 400
 
-    model = models.get(model_name)
+    if lang == "sk":
+        model = models_sk.get(model_name)
+    else:
+        model = models.get(model_name)
 
     if not model:
         return jsonify({"error": "Unknown model"}), 400
