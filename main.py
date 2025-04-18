@@ -3,17 +3,11 @@ from api.home_api import configure_routes
 from api.calculator_api import configure_calculator
 from api.models_api import configure_models
 from api.intros_and_params_api import configure_info
+from api.language_api import configure_language
 app = Flask(__name__)
 app.secret_key = 'mOja_TaJnA_kLuc'
 
-@app.before_request
-def detect_language():
-    lang = request.args.get("lang")
-    if lang:
-        session['lang'] = lang
-    elif 'lang' not in session:
-        session['lang'] = 'en'
-
+configure_language(app)
 configure_routes(app)
 configure_calculator(app)
 configure_models(app)

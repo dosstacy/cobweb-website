@@ -1,6 +1,10 @@
 <div class="dropdown-math-content">
     <div class="math-table-container">
-        <button type="button" id="toggle-view" class="toggle-button">Show functions</button>
+        {% if language == "en" %}
+            <button type="button" id="toggle-view" class="toggle-button">Show functions</button>
+        {% else %}
+            <button type="button" id="toggle-view" class="toggle-button">Zobraziť funkcie</button>
+        {%endif%}
         <table class="math-table">
             <tr class="fixed-row">
                 <td><button type="button" class="table-button" id="removeAll" onclick="removeAllFromField()">C</button></td>

@@ -1,3 +1,11 @@
+let currentLang = "";
+
+function getCurrentLanguage() {
+    return fetch('/get-lang')
+        .then(response => response.json())
+        .then(data => data.lang);
+}
+
 document.querySelectorAll('.table-button').forEach(button => {
     button.addEventListener('click', function () {
         if (button.id !== 'remove' && button.id !== 'removeAll') {
@@ -17,7 +25,8 @@ document.querySelectorAll('.table-button').forEach(button => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', function () {
+async function initTable() {
+    currentLang = await getCurrentLanguage();
     const toggleButton = document.getElementById('toggle-view');
     const basicSymbols = document.getElementById('basic-symbols');
     const functionSymbols = document.getElementById('function-symbols');
@@ -27,20 +36,32 @@ document.addEventListener('DOMContentLoaded', function () {
             if (basicSymbols.style.display !== 'none') {
                 basicSymbols.style.display = 'none';
                 functionSymbols.style.display = '';
-                toggleButton.textContent = 'Show numbers';
+                if (currentLang === "en") {
+                    toggleButton.textContent = 'Show numbers';
+                } else {
+                    toggleButton.textContent = 'Zobraziť čísla';
+                }
             } else {
                 basicSymbols.style.display = '';
                 functionSymbols.style.display = 'none';
-                toggleButton.textContent = 'Show functions';
+                if (currentLang === "en") {
+                    toggleButton.textContent = 'Show functions';
+                } else {
+                    toggleButton.textContent = 'Zobraziť funkcie';
+                }
             }
         });
     }
 
     window.removeAllFromField = removeAllFromField;
     window.removeLastSymbol = removeLastSymbol;
-});
+}
+document.addEventListener("DOMContentLoaded", initTable);
 
-document.addEventListener("DOMContentLoaded", function () {
+async function initModelPage() {
+    currentLang = await getCurrentLanguage();
+    console.log("Lang in initModelPage:", currentLang);
+
     const form = document.getElementById("dataForm");
 
     if (form) {
@@ -57,20 +78,32 @@ document.addEventListener("DOMContentLoaded", function () {
                 hideError(input);
 
                 if (fieldValue === "") {
-                    showError(input, "This field is required!");
+                    console.log("Field value is empty");
+                    if (currentLang === "en") {
+                        console.log("Hello from here");
+                        showError(input, "This field is required!");
+                    } else {
+                        showError(input, "Povinné pole!!");
+                        console.log("Hello from else");
+                    }
                     isValid = false;
                     continue;
                 }
 
-                if (fieldsName.includes("price") && fieldsName !== "previous actual price") {
+                if ((fieldsName.includes("price") && fieldsName !== "previous actual price") ||
+                    (fieldsName.includes("cena") && fieldsName !== "predchádzajúca skutočná cena")) {
                     if (parseFloat(fieldValue) <= 0) {
-                        showError(input, "Value must be positive!");
+                        if (currentLang === "en") {
+                            showError(input, "Value must be positive!");
+                        } else {
+                            showError(input, "Hodnota musí byť kladná!");
+                        }
                         isValid = false;
                         continue;
                     }
                 }
 
-                if (fieldsName === "previous actual price") {
+                if (fieldsName === "previous actual price" || fieldsName === "predchádzajúca skutočná cena") {
                     fieldValue = fieldValue.replace(/,$/, '');
                     const values = fieldValue.split(',').map(v => v.trim());
                     const regex = /^[0-9,.+\-]*$/;
@@ -78,27 +111,45 @@ document.addEventListener("DOMContentLoaded", function () {
                     for (let numberStr of values) {
                         if (regex.test(numberStr)) {
                             if (parseFloat(numberStr) <= 0) {
-                                showError(input, "Value must be positive!");
+                                if (currentLang === "en") {
+                                    showError(input, "Value must be positive!");
+                                } else {
+                                    showError(input, "Hodnota musí byť kladná!");
+                                }
                                 isValid = false;
                             }
                         } else {
-                            showError(input, "Field must contains numbers!");
+                            if (currentLang === "en") {
+                                showError(input, "Field must contains numbers!");
+                            } else {
+                                showError(input, "Pole musí obsahovať čísla!");
+                            }
                             isValid = false;
                         }
                     }
                 }
 
-                if (fieldsName === "iterations" || fieldsName === "periods") {
+                if ((fieldsName === "iterations" || fieldsName === "periods") ||
+                    (fieldsName === "iterácie" || fieldsName === "obdobia")) {
                     if (parseFloat(fieldValue) % 1 !== 0) {
-                        showError(input, "Value must be a whole number!");
+                        if (currentLang === "en") {
+                            showError(input, "Value must be a whole number!");
+                        } else {
+                            showError(input, "Hodnota musí byť celé číslo!");
+                        }
                         isValid = false;
                         continue;
                     }
                 }
 
-                if (fieldsName === "adjustment factor" || fieldsName === "adaptation coefficient") {
+                if ((fieldsName === "adjustment factor" || fieldsName === "adaptation coefficient") ||
+                    (fieldsName === "faktor úpravy" || fieldsName === "adaptačný koeficient")) {
                     if (parseFloat(fieldValue) < 0 || parseFloat(fieldValue) > 1) {
-                        showError(input, "Value must be between 0 and 1!");
+                        if (currentLang === "en") {
+                            showError(input, "Value must be between 0 and 1!");
+                        } else {
+                            showError(input, "Hodnota musí byť od 0 do 1!");
+                        }
                         isValid = false;
                         continue;
                     }
@@ -109,7 +160,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const functionField = document.querySelector('#function');
             if (functionField && !validateScopes(functionField.value)) {
-                showError(functionField, "Bracket mismatch!");
+                if (currentLang === "en") {
+                    showError(functionField, "Bracket mismatch!");
+                } else {
+                    showError(functionField, "Nesúlad zátvoriek!");
+                }
                 isValid = false;
             }
 
@@ -152,9 +207,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-});
+}
+document.addEventListener("DOMContentLoaded", initModelPage);
 
-document.addEventListener("DOMContentLoaded", function () {
+async function initCalculatorPage() {
+    currentLang = await getCurrentLanguage();
+    console.log("Lang in initCalculatorPage:", currentLang);
+
     const calcForm = document.getElementById("calc-form");
 
     if (calcForm) {
@@ -172,38 +231,67 @@ document.addEventListener("DOMContentLoaded", function () {
             hideError(p1);
 
             if (!equation.value.includes("=")) {
-                showError(equation, "Please add the right side of equation");
+                if (currentLang === "en") {
+                    showError(equation, "Please add the right side of equation!");
+                } else {
+                    showError(equation, "Doplňte pravú stranu rovnice!");
+                }
                 isValid = false;
             } else {
                 if ((equation.value.split("=").length - 1) > 1) {
-                    showError(equation, "Duplicates of '='");
+                    if (currentLang === "en") {
+                        showError(equation, "Duplicates of '='");
+                    } else {
+                        showError(equation, "Duplikáty znakov '='");
+                    }
                     isValid = false;
                 }
             }
 
             if (!validateScopes(equation.value)) {
-                showError(equation, "Bracket mismatch!");
+                if (currentLang === "en") {
+                    showError(equation, "Bracket mismatch!");
+                } else {
+                    showError(equation, "Nesúlad zátvoriek!");
+                }
                 isValid = false;
             }
 
             const maxOrder = getMaxOrder(equation.value);
             if (maxOrder > 2) {
                 console.log(maxOrder);
-                showError(equation, "Maximum allowed order - (n±2)");
+                if (currentLang === "en") {
+                    showError(equation, "Maximum allowed order - (n±2)");
+                } else {
+                    showError(equation, "Maximálny povolený stupeň - (n±2)");
+                }
                 isValid = false;
             } else {
                 if (maxOrder === 1 && p1.value.trim() !== "") {
-                    showError(p1, "Equation of the 1 order must have only p0 initial condition");
+                    if (currentLang === "en") {
+                        showError(p1, "Equation of the 1 order must have only p0 initial condition");
+                    } else {
+                        showError(p1, "Rovnica 1. rádu musí mať iba počiatočnú podmienku p0");
+                    }
                     isValid = false;
                 } else if (maxOrder === 0 && (p1.value.trim() !== "" || p1.value.trim() !== "")) {
-                    showError(p0, "Equation don't need initial conditions");
-                    showError(p1, "Equation don't need initial conditions");
+                    if (currentLang=== "en") {
+                        showError(p0, "Equation don't need initial conditions");
+                        showError(p1, "Equation don't need initial conditions");
+                    } else {
+                        showError(p0, "Rovnica nepotrebuje začiatočné podmienky");
+                        showError(p1, "Rovnica nepotrebuje začiatočné podmienky");
+                    }
                     isValid = false;
                 }
             }
 
             if (hasInvalidAsterisk(equation.value)) {
-                showError(equation, "The expression contains an invalid * before the brackets with n or n");
+                if (currentLang === "en") {
+                    showError(equation, "The expression contains an invalid * before the brackets with n or n");
+                } else {
+                    showError(equation, "Výraz obsahuje neplatné * pred zátvorkami s n alebo n");
+                }
                 isValid = false;
             }
 
@@ -232,7 +320,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-});
+}
+document.addEventListener("DOMContentLoaded", initCalculatorPage);
 
 function removeLastSymbol() {
     let inputField;
@@ -286,7 +375,9 @@ function validateScopes(value) {
 }
 
 function showError(inputElement, message) {
+    console.log("Hello from showError");
     const errorMessage = inputElement.nextElementSibling;
+    console.log("nextElementSibling: " + errorMessage.name);
     errorMessage.textContent = message;
 }
 
@@ -358,5 +449,3 @@ function generateAnswerContainer(data) {
 //     // Якщо кількість "n"-подібних частин = кількість валідних — усе ок
 //     return allNLike.length === validNLike.length;
 // }
-
-
