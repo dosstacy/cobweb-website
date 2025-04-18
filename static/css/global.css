@@ -76,13 +76,14 @@ body {
     justify-content: space-between;
 }
 
-.dropdown-btn, .diff-calc {
+.dropdown-btn, .lang-btn, .diff-calc {
     color: black;
     padding: 16px;
     font-size: 14px;
     border: none;
     cursor: pointer;
     background-color: transparent;
+    font-family: sans-serif;
 }
 
 .dropdown-content {
@@ -111,7 +112,7 @@ body {
     display: block;
 }
 
-.dropdown:hover .dropdown-btn, .diff-calc:hover {
+.dropdown:hover .dropdown-btn, .lang-btn:hover, .diff-calc:hover {
     background-color: #D9D9D9;
 }
 
