@@ -2,7 +2,6 @@ from tools.models import symbols, sympify, lambdify, go, np
 from tools import convert_to_sympy
 
 ##TODO: 1. edit text pages
-##TODO: 2. add language change
 ##TODO: 4. add modal window for solution error
 ##TODO: 7. edit main page
 ##TODO: 8. коли користувач не задає n+1.... - виводити помилку під інпутом

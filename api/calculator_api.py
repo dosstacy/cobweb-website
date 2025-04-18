@@ -25,8 +25,12 @@ def configure_calculator(app):
 
             latex_general = latex(sympify(general_result))
             latex_final = latex(sympify(final_result))
-            html_output = f"<p>General solution: $${latex_general}$$</p>"
-            html_output += f"<p>Partial solution: $${latex_final}$$</p>"
+            if session["lang"] == "en":
+                html_output = f"<p>General solution: $${latex_general}$$</p>"
+                html_output += f"<p>Partial solution: $${latex_final}$$</p>"
+            else:
+                html_output = f"<p>Všeobecné riešenie: $${latex_general}$$</p>"
+                html_output += f"<p>Čiastočné riešenie: $${latex_final}$$</p>"
 
             return jsonify({
                 "general_solution": latex_general,
@@ -37,7 +41,10 @@ def configure_calculator(app):
             general_result = result
 
             latex_general = latex(sympify(general_result))
-            html_output = f"<p>General solution: $${latex_general}$$</p>"
+            if session["lang"] == "en":
+                html_output = f"<p>General solution: $${latex_general}$$</p>"
+            else:
+                html_output = f"<p>Všeobecné riešenie: $${latex_general}$$</p>"
 
             return jsonify({
                 "general_solution": latex_general,

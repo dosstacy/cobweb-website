@@ -21,12 +21,12 @@ def find_model_solution(model_name, data):
         return find_adapt_exp_solution(data)
 
 def find_eq_cobweb_solution(data):
-    #if session['lang'] == 'en':
-    eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
+    if session['lang'] == 'en':
+        eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
                          data["iterations"], data["initial price"])
-    # else:
-    #     eq_cobweb = EqCobweb(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"], data["sklon ponuky"],
-    #                          data["iterácie"], data["počiatočná cena"])
+    else:
+        eq_cobweb = EqCobweb(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"], data["sklon ponuky"],
+                             data["iterácie"], data["počiatočná cena"])
 
     graph_json = generate_graph(eq_cobweb.find_eq_cobweb())
     pp_graph_json = find_pp_dep(eq_cobweb)
@@ -40,8 +40,12 @@ def find_eq_cobweb_solution(data):
     })
 
 def find_func_cobweb_solution(data):
-    func_cobweb = FuncCobweb(data["function"], data["min value on x-axis"], data["max value on x-axis"],
+    if session['lang'] == 'en':
+        func_cobweb = FuncCobweb(data["function"], data["min value on x-axis"], data["max value on x-axis"],
                              data["min value on y-axis"], data["max value on y-axis"], data["seed"], data["iterations"])
+    else:
+        func_cobweb = FuncCobweb(data["funkcia"], data["minimálna hodnota na osi X"], data["maximálna hodnota na osi X"],
+                                 data["minimálna hodnota na osi Y"], data["maximálna hodnota na osi Y"], data["počiatočná hodnota"], data["iterácie"])
 
     graph_json = generate_graph(func_cobweb.find_func_cobweb())
 
@@ -51,21 +55,34 @@ def find_func_cobweb_solution(data):
     })
 
 def find_normal_price_solution(data):
-    normal_price = NormalPrice(data["previous price"], data["normal price"], data["adjustment factor"],
+    if session['lang'] == 'en':
+        normal_price = NormalPrice(data["previous price"], data["normal price"], data["adjustment factor"],
                                data["periods"])
+    else:
+        normal_price = NormalPrice(data["predchádzajúca cena"], data["normálna cena"], data["faktor úpravy"],
+                                   data["obdobia"])
     time_steps, prices = normal_price.ad_exp()
     figure = draw_graph(time_steps, prices)
     return jsonify({"graph_json": generate_graph(figure)})
 
 def find_adapt_exp_solution(data):
-    adapt_exp = AdaptiveExpectations(data["previous expected price"], data["previous actual price"], data["adaptation coefficient"])
+    if session['lang'] == 'en':
+        adapt_exp = AdaptiveExpectations(data["previous expected price"], data["previous actual price"], data["adaptation coefficient"])
+    else:
+        adapt_exp = AdaptiveExpectations(data["predchádzajúca očakávaná cena"], data["predchádzajúca skutočná cena"],
+                                         data["adaptačný koeficient"])
     periods, prices = adapt_exp.find_adapt_expectation()
     figure = draw_graph(periods, prices)
     return jsonify({"graph_json": generate_graph(figure)})
 
 def find_demand_supply_solution(data):
-    demand_supply = DemandSupply(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
+    if session['lang'] == 'en':
+        demand_supply = DemandSupply(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
                                  data["start price"], data["end price"], data["functions"])
+    else:
+        demand_supply = DemandSupply(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"],
+                                     data["sklon ponuky"],
+                                     data["počiatočná cena"], data["konečná cena"], data["functions"])
     return jsonify({"graph_json": generate_graph(demand_supply.find_demand_supply())})
 
 def find_pp_dep(cobweb_model):
