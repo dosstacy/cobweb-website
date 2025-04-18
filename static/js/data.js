@@ -375,15 +375,14 @@ function validateScopes(value) {
 }
 
 function showError(inputElement, message) {
-    console.log("Hello from showError");
     const errorMessage = inputElement.nextElementSibling;
-    console.log("nextElementSibling: " + errorMessage.name);
     errorMessage.textContent = message;
+    errorMessage.classList.add('show');
 }
 
 function hideError(inputElement) {
     const errorMessage = inputElement.nextElementSibling;
-    errorMessage.textContent = '';
+    errorMessage.classList.remove('show');
 }
 
 function getMaxOrder(equationStr) {
