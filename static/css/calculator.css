@@ -34,7 +34,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 45px;
 }
 
 .form-container {
@@ -58,7 +57,7 @@ label {
 
 #eq-btn {
     padding: 10px 35px;
-    margin: 15px 10px 30px;
+    margin: 15px 10px;
 }
 
 #equation-input, #p0, #p1 {
