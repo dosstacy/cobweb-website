@@ -3,9 +3,7 @@ from tools import convert_to_sympy
 
 ##TODO: 1. edit text pages
 ##TODO: 4. add modal window for solution error
-##TODO: 7. edit main page
 ##TODO: 9. придумати якийсь прикол з n-1
-##TODO: кнопка для напису models
 
 class FuncCobweb:
     def __init__(self, str_func, x_min, x_max, y_min, y_max, seed, iterates):
