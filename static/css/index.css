@@ -7,10 +7,13 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    gap: 85px;
 }
 
 #rectangle-intro {
     margin-top: 50px;
+    height: fit-content;
+    /* padding: 61px; */
 }
 
 #rectangle-menu {
@@ -40,5 +43,35 @@
 
 .main-page-btn:hover {
     background-color: #204aaf;
+}
+
+.quote {
+    font-family: 'Georgia', serif;
+    font-style: italic;
+    margin-bottom: 10px;
+    font-weight: bold;
+    font-size: x-large;
+}
+
+.author {
+    text-align: right;
+    font-style: italic;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.explanation {
+    font-size: 1em;
+    font-family: sans-serif;
+    margin-top: 30px;
+}
+
+.quote, .explanation {
+    overflow-wrap: break-word;
+    display: inline-block;
+}
+
+.quote-block {
+    margin: 20px;
 }
 
