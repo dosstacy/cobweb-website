@@ -13,9 +13,68 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    height: -webkit-fill-available;
 }
 
 p {
     max-width: 80%;
     font-size: large;
+}
+
+.carousel-wrapper {
+    width: 75%;
+    margin: 40px auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 75%;
+}
+
+.carousel-item {
+    flex: 0 0 60%; /* Зменшили ширину кожного елемента */
+    min-width: 60%; /* Фіксована ширина */
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    padding: 0 10px;
+    opacity: 0.4;
+    transform: scale(0.8);
+}
+
+.carousel-item.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 2;
+}
+
+.carousel-buttons {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+    z-index: 3;
+}
+
+.carousel-buttons button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.carousel img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.carousel-buttons button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
 }

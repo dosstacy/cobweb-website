@@ -17,17 +17,19 @@ def check_model(model_name, lang="en"):
 
     return model
 
-def check_intro():
-    intro_name = request.args.get('name')
+def check_intro(intro_name, lang):
     if not intro_name:
         return jsonify({"error": "Missing intro name"}), 400
 
-    intro = intros.get(intro_name)
+    if lang == "sk":
+        intro = intros_sk.get(intro_name)
+    else:
+        intro = intros.get(intro_name)
 
     if not intro:
         return jsonify({"error": "Unknown intro"}), 400
 
-    return intro_name, intro
+    return intro
 
 def check_params():
     params_name = request.args.get('name')

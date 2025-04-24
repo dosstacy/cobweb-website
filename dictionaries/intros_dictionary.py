@@ -12,3 +12,7 @@ intros = {
         "intro": "These are mathematical equations that describe how a quantity changes at discrete points in time. They are analogous to differential equations, but are used when time is not considered continuous, but as a set of separate points (for example, years or months). Such equations are widely used in economics, physics, and computer modeling to predict the development of systems.",
     }
 }
+
+intros_sk = {
+
+}
