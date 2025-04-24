@@ -231,72 +231,52 @@ async function initCalculatorPage() {
             hideError(p1);
 
             if (!equation.value.includes("=")) {
-                if (currentLang === "en") {
-                    showError(equation, "Please add the right side of equation!");
-                } else {
-                    showError(equation, "Doplňte pravú stranu rovnice!");
-                }
+                showError(equation, currentLang === "en"? "Please add the right side of equation!" : "Doplňte pravú stranu rovnice!");
                 isValid = false;
             } else {
                 if ((equation.value.split("=").length - 1) > 1) {
-                    if (currentLang === "en") {
-                        showError(equation, "Duplicates of '='");
-                    } else {
-                        showError(equation, "Duplikáty znakov '='");
-                    }
+                    showError(equation, currentLang === "en"? "Duplicates of '='" : "Duplikáty znakov '='");
                     isValid = false;
                 }
             }
 
-            if (!validateScopes(equation.value)) {
-                if (currentLang === "en") {
-                    showError(equation, "Bracket mismatch!");
-                } else {
-                    showError(equation, "Nesúlad zátvoriek!");
-                }
+            if (!validateScopes(equation.value) && isValid) {
+                showError(equation, currentLang === "en"? "Bracket mismatch!" : "Nesúlad zátvoriek!");
                 isValid = false;
             }
 
             const maxOrder = getMaxOrder(equation.value);
-            if (maxOrder > 2) {
-                console.log(maxOrder);
-                if (currentLang === "en") {
-                    showError(equation, "Maximum allowed order - (n±2)");
+            console.log("Max order: " + maxOrder);
+            if(isValid) {
+                if (maxOrder > 2) {
+                    showError(equation, currentLang === "en" ? "Maximum allowed order - (n±2)" : "Maximálny povolený stupeň - (n±2)");
+                    isValid = false;
                 } else {
-                    showError(equation, "Maximálny povolený stupeň - (n±2)");
-                }
-                isValid = false;
-            } else {
-                if (maxOrder === 1 && p1.value.trim() !== "") {
-                    if (currentLang === "en") {
-                        showError(p1, "Equation of the 1 order must have only p0 initial condition");
-                    } else {
-                        showError(p1, "Rovnica 1. rádu musí mať iba počiatočnú podmienku p0");
+                    if (maxOrder === 1 && p1.value.trim() !== "") {
+                        showError(p1, currentLang === "en" ? "Equation of the 1 order must have only p0 initial condition" : "Rovnica 1. rádu musí mať iba počiatočnú podmienku p0");
+                        isValid = false;
+                    } else if (maxOrder === 0 && p1.value.trim() !== ""  && p0.value.trim() !== "") {
+                        showError(p0, currentLang === "en" ? "Equation don't need initial conditions" : "Rovnica nepotrebuje začiatočné podmienky");
+                        showError(p1, currentLang === "en" ? "Equation don't need initial conditions" : "Rovnica nepotrebuje začiatočné podmienky");
+                    } else if (maxOrder === 0 && p0.value.trim() !== "") {
+                        showError(p0, currentLang === "en" ? "Equation don't need initial conditions" : "Rovnica nepotrebuje začiatočné podmienky");
+                    } else if (maxOrder === 0 && p1.value.trim() !== "") {
+                        showError(p1, currentLang === "en" ? "Equation don't need initial conditions" : "Rovnica nepotrebuje začiatočné podmienky");
+                        isValid = false;
                     }
-                    isValid = false;
-                } else if (maxOrder === 0 && (p1.value.trim() !== "" || p1.value.trim() !== "")) {
-                    if (currentLang=== "en") {
-                        showError(p0, "Equation don't need initial conditions");
-                        showError(p1, "Equation don't need initial conditions");
-                    } else {
-                        showError(p0, "Rovnica nepotrebuje začiatočné podmienky");
-                        showError(p1, "Rovnica nepotrebuje začiatočné podmienky");
-                    }
-                    isValid = false;
                 }
             }
 
-            if (hasInvalidAsterisk(equation.value)) {
-                if (currentLang === "en") {
-                    showError(equation, "The expression contains an invalid * before the brackets with n or n");
-                } else {
-                    showError(equation, "Výraz obsahuje neplatné * pred zátvorkami s n alebo n");
-                }
+            if (hasInvalidAsterisk(equation.value) && isValid) {
+                showError(equation, currentLang === "en"? "The expression contains an invalid * before the brackets with n or n" : "Výraz obsahuje neplatné * pred zátvorkami s n alebo n");
                 isValid = false;
             }
 
-            if (validateNExpressions(equation.value, equation, currentLang)) {
-                isValid = false;
+            console.log("Is valid: " + isValid);
+            if(isValid) {
+                if (validateNExpressions(equation.value, equation, currentLang)) {
+                    isValid = false;
+                }
             }
 
             if (isValid) {
@@ -374,24 +354,17 @@ function validateScopes(value) {
 }
 
 function showError(inputElement, message) {
-    if (!inputElement) {
-        console.error("inputElement is undefined");
-        return;
-    }
-
     const errorMessage = inputElement.parentElement.querySelector(".error-message");
     if (errorMessage) {
         errorMessage.textContent = message;
     }
 
-    // const errorMessage = inputElement.nextElementSibling;
-    // errorMessage.textContent = message;
     errorMessage.classList.add('show');
 }
 
 function hideError(inputElement) {
-    //const errorMessage = inputElement.nextElementSibling;
     const errorMessage = inputElement.parentElement.querySelector(".error-message");
+    errorMessage.textContent = "";
     errorMessage.classList.remove('show');
 }
 
@@ -447,6 +420,11 @@ function generateAnswerContainer(data) {
 }
 
 function validateNExpressions(equation, field, lang) {
+    const parts = equation.split('=');
+
+    const leftSide = parts[0].trim();
+    const rightSide = parts[1].trim();
+
     const patterns = [
         { label: "(n)", regex: /\(n\)/g },
         { label: "(n+1)", regex: /\(n\+1\)/g },
@@ -455,31 +433,41 @@ function validateNExpressions(equation, field, lang) {
         { label: "(n-2)", regex: /\(n-2\)/g }
     ];
 
+    let hasPatternOnLeft = false;
     let errors = false;
 
     patterns.forEach(({ label, regex }) => {
-        const matches = equation.match(regex);
-        const count = matches ? matches.length : 0;
+        const leftMatches = leftSide.match(regex);
+        const leftCount = leftMatches ? leftMatches.length : 0;
 
-        console.log("Count: " + count);
-        if (count === 0) {
-            if (lang === "en") {
-                showError(field, "The equation must contain n, (n), (n+1), (n-2), etc.");
-                errors = true;
-            } else {
-                showError(field, "Rovnica musí obsahovať n, (n), (n+1), (n-2) atď.");
-                errors = true;
-            }
-        } else if (count > 1) {
-            if (lang === "en") {
-                showError(field, `Expression ${label} appears more than once`);
-                errors = true;
-            } else {
-                showError(field, `Výraz ${label} sa objaví viac ako raz`);
-                errors = true;
-            }
+        if (leftCount > 0) {
+            hasPatternOnLeft = true;
+        }
+
+        if (leftCount > 1) {
+            showError(field, lang === "en" ?
+                `Expression ${label} appears more than once on the left side` :
+                `Výraz ${label} sa objaví viac ako raz na ľavej strane`);
+            errors = true;
+        }
+
+        const rightMatches = rightSide.match(regex);
+        const rightCount = rightMatches ? rightMatches.length : 0;
+
+        if (rightCount > 0) {
+            showError(field, lang === "en" ?
+                `Expression ${label} is not allowed on the right side` :
+                `Výraz ${label} nie je povolený na pravej strane`);
+            errors = true;
         }
     });
+
+    if (!hasPatternOnLeft) {
+        showError(field, lang === "en" ?
+            "The left side must contain at least one of these patterns: (n), (n+1), (n+2), (n-1), (n-2)" :
+            "Ľavá strana musí obsahovať aspoň jeden z týchto vzorov: (n), (n+1), (n+2), (n-1), (n-2)");
+        errors = true;
+    }
 
     return errors;
 }
