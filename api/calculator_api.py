@@ -1,10 +1,6 @@
 from flask import session
-
 from api import render_template, request, calculate_eq, jsonify
 from sympy import latex, sympify
-
-##TODO: не можуть бути дублікати (n+1) і тд
-
 
 def configure_calculator(app):
     @app.route("/calculator", methods=["GET"])
