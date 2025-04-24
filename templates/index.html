@@ -8,48 +8,90 @@
 <div class="desktop">
     <div class="rectangle" id="rectangle-intro">
         <div class="quote-block">
-            <div class="quote">
-                “Difference equations are the memory of a system about its own past.”
-            </div>
-            <div class="author">
-                — Unknown mathematician
-            </div>
-            <div class="explanation">
-                Difference equations describe how the value of a variable changes over time based on its previous
-                values. In this way, the system "remembers" its history, making these equations a natural tool for
-                modeling dynamic processes in economics, biology, and physics.
-            </div>
+            {% if language == "en" %}
+                <div class="quote">
+                    “Difference equations are the memory of a system about its own past.”
+                </div>
+                <div class="author">
+                    — Unknown mathematician
+                </div>
+                <div class="explanation">
+                    Difference equations describe how the value of a variable changes over time based on its previous
+                    values. In this way, the system "remembers" its history, making these equations a natural tool for
+                    modeling dynamic processes in economics, biology, and physics.
+                </div>
+            {%else%}
+                <div class="quote">
+                    “Diferenčné rovnice sú pamäťou systému o jeho vlastnej minulosti.”
+                </div>
+                <div class="author">
+                    — Neznámy matematik
+                </div>
+                <div class="explanation">
+                    Diferenčné rovnice opisujú, ako sa hodnota premennej mení v čase na základe jej predchádzajúcich hodnôt. Týmto spôsobom si systém „pamätá“ svoju históriu, vďaka čomu sú tieto rovnice prirodzeným nástrojom na modelovanie dynamických procesov v ekonómii, biológii a fyzike.
+                </div>
+            {%endif%}
         </div>
     </div>
     <div class="rectangle" id="rectangle-menu">
         <div class="cards-menu">
-            <a href='/model/cobweb' class="cobweb-card">
-                <div class="card-button">
-                    <img src="/static/img/cobweb.png" alt="Cobweb" class="card-image">
-                    <div class="card-text">
-                        <h3>Cobweb Model</h3>
-                        <p>Visualize how prices and quantities evolve over time when supply reacts with a delay to demand.</p>
+            {% if language == "en" %}
+                <a href='/model/cobweb' class="cobweb-card">
+                    <div class="card-button">
+                        <img src="/static/img/cobweb.png" alt="Cobweb" class="card-image">
+                        <div class="card-text">
+                            <h3>Cobweb Model</h3>
+                            <p>Visualize how prices and quantities evolve over time when supply reacts with a delay to demand.</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a href='/calculator' class="calc-card">
-                <div class="card-button">
-                    <img src="/static/img/calculator.png" alt="Calculator" class="card-image">
-                    <div class="card-text">
-                        <h3>DE Calculator</h3>
-                        <p>Solve linear difference equations step by step with initial conditions.</p>
+                </a>
+                <a href='/calculator' class="calc-card">
+                    <div class="card-button">
+                        <img src="/static/img/calculator.png" alt="Calculator" class="card-image">
+                        <div class="card-text">
+                            <h3>DE Calculator</h3>
+                            <p>Solve linear difference equations step by step with initial conditions.</p>
+                        </div>
                     </div>
-                </div>
-            </a>
-            <a href='/model/demand_supply' class="sup-dem-card">
-                <div class="card-button">
-                    <img src="/static/img/supply-demand.png" alt="Supply and Demand" class="card-image">
-                    <div class="card-text">
-                        <h3>Supply and Demand</h3>
-                        <p>Understand the fundamental interaction between buyers and sellers shaping market equilibrium.</p>
+                </a>
+                <a href='/model/demand_supply' class="sup-dem-card">
+                    <div class="card-button">
+                        <img src="/static/img/supply-demand.png" alt="Supply and Demand" class="card-image">
+                        <div class="card-text">
+                            <h3>Supply and Demand</h3>
+                            <p>Understand the fundamental interaction between buyers and sellers shaping market equilibrium.</p>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            {%else%}
+                <a href='/model/cobweb' class="cobweb-card">
+                    <div class="card-button">
+                        <img src="/static/img/cobweb.png" alt="Pavučinový model" class="card-image">
+                        <div class="card-text">
+                            <h3>Pavučinový Model</h3>
+                            <p>Vizualizujte, ako sa ceny a množstvá vyvíjajú v čase, keď ponuka reaguje s oneskorením na dopyt.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href='/calculator' class="calc-card">
+                    <div class="card-button">
+                        <img src="/static/img/calculator.png" alt="Kalkulačka" class="card-image">
+                        <div class="card-text">
+                            <h3>Kalkulačka DR</h3>
+                            <p>Riešte lineárne diferenčné rovnice krok za krokom s počiatočnými podmienkami.</p>
+                        </div>
+                    </div>
+                </a>
+                <a href='/model/demand_supply' class="sup-dem-card">
+                    <div class="card-button">
+                        <img src="/static/img/supply-demand.png" alt="Ponuka a Dopyt" class="card-image">
+                        <div class="card-text">
+                            <h3>Ponuka a Dopyt</h3>
+                            <p>Pochopte základné interakcie medzi kupujúcimi a predávajúcimi, ktoré formujú rovnováhu na trhu.</p>
+                        </div>
+                    </div>
+                </a>
+            {%endif%}
         </div>
     </div>
 </div>
