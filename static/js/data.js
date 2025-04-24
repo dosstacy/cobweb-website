@@ -295,10 +295,9 @@ async function initCalculatorPage() {
                 isValid = false;
             }
 
-            // if (containsOnlyValidNForms(equation.value)) {
-            //     showError(equation, "The equation must contain n, (n), (n+1), (n-2), etc.");
-            //     isValid = false;
-            // }
+            if (validateNExpressions(equation.value, equation, currentLang)) {
+                isValid = false;
+            }
 
             if (isValid) {
                 eqData["equation"] = equation.value;
@@ -375,13 +374,24 @@ function validateScopes(value) {
 }
 
 function showError(inputElement, message) {
-    const errorMessage = inputElement.nextElementSibling;
-    errorMessage.textContent = message;
+    if (!inputElement) {
+        console.error("inputElement is undefined");
+        return;
+    }
+
+    const errorMessage = inputElement.parentElement.querySelector(".error-message");
+    if (errorMessage) {
+        errorMessage.textContent = message;
+    }
+
+    // const errorMessage = inputElement.nextElementSibling;
+    // errorMessage.textContent = message;
     errorMessage.classList.add('show');
 }
 
 function hideError(inputElement) {
-    const errorMessage = inputElement.nextElementSibling;
+    //const errorMessage = inputElement.nextElementSibling;
+    const errorMessage = inputElement.parentElement.querySelector(".error-message");
     errorMessage.classList.remove('show');
 }
 
@@ -436,15 +446,40 @@ function generateAnswerContainer(data) {
     }
 }
 
-// function containsOnlyValidNForms(expression) {
-//     const allowedPattern = /\b(n|\(n(\s*[\+\-]\s*\d+)?\))\b/g;
-//
-//     // Знайдемо всі підозрілі "n", навіть неправильні
-//     const allNLike = expression.match(/\b\(?n[\+\-\d\s]*\)?\b/g) || [];
-//
-//     // Знайдемо тільки валідні
-//     const validNLike = expression.match(allowedPattern) || [];
-//
-//     // Якщо кількість "n"-подібних частин = кількість валідних — усе ок
-//     return allNLike.length === validNLike.length;
-// }
+function validateNExpressions(equation, field, lang) {
+    const patterns = [
+        { label: "(n)", regex: /\(n\)/g },
+        { label: "(n+1)", regex: /\(n\+1\)/g },
+        { label: "(n+2)", regex: /\(n\+2\)/g },
+        { label: "(n-1)", regex: /\(n-1\)/g },
+        { label: "(n-2)", regex: /\(n-2\)/g }
+    ];
+
+    let errors = false;
+
+    patterns.forEach(({ label, regex }) => {
+        const matches = equation.match(regex);
+        const count = matches ? matches.length : 0;
+
+        console.log("Count: " + count);
+        if (count === 0) {
+            if (lang === "en") {
+                showError(field, "The equation must contain n, (n), (n+1), (n-2), etc.");
+                errors = true;
+            } else {
+                showError(field, "Rovnica musí obsahovať n, (n), (n+1), (n-2) atď.");
+                errors = true;
+            }
+        } else if (count > 1) {
+            if (lang === "en") {
+                showError(field, `Expression ${label} appears more than once`);
+                errors = true;
+            } else {
+                showError(field, `Výraz ${label} sa objaví viac ako raz`);
+                errors = true;
+            }
+        }
+    });
+
+    return errors;
+}
