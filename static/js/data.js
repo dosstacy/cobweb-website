@@ -80,11 +80,9 @@ async function initModelPage() {
                 if (fieldValue === "") {
                     console.log("Field value is empty");
                     if (currentLang === "en") {
-                        console.log("Hello from here");
                         showError(input, "This field is required!");
                     } else {
                         showError(input, "Povinné pole!!");
-                        console.log("Hello from else");
                     }
                     isValid = false;
                     continue;
@@ -267,11 +265,6 @@ async function initCalculatorPage() {
                 }
             }
 
-            if (hasInvalidAsterisk(equation.value) && isValid) {
-                showError(equation, currentLang === "en"? "The expression contains an invalid * before the brackets with n or n" : "Výraz obsahuje neplatné * pred zátvorkami s n alebo n");
-                isValid = false;
-            }
-
             console.log("Is valid: " + isValid);
             if(isValid) {
                 if (validateNExpressions(equation.value, equation, currentLang)) {
@@ -382,12 +375,6 @@ function getMaxOrder(equationStr) {
     }
     console.log(maxOrder);
     return maxOrder;
-}
-
-function hasInvalidAsterisk(expression) {
-    const pattern1 = /\*\s*\(.*?n.*?\)/;
-
-    return pattern1.test(expression);
 }
 
 function generateAnswerContainer(data) {
