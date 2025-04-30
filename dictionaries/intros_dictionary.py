@@ -14,5 +14,8 @@ intros = {
 }
 
 intros_sk = {
-
+    "cobweb": {
+        "name": "Pavučinový model",
+        "intro": "Tento ekonomický model popisuje, ako zmeny ceny a množstva tovaru na trhu môžu viesť k výkyvom namiesto rovnováhy. Vychádza z predpokladu, že výrobcovia sa rozhodujú o budúcej produkcii na základe súčasných cien, ale neberú do úvahy, že ceny sa môžu zmeniť. Ak ponuka a dopyt reagujú s oneskorením, trh môže kolísať a vytvárať „pavučinovú“ trajektóriu.",
+    },
 }

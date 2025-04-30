@@ -78,11 +78,11 @@ def find_adapt_exp_solution(data):
 def find_demand_supply_solution(data):
     if session['lang'] == 'en':
         demand_supply = DemandSupply(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
-                                 data["start price"], data["end price"], data["functions"])
+                                 data["start price"], data["end price"], data["functions"], "en")
     else:
         demand_supply = DemandSupply(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"],
                                      data["sklon ponuky"],
-                                     data["počiatočná cena"], data["konečná cena"], data["functions"])
+                                     data["počiatočná cena"], data["konečná cena"], data["functions"], "sk")
     return jsonify({"graph_json": generate_graph(demand_supply.find_demand_supply())})
 
 def find_pp_dep(cobweb_model):
