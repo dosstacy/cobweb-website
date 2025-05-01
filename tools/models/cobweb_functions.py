@@ -3,9 +3,10 @@ from tools import convert_to_sympy
 
 ##TODO: 1. edit text pages
 ##TODO: 4. add modal window for solution error
-##TODO: 9. придумати якийсь прикол з n-1
 ##TODO: 5. спробувати переробити модель нормальної ціни та адаптивних очікувань під ті рівняння, які я розв'язала
 ##TODO: 6. пофіксити карусель
+##TODO: 3. пофіксити поле калькулятора, щоб воно збільшувалося від розміру рівняння - якщо буде можливо
+
 
 class FuncCobweb:
     def __init__(self, str_func, x_min, x_max, y_min, y_max, seed, iterates):

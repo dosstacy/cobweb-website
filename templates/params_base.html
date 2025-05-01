@@ -1,21 +1,63 @@
 {% extends "base.html" %}
 
+{% block title %}{{ model.name }}{% endblock %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="../static/css/params.css"/>
-{% endblock %}
+<link rel="stylesheet" href="../static/css/data.css"/>{% endblock %}
+{% block extra_js %}
+<script src="../static/js/data.js" defer></script>{% endblock %}
 
 {% block content %}
-<div class="params_page">
-    <div class="rectangle" id="params-rectangle">
-        <h1>{{params.name}}</h1>
-        <ul>
-            {% for param in params.params %}
-            <li>
-                <b>{{ param }}</b>
-                <p style="font-size: smaller;">{{ params.descriptions[loop.index0] }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+<div class="data-page">
+    <div class="parent-cont">
+        <div class="form-cont">
+            <h1>{{ model.name }}</h1>
+            <div id="model-container" data-model="{{ model_name }}"></div>
+            <form id="dataForm">
+                {% if model.functions is defined %}
+                <div class="select-cont">
+                    {% if language == "sk" %}
+                    <label for="{{ func|lower }}">Funkcia:</label>
+                    {%else%}
+                    <label for="{{ func|lower }}">Function:</label>
+                    {%endif%}
+                    <select class="func-selection" id="{{ func|lower }}" name="functions">
+                        {% for func in model.functions %}
+                        <option value="{{ func }}">{{ func }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endif %}
+                {% for field in model.fields %}
+                <div class="input-cont">
+                    <label for="{{ field|lower }}">{{ field }}:</label>
+                    {% if field == "Function" or field == "Funkcia"%}
+                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" readonly
+                           placeholder="4*x*(1-x)"/>
+                    <div class="error-message" id="errorField"></div>
+                    <div class="dropdown-math">
+                        <input type="checkbox" id="dropdownToggle" class="dropdown-checkbox">
+                        {% if language == "sk" %}
+                        <label for="dropdownToggle" class="dropdown-math-btn"><u>Matematické symboly a
+                            funkcie</u>▼</label>
+                        {%else%}
+                        <label for="dropdownToggle" class="dropdown-math-btn"><u>Math symbols and functions</u>▼</label>
+                        {%endif%}
+                        {% include 'partials/math_table.html' %}
+                    </div>
+                    {% elif field == "Previous actual price" or field == "Predchádzajúca skutočná cena"%}
+                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" readonly
+                           step="any" type="text"/>
+                    {% else %}
+                    <input class="data-input" id="{{ field|lower }}" name="{{ field|lower }}" readonly
+                           step="any" type="number"/>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </form>
+        </div>
+        <div class="answer-cont"></div>
     </div>
 </div>
+
 {% endblock %}

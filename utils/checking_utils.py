@@ -31,14 +31,17 @@ def check_intro(intro_name, lang):
 
     return intro
 
-def check_params():
-    params_name = request.args.get('name')
+def check_params(params_name, lang):
     if not params_name:
         return jsonify({"error": "Missing params name"}), 400
 
-    param = params.get(params_name)
+    if lang == "sk":
+        print("lala")
+        param = params_sk.get(params_name)
+    else:
+        param = params.get(params_name)
 
     if not param:
         return jsonify({"error": "Unknown params"}), 400
 
-    return params_name, param
+    return param
