@@ -55,12 +55,22 @@ def find_func_cobweb_solution(data):
     })
 
 def find_normal_price_solution(data):
+    # if session['lang'] == 'en':
+    #     normal_price = NormalPrice(data["previous price"], data["normal price"], data["adjustment factor"],
+    #                            data["periods"])
+    # else:
+    #     normal_price = NormalPrice(data["predchádzajúca cena"], data["normálna cena"], data["faktor úpravy"],
+    #                                data["obdobia"])
+
     if session['lang'] == 'en':
-        normal_price = NormalPrice(data["previous price"], data["normal price"], data["adjustment factor"],
-                               data["periods"])
+        normal_price = NormalPrice(data["demand shift"], data["demand slope"], data["supply shift"],
+                                         data["supply slope"], data["adjustment factor"], data["periods"],
+                                         data["constant"])
     else:
-        normal_price = NormalPrice(data["predchádzajúca cena"], data["normálna cena"], data["faktor úpravy"],
-                                   data["obdobia"])
+        normal_price = NormalPrice(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"],
+                                         data["sklon ponuky"], data["faktor úpravy"], data["obdobie"],
+                                         data["konštanta"])
+
     time_steps, prices = normal_price.ad_exp()
     figure = draw_graph(time_steps, prices)
     return jsonify({"graph_json": generate_graph(figure)})
