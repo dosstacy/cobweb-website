@@ -3,7 +3,6 @@ from tools import convert_to_sympy
 
 ##TODO: 1. edit text pages
 ##TODO: 2. add modal window for solution error
-##TODO: 5. пофіксити поле калькулятора, щоб воно збільшувалося від розміру рівняння - якщо буде можливо
 ##TODO: 6. видалити всі дані про попередні зміни в адаптивних очікуваннях та в нормальній ціні
 
 

@@ -62,15 +62,9 @@ label {
 
 #equation-input, #p0, #p1 {
     margin-bottom: 7px;
-    /*width: 100%;*/
     font-size: 1.2rem;
     transition: all 0.5s ease-in-out
 }
-
-/*#p0, #p1 {*/
-/*    margin: 7px 0 23px;*/
-/*    transition: all 0.5s ease-in-out*/
-/*}*/
 
 #equation-input:focus, #p0:focus, #p1:focus {
     box-shadow: 0 7px 5px rgba(0, 0, 0, 0.1);

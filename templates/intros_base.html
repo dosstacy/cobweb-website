@@ -10,30 +10,67 @@
 <div class="intro_page">
     <div class="rectangle" id="intro-rectangle">
         <h1>{{intros.name}}</h1>
-        <p>{{intros.intro}}</p>
+        <p>{{ intros.intro.replace('\n\n', '</p><p>') | safe }}</p>
 
         <div class="carousel-wrapper">
             <div class="carousel" id="carousel">
+                {% if intros.key == "cobweb" %}
                 <div class="carousel-item active">
-                    <img src="/static/img/cobweb.png" alt="Графік 1">
+                    <img src="/static/img/cobweb.png">
                 </div>
                 <div class="carousel-item">
-                    <img src="/static/img/diverg-1.png" alt="Графік 2">
+                    <img src="/static/img/diverg-1.png">
                 </div>
                 <div class="carousel-item">
-                    <img src="/static/img/anomal.png" alt="Графік 3">
+                    <img src="/static/img/anomal.png">
                 </div>
                 <div class="carousel-item">
-                    <img src="/static/img/chaos-1.png" alt="Графік 3">
+                    <img src="/static/img/chaos-1.png">
                 </div>
                 <div class="carousel-item">
-                    <img src="/static/img/chaos-2.png" alt="Графік 3">
+                    <img src="/static/img/chaos-2.png">
                 </div>
                 <div class="carousel-item">
-                    <img src="/static/img/diverg-2.png" alt="Графік 3">
+                    <img src="/static/img/diverg-2.png">
                 </div>
+                {% elif intros.key == "adapt_exp" %}
+                <div class="carousel-item active">
+                    <img src="/static/img/adapt1.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/adapt2.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/adapt3.png">
+                </div>
+                {% elif intros.key == "normal_price" %}
+                <div class="carousel-item active">
+                    <img src="/static/img/normal1.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/normal2.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/normal3.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/normal4.png">
+                </div>
+                {% elif intros.key == "demand_supply" %}
+                <div class="carousel-item active">
+                    <img src="/static/img/supply-demand.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/d-s1.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/d-s2.png">
+                </div>
+                <div class="carousel-item">
+                    <img src="/static/img/d-s3.png">
+                </div>
+                {% endif %}
             </div>
-
             <div class="carousel-buttons">
                 <button onclick="moveCarousel(-1)">&#10094;</button>
                 <button onclick="moveCarousel(1)">&#10095;</button>

@@ -15,5 +15,5 @@ models_sk = {
     "demand_supply":{"name": "Ponuka a dopyt", "fields": ["Posun dopytu", "Sklon dopytu", "Posun ponuky", "Sklon ponuky", "Počiatočná cena", "Konečná cena"], "functions": ["lineárna", "cos", "exp", "ln"]},
     #"adapt_exp": {"name": "Adaptívne očakávania", "fields": ["Predchádzajúca očakávaná cena", "Predchádzajúca skutočná cena", "Adaptačný koeficient"]},
     "adapt_exp": {"name": "Adaptívne očakávania", "fields": ["Posun dopytu","Sklon dopytu", "Posun ponuky", "Sklon ponuky", "Adaptačný koeficient", "Obdobie", "Konštanta"]},
-    "normal_price": {"name": "Expected price", "fields": ["Posun dopytu","Sklon dopytu", "Posun ponuky", "Sklon ponuky", "Faktor úpravy", "Obdobie", "Konštanta"]},
+    "normal_price": {"name": "Očakávaná cena", "fields": ["Posun dopytu","Sklon dopytu", "Posun ponuky", "Sklon ponuky", "Faktor úpravy", "Obdobie", "Konštanta"]},
 }
