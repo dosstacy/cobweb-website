@@ -11,6 +11,7 @@ def configure_info(app):
     @app.route("/params/<model_name>", methods=["GET"])
     def params_get_page(model_name):
         lang = session["lang"]
+        print(model_name)
         param = check_params(model_name, lang)
         model = check_model(model_name, lang)
         return render_template("params_base.html", model=model, model_name=model_name, params=param, language=lang)

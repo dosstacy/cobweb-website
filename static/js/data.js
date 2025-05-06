@@ -286,7 +286,7 @@ async function initCalculatorPage() {
                     .then(data => generateAnswerContainer(data))
                     .catch(error => {
                         console.error("Error:", error);
-                        alert("Сталася помилка. Спробуйте інше рівняння.");
+                        alert("There was an error. Try another equation.");
                     });
 
             }

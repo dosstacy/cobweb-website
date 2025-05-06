@@ -5,9 +5,13 @@
     align-items: center;
 }
 
-#params-rectangle {
+p {
+    max-width: 80%;
+    font-size: larger;
+}
+
+.answer-cont {
     margin-top: 50px;
-    height: 73vh;
     margin-bottom: 30px;
     display: flex;
     flex-direction: column;
@@ -15,6 +19,16 @@
     align-items: center;
 }
 
+.answer-cont {
+    padding: 0;
+}
+
+.form-cont {
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
 p {
-    max-width: 80%;
+    text-align: left;
 }

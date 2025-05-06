@@ -36,8 +36,8 @@ def check_params(params_name, lang):
         return jsonify({"error": "Missing params name"}), 400
 
     if lang == "sk":
-        print("lala")
         param = params_sk.get(params_name)
+        print(param)
     else:
         param = params.get(params_name)
 

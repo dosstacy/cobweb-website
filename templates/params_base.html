@@ -3,14 +3,48 @@
 {% block title %}{{ model.name }}{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="../static/css/data.css"/>{% endblock %}
-{% block extra_js %}
-<script src="../static/js/data.js" defer></script>{% endblock %}
+<link rel="stylesheet" href="../static/css/data.css"/>
+<link rel="stylesheet" href="../static/css/calculator.css"/>
+<link rel="stylesheet" href="../static/css/params.css"/>
+{% endblock %}
 
 {% block content %}
 <div class="data-page">
     <div class="parent-cont">
         <div class="form-cont">
+            {%if params.key == "diff_eq"%}
+                <form id="calc-form">
+                    {% if language == "en" %}
+                        <label for="equation-input" style="display: block;">Please write your difference equation: </label>
+                    {% else %}
+                        <label for="equation-input" style="display: block;">Napíšte diferenčnú rovnicu: </label>
+                    {%endif%}
+                    <div class="eq-input-cont">
+                        <input class="eq-input" id="equation-input" required readonly placeholder="x(n+1) + 2*x(n) = 2^n"/>
+                        <div class="error-message"></div>
+                    </div>
+                    <div class="init-cond">
+                        {% if language == "en" %}
+                            <label for="p0">Initial condition p0:</label>
+                        {% else %}
+                            <label for="p0">Začiatočná podmienka p0:</label>
+                        {%endif%}
+                        <div class="eq-init-cond">
+                            <input class="eq-input" type="number" id="p0" readonly/>
+                            <div class="error-message"></div>
+                        </div>
+                        {% if language == "en" %}
+                            <label for="p1">Initial condition p1:</label>
+                        {% else %}
+                            <label for="p1">Začiatočná podmienka p1:</label>
+                        {%endif%}
+                        <div class="eq-init-cond">
+                            <input class="eq-input" type="number" id="p1" readonly />
+                            <div class="error-message"></div>
+                        </div>
+                    </div>
+                </form>
+            {%endif%}
             <h1>{{ model.name }}</h1>
             <div id="model-container" data-model="{{ model_name }}"></div>
             <form id="dataForm">
@@ -56,7 +90,10 @@
                 {% endfor %}
             </form>
         </div>
-        <div class="answer-cont"></div>
+        <div class="answer-cont">
+            <h1>{{params.name}}</h1>
+            <p>{{ params.description | safe }}</p>
+        </div>
     </div>
 </div>
 

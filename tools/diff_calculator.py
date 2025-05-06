@@ -11,14 +11,13 @@ class Calculator:
     def calculate_diff_eq(self):
         n = symbols('n', integer=True)
         x_func = Function('x')
-        x = symbols('x')
 
         eq_str = convert_to_sympy(self.equation)
         left_side, right_side = eq_str.split("=")
 
 
         left_expr = sympify(left_side.strip(), locals={'x': x_func, 'n': n, 'sin': sin, 'cos': cos, 'exp': exp, 'log': log})
-        right_expr = sympify(right_side.strip(), locals={'x': x, 'n': n, 'sin': sin, 'cos': cos, 'exp': exp, 'log': log})
+        right_expr = sympify(right_side.strip(), locals={'n': n, 'sin': sin, 'cos': cos, 'exp': exp, 'log': log})
 
         rhs = expand(right_expr)
         print('expanded right side: ')
