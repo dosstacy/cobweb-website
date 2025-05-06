@@ -65,11 +65,11 @@ def find_normal_price_solution(data):
     if session['lang'] == 'en':
         normal_price = NormalPrice(data["demand shift"], data["demand slope"], data["supply shift"],
                                          data["supply slope"], data["adjustment factor"], data["periods"],
-                                         data["constant"])
+                                         data["start price"])
     else:
         normal_price = NormalPrice(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"],
                                          data["sklon ponuky"], data["faktor úpravy"], data["obdobie"],
-                                         data["konštanta"])
+                                         data["počiatočná cena"])
 
     time_steps, prices = normal_price.ad_exp()
     figure = draw_graph(time_steps, prices)
@@ -85,11 +85,11 @@ def find_adapt_exp_solution(data):
     if session['lang'] == 'en':
         adapt_exp = AdaptiveExpectations(data["demand shift"], data["demand slope"], data["supply shift"],
                                          data["supply slope"], data["adaptation coefficient"], data["periods"],
-                                         data["constant"])
+                                         data["start price"])
     else:
         adapt_exp = AdaptiveExpectations(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"],
                                          data["sklon ponuky"], data["adaptačný koeficient"], data["obdobie"],
-                                         data["konštanta"])
+                                         data["počiatočná cena"])
     periods, prices = adapt_exp.find_adapt_expectation()
     figure = draw_graph(periods, prices)
     return jsonify({"graph_json": generate_graph(figure)})

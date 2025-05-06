@@ -33,7 +33,6 @@ params = {
         <strong>Supply slope</strong>: Should be a positive number, representing the rate at which supply increases with price.<br><br>
         <strong>Adaptation coefficient</strong>: Controls how fast expectations adjust. Should be between 0 and 1.<br><br>
         <strong>Periods</strong>: Number of steps to simulate.<br><br>
-        <strong>Constant</strong>: A fixed term included in the adaptive expectations formula.<br><br>
         """
     },
 
@@ -100,7 +99,6 @@ params_sk = {
         <strong>Sklon ponuky</strong>: Mal by byť kladný a vyjadruje rýchlosť rastu ponuky pri zvyšovaní ceny.<br><br>
         <strong>Koeficient adaptácie</strong>: Určuje rýchlosť prispôsobovania očakávaní. Má byť medzi 0 a 1.<br><br>
         <strong>Počet období</strong>: Počet simulovaných krokov.<br><br>
-        <strong>Konštanta</strong>: Pevná hodnota zahrnutá vo vzorci adaptívnych očakávaní.<br><br>
         """
     },
 

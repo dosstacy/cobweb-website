@@ -1,28 +1,26 @@
 class AdaptiveExpectations:
 
-    def __init__(self, demand_shift, demand_slope, supply_shift, supply_slope, adapt_coeff, periods, constant):
+    def __init__(self, demand_shift, demand_slope, supply_shift, supply_slope, adapt_coeff, periods, start_price):
         self.demand_shift = demand_shift
         self.demand_slope = demand_slope
         self.supply_shift = supply_shift
         self.supply_slope = supply_slope
         self.adapt_coeff = adapt_coeff
         self.periods = periods
-        self.constant = constant
-
+        self.start_price = start_price
 
     def find_adapt_expectation(self):
         pt = []
         times = []
+
+        equilibrium_price = (self.supply_shift - self.demand_shift) / (self.demand_slope - self.supply_slope)
+        lam = ((self.supply_slope / self.demand_slope) - 1) * self.adapt_coeff + 1
+        constant = self.start_price - equilibrium_price
+
         for i in range(1, self.periods):
-            value = self.constant * ((((self.supply_slope / self.demand_slope) - 1) * self.adapt_coeff + 1) ** i) + (
-                                (self.supply_shift - self.demand_shift) / (self.demand_slope - self.supply_slope))
-            pt.append(value)
+            price = constant * (lam ** i) + equilibrium_price
+            pt.append(price)
             times.append(i)
 
-        print("Equilibrium price")
-        print((self.supply_shift - self.demand_shift) / (self.demand_slope - self.supply_slope))
-
-        print("Lambda")
-        print(((self.supply_slope / self.demand_slope) -1) * (self.adapt_coeff + 1))
         return times, pt
 
