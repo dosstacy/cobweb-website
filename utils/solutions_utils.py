@@ -71,7 +71,7 @@ def find_normal_price_solution(data):
                                          data["sklon ponuky"], data["faktor úpravy"], data["obdobie"],
                                          data["počiatočná cena"])
 
-    time_steps, prices = normal_price.ad_exp()
+    time_steps, prices = normal_price.normal_price()
     figure = draw_graph(time_steps, prices)
     return jsonify({"graph_json": generate_graph(figure)})
 

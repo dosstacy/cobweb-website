@@ -5,7 +5,7 @@ from tools import convert_to_sympy
 ##TODO: 4. add podmienku ,ze na pravej strane nemozu byt x
 ##TODO: 5. delete podmienku with () nieco x, bola s tym chyba
 ##TODO: obmedzenia pre pociatocnu cenu pri normalnej a adaptivnych
-##TODO: pridat zaciatocnu cenu do parametrov pouzitia
+##TODO: перевірити текстові сторінки, додати щось, можливо
 
 
 class FuncCobweb:

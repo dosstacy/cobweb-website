@@ -9,18 +9,20 @@ class NormalPrice:
         self.periods = periods
         self.start_price = start_price
 
-    def ad_exp(self):
+    def normal_price(self):
         prices = []
         times = []
+        prices.append(self.start_price)
 
         equilibrium_price = (self.supply_shift - self.demand_shift) / (self.demand_slope - self.supply_slope)
 
         r = (self.supply_slope * (1 - self.factor)) / self.demand_slope
         constant = self.start_price - equilibrium_price
 
-        for t in range(1, self.periods):
+        for t in range(1, self.periods+1):
             pt = constant * (r ** t) + equilibrium_price
             prices.append(pt)
             times.append(t)
+            print(times)
 
         return times, prices

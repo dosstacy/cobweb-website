@@ -45,21 +45,17 @@ params = {
         <strong>Supply slope</strong>: Positive number that defines how supply reacts to price.<br><br>
         <strong>Start price</strong>: Initial market price.<br><br>
         <strong>End price</strong>: Final price range value for plotting.<br><br>
-        <strong>Function</strong>: Type of demand or supply behavior. Options include linear, cosine (seasonal variation), exponential, and logarithmic. The last three are for educational purposes.<br><br>
+        <strong>Function</strong>: Type of demand or supply behavior. Options include linear, cosine (seasonal variation), exponential, and logarithmic. The last two are for educational purposes.<br><br>
         """
     },
 
     "diff_eq": {
         "key": "diff_eq",
-        "name": "Difference equations",
+        "name": "Difference equations calculator",
         "description": """
-        <strong>Equation</strong>: Enter the difference equation using the variable <code>x[n]</code> for the current term, <code>x[n-1]</code> for the previous term, etc. You may use basic operations (+, -, , /), integer constants, and parentheses. For example: <code>x[n] = 0.5x[n-1] + 2</code>.<br><br>
-        The index must be enclosed in square brackets (e.g., <code>x[n-2]</code>).<br>
-        Use lowercase <code>x</code> only (uppercase <code>X</code> will not be recognized).<br>
-        Do not include any symbols other than mathematical operators and valid variable names.<br><br>
-        <strong>Initial condition p₀</strong>: This is the first known value of the sequence. It is required for solving first-order and higher-order difference equations.<br><br>
-        <strong>Initial condition p₁</strong>: This is the second known value and is needed for second-order and higher equations, where <code>x[n]</code> depends on both <code>x[n-1]</code> and <code>x[n-2]</code>, etc.<br><br>
-        <strong>Note:</strong> Always provide as many initial conditions as the order of the equation requires.
+        <strong>Equation</strong>: Enter the nth order difference equation <em>(the calculator can solve the maximum second order equation!)</em>. You may use basic operations (+, -, , /), integer constants, and parentheses. For example: <code>x(n) = 0.5x(n+1) + 2</code>.<br><br>
+        <strong>Initial condition p₀</strong>: This is the first known value of the sequence.<br><br>
+        <strong>Initial condition p₁</strong>: This is the second known value and is needed for second-order and higher equations.<br><br>
     """
     }
 }
@@ -111,21 +107,17 @@ params_sk = {
         <strong>Sklon ponuky</strong>: Kladná hodnota ukazujúca reakciu ponuky na cenu.<br><br>
         <strong>Začiatočná cena</strong>: Počiatočná trhová cena.<br><br>
         <strong>Koncová cena</strong>: Konečná cena, do ktorej sa vykresľuje graf.<br><br>
-        <strong>Funkcia</strong>: Typ správania dopytu alebo ponuky. Používateľ môže zvoliť lineárnu, kosínusovú (sezónne kolísanie), exponenciálnu alebo logaritmickú funkciu. Posledné tri slúžia len na výučbové účely.<br><br>
+        <strong>Funkcia</strong>: Typ správania dopytu alebo ponuky. Používateľ môže zvoliť lineárnu, kosínusovú (sezónne kolísanie), exponenciálnu alebo logaritmickú funkciu. Posledné dva slúžia len na výučbové účely.<br><br>
         """
     },
 
     "diff_eq": {
         "key": "diff_eq",
-        "name": "Diferenčné rovnice",
+        "name": "Kalkulačka diferenčných rovníc",
         "description": """
-        <strong>Rovnica</strong>: Zadajte rozdielovú rovnicu pomocou premennej <code>x[n]</code> pre aktuálny člen, <code>x[n-1]</code> pre predchádzajúci, atď. Môžete používať základné operácie (+, -, , /), celé konštanty a zátvorky. Napríklad: <code>x[n] = 0.5x[n-1] + 2</code>.<br><br>
-        Index musí byť v hranatých zátvorkách (napr. <code>x[n-2]</code>).<br>
-        Používajte len malé <code>x</code> (veľké <code>X</code> nebude rozpoznané).<br>
-        Nepoužívajte žiadne iné znaky okrem matematických operátorov a platných názvov premenných.<br><br>
+        <strong>Rovnica</strong>: Zadajte diferenčnú rovnicu n-tého rádu <em>(kalkulačka dokáže vyriešiť rovnicu maximálneho druhého radu!)</em>. Môžete používať základné operácie (+, -, , /), celé konštanty a zátvorky. Napríklad: <code>x(n) = 0.5x(n+1) + 2</code>.<br><br>
         <strong>Počiatočná podmienka p₀</strong>: Prvá známa hodnota postupnosti. Je potrebná pri riešení rovníc prvého a vyššieho rádu.<br><br>
-        <strong>Počiatočná podmienka p₁</strong>: Druhá známa hodnota, potrebná pri riešení rovníc druhého a vyššieho rádu, kde <code>x[n]</code> závisí od <code>x[n-1]</code> a <code>x[n-2]</code> a pod.<br><br>
-        <strong>Poznámka:</strong> Vždy zadajte toľko počiatočných podmienok, koľko si vyžaduje rád rovnice.
+        <strong>Počiatočná podmienka p₁</strong>: Druhá známa hodnota, potrebná pri riešení rovníc druhého a vyššieho rádu.<br><br>
         """
     }
 

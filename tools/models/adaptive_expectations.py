@@ -12,15 +12,17 @@ class AdaptiveExpectations:
     def find_adapt_expectation(self):
         pt = []
         times = []
+        pt.append(self.start_price)
 
         equilibrium_price = (self.supply_shift - self.demand_shift) / (self.demand_slope - self.supply_slope)
         lam = ((self.supply_slope / self.demand_slope) - 1) * self.adapt_coeff + 1
         constant = self.start_price - equilibrium_price
 
-        for i in range(1, self.periods):
+        for i in range(1, self.periods+1):
             price = constant * (lam ** i) + equilibrium_price
             pt.append(price)
             times.append(i)
+            print(times)
 
         return times, pt
 
