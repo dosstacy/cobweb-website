@@ -88,8 +88,7 @@ async function initModelPage() {
                     continue;
                 }
 
-                if ((fieldsName.includes("price") && fieldsName !== "previous actual price") ||
-                    (fieldsName.includes("cena") && fieldsName !== "predchádzajúca skutočná cena")) {
+                if ((fieldsName.includes("price")) || (fieldsName.includes("cena"))) {
                     if (parseFloat(fieldValue) <= 0) {
                         if (currentLang === "en") {
                             showError(input, "Value must be positive!");
