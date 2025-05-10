@@ -286,7 +286,11 @@ async function initCalculatorPage() {
                     .then(data => generateAnswerContainer(data))
                     .catch(error => {
                         console.error("Error:", error);
-                        alert("There was an error. Try another equation.");
+                        if (currentLang === "en") {
+                            showErrorModal("There was an error - couldn't solve the equation or you entered the equation incorrectly (please check if there is no symbol \"*\" before (n), (n+1) etc. - it's the most common problem).");
+                        } else {
+                            showErrorModal("Vyskytla sa chyba - rovnicu sa nepodarilo vyriešiť alebo ste ju zadali nesprávne (skontrolujte, či pred (n), (n+1) atď. nie je symbol \"*\" - je to najčastejší problém).");
+                        }
                     });
 
             }
@@ -458,3 +462,15 @@ function validateNExpressions(equation, field, lang) {
 
     return errors;
 }
+
+function showErrorModal(message) {
+    const modal = document.getElementById("errorModal");
+    const modalMessage = document.getElementById("modal-message");
+    modalMessage.textContent = message;
+    modal.classList.remove("hidden");
+}
+
+document.getElementById("closeModal").onclick = function () {
+    document.getElementById("errorModal").classList.add("hidden");
+};
+

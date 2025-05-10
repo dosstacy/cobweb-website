@@ -35,11 +35,11 @@ class Calculator:
 
         equations = []
 
-        if not self.p0.strip():
+        if self.p0.strip():
             self.p0 = float(self.p0)
             equations.append(Eq(x_general.subs(n, 0), self.p0))
 
-        if not self.p1.strip():
+        if self.p1.strip():
             self.p1 = float(self.p1)
             equations.append(Eq(x_general.subs(n, 1), self.p1))
 
