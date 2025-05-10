@@ -1,7 +1,6 @@
 from tools.models import symbols, sympify, lambdify, go, np
 from tools import convert_to_sympy
 
-##TODO: 2. add modal window for solution error
 ##TODO: 4. add podmienku ,ze na pravej strane nemozu byt x
 ##TODO: 5. delete podmienku with () nieco x, bola s tym chyba
 ##TODO: obmedzenia pre pociatocnu cenu pri normalnej a adaptivnych
