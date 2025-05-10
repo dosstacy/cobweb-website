@@ -55,13 +55,6 @@ def find_func_cobweb_solution(data):
     })
 
 def find_normal_price_solution(data):
-    # if session['lang'] == 'en':
-    #     normal_price = NormalPrice(data["previous price"], data["normal price"], data["adjustment factor"],
-    #                            data["periods"])
-    # else:
-    #     normal_price = NormalPrice(data["predchádzajúca cena"], data["normálna cena"], data["faktor úpravy"],
-    #                                data["obdobia"])
-
     if session['lang'] == 'en':
         normal_price = NormalPrice(data["demand shift"], data["demand slope"], data["supply shift"],
                                          data["supply slope"], data["adjustment factor"], data["periods"],
@@ -76,12 +69,6 @@ def find_normal_price_solution(data):
     return jsonify({"graph_json": generate_graph(figure)})
 
 def find_adapt_exp_solution(data):
-    # if session['lang'] == 'en':
-    #     adapt_exp = AdaptiveExpectations(data["previous expected price"], data["previous actual price"], data["adaptation coefficient"])
-    # else:
-    #     adapt_exp = AdaptiveExpectations(data["predchádzajúca očakávaná cena"], data["predchádzajúca skutočná cena"],
-    #                                      data["adaptačný koeficient"])
-
     if session['lang'] == 'en':
         adapt_exp = AdaptiveExpectations(data["demand shift"], data["demand slope"], data["supply shift"],
                                          data["supply slope"], data["adaptation coefficient"], data["periods"],

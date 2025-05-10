@@ -1,11 +1,8 @@
 from tools.models import symbols, sympify, lambdify, go, np
 from tools import convert_to_sympy
 
-##TODO: 4. add podmienku ,ze na pravej strane nemozu byt x
-##TODO: 5. delete podmienku with () nieco x, bola s tym chyba
 ##TODO: obmedzenia pre pociatocnu cenu pri normalnej a adaptivnych
 ##TODO: перевірити текстові сторінки, додати щось, можливо
-
 
 class FuncCobweb:
     def __init__(self, str_func, x_min, x_max, y_min, y_max, seed, iterates):

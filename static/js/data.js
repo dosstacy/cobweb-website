@@ -128,7 +128,7 @@ async function initModelPage() {
                 }
 
                 if ((fieldsName === "iterations" || fieldsName === "periods") ||
-                    (fieldsName === "iterácie" || fieldsName === "obdobia")) {
+                    (fieldsName === "iterácie" || fieldsName === "obdobie")) {
                     if (parseFloat(fieldValue) % 1 !== 0) {
                         if (currentLang === "en") {
                             showError(input, "Value must be a whole number!");
@@ -200,7 +200,11 @@ async function initModelPage() {
                     })
                     .catch(error => {
                         console.error("Error:", error);
-                        alert("Sorry, we can't find solution for your function. Please try another one.")
+                        if (currentLang === "en") {
+                            showErrorModal("Sorry, we can't find solution. Please try another one.");
+                        } else {
+                            showErrorModal("Je nám ľúto, ale nemôžeme nájsť riešenie. Skúste prosím iné.")
+                        }
                     });
             }
         });
@@ -444,6 +448,13 @@ function validateNExpressions(equation, field, lang) {
 
         const rightMatches = rightSide.match(regex);
         const rightCount = rightMatches ? rightMatches.length : 0;
+
+        if (rightSide.includes('x')) {
+            showError(field, lang === "en" ?
+                `Expression \"x\" is not allowed on the right side` :
+                `Výraz \"x\" nie je povolený na pravej strane`);
+            errors = true;
+        }
 
         if (rightCount > 0) {
             showError(field, lang === "en" ?
