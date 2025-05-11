@@ -2,9 +2,10 @@ from tools.models import go
 
 
 class PPDependency:
-    def __init__(self, n_iterations, prices):
+    def __init__(self, n_iterations, prices, lang):
         self.n_iterations = n_iterations
         self.prices = prices
+        self.lang = lang
 
     def find_pp_dependency(self):
         x_values = []
@@ -16,7 +17,10 @@ class PPDependency:
 
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=x_values, y=y_values, mode='lines', line=dict(color="blue")))
-        fig.update_layout(xaxis_title="Periods", yaxis_title="Price", template="plotly_white")
+        if self.lang == 'en':
+            fig.update_layout(xaxis_title="Periods", yaxis_title="Price", template="plotly_white")
+        else:
+            fig.update_layout(xaxis_title="Periody", yaxis_title="Cena", template="plotly_white")
 
         return fig
 

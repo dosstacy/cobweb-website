@@ -1,7 +1,7 @@
 from tools.models import go, np, eq_price, demand, supply
 
 class EqCobweb:
-    def __init__(self, d_shift, d_slope, s_shift, s_slope, n_iterations, initial_price):
+    def __init__(self, d_shift, d_slope, s_shift, s_slope, n_iterations, initial_price, lang):
         self.d_shift = d_shift
         self.d_slope = d_slope
         self.s_shift = s_shift
@@ -9,6 +9,7 @@ class EqCobweb:
         self.n_iterations = n_iterations
         self.initial_price = initial_price
         self.prices = [self.initial_price]
+        self.lang = lang
 
     def find_eq_cobweb(self):
         pe = eq_price(self.s_shift, self.d_shift, self.d_slope, self.s_slope)
@@ -23,14 +24,16 @@ class EqCobweb:
 
         fig = go.Figure()
 
-        fig.add_trace(go.Scatter(x=demand(self.d_shift, self.d_slope, p_range), y=p_range, mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
-        fig.add_trace(go.Scatter(x=supply(self.s_shift, self.s_slope, p_range), y=p_range, mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
+        if self.lang == 'en':
+            fig.add_trace(go.Scatter(x=demand(self.d_shift, self.d_slope, p_range), y=p_range, mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
+            fig.add_trace(go.Scatter(x=supply(self.s_shift, self.s_slope, p_range), y=p_range, mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
+        else:
+            fig.add_trace(go.Scatter(x=demand(self.d_shift, self.d_slope, p_range), y=p_range, mode='lines', name="Dopyt", line=dict(color="blue"), showlegend=True))
+            fig.add_trace(go.Scatter(x=supply(self.s_shift, self.s_slope, p_range), y=p_range, mode='lines', name="Ponuka",line=dict(color="red"), showlegend=True))
+
 
         q_equilibrium = self.s_shift + (self.s_slope * pe)
-        fig.add_trace(
-            go.Scatter(x=[q_equilibrium], y=[pe],
-                    mode='markers', marker=dict(color="green", size=10),
-                    name="Equilibrium"))
+        fig.add_trace(go.Scatter(x=[q_equilibrium], y=[pe],mode='markers', marker=dict(color="green", size=10), name="Equilibrium"))
 
         for i in range(len(self.prices) - 1):
             #horizontal
@@ -50,7 +53,10 @@ class EqCobweb:
                     showlegend=False
                 ))
 
-        fig.update_layout(xaxis_title="Quantity", yaxis_title="Price", template="plotly_white")
+        if self.lang == 'en':
+            fig.update_layout(xaxis_title="Quantity", yaxis_title="Price", template="plotly_white")
+        else:
+            fig.update_layout(xaxis_title="Množstvo", yaxis_title="Cena", template="plotly_white")
 
         return fig
 

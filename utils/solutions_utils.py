@@ -23,10 +23,10 @@ def find_model_solution(model_name, data):
 def find_eq_cobweb_solution(data):
     if session['lang'] == 'en':
         eq_cobweb = EqCobweb(data["demand shift"], data["demand slope"], data["supply shift"], data["supply slope"],
-                         data["iterations"], data["initial price"])
+                         data["iterations"], data["initial price"], "en")
     else:
         eq_cobweb = EqCobweb(data["posun dopytu"], data["sklon dopytu"], data["posun ponuky"], data["sklon ponuky"],
-                             data["iterácie"], data["počiatočná cena"])
+                             data["iterácie"], data["počiatočná cena"], "sk")
 
     graph_json = generate_graph(eq_cobweb.find_eq_cobweb())
     pp_graph_json = find_pp_dep(eq_cobweb)
@@ -65,7 +65,7 @@ def find_normal_price_solution(data):
                                          data["počiatočná cena"])
 
     time_steps, prices = normal_price.normal_price()
-    figure = draw_graph(time_steps, prices)
+    figure = draw_graph(time_steps, prices, session['lang'])
     return jsonify({"graph_json": generate_graph(figure)})
 
 def find_adapt_exp_solution(data):
@@ -78,7 +78,7 @@ def find_adapt_exp_solution(data):
                                          data["sklon ponuky"], data["adaptačný koeficient"], data["obdobie"],
                                          data["počiatočná cena"])
     periods, prices = adapt_exp.find_adapt_expectation()
-    figure = draw_graph(periods, prices)
+    figure = draw_graph(periods, prices, session['lang'])
     return jsonify({"graph_json": generate_graph(figure)})
 
 def find_demand_supply_solution(data):
@@ -93,7 +93,7 @@ def find_demand_supply_solution(data):
 
 def find_pp_dep(cobweb_model):
     [periods, prices] = cobweb_model.return_periods_and_prices()
-    pp_dep = PPDependency(periods, prices)
+    pp_dep = PPDependency(periods, prices, session['lang'])
     return generate_graph(pp_dep.find_pp_dependency())
 
 def calculate_eq(data):
