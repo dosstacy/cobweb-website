@@ -1,8 +1,8 @@
 from tools.models import symbols, sympify, lambdify, go, np
 from tools import convert_to_sympy
 
-##TODO: obmedzenia pre pociatocnu cenu pri normalnej a adaptivnych
 ##TODO: перевірити текстові сторінки, додати щось, можливо
+## додати іконку для вкладки
 
 class FuncCobweb:
     def __init__(self, str_func, x_min, x_max, y_min, y_max, seed, iterates):

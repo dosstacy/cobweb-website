@@ -21,15 +21,12 @@ class EqCobweb:
         return self.s_shift + self.s_slope * price
 
     def find_eq_cobweb(self):
-        #prices = [self.initial_price]
-
         pe = self.eq_price()
 
         for i in range(1, self.n_iterations + 1):
             price = (self.initial_price - pe) * (self.s_slope / self.d_slope) ** i + pe
             self.prices.append(price)
 
-        print("Prices =", self.prices)
         p_min = min(self.prices) - (max(self.prices) - min(self.prices)) * 0.5
         p_max = max(self.prices) + (max(self.prices) - min(self.prices)) * 0.5
         p_range = np.linspace(p_min, p_max, 200)
@@ -53,7 +50,6 @@ class EqCobweb:
                 mode='lines', line=dict(color="black"),
                 showlegend=False
             ))
-            #print(f"Coordinates: x=[", self.demand(prices[i]), self.demand(prices[i]), "], y=[",prices[i], prices[i + 1],"]")
 
             #vertical
             if i < len(self.prices) - 1:
