@@ -11,6 +11,7 @@ params = {
         <strong>Note:</strong> Demand slope must be negative, and supply slope must be positive for the model to behave realistically.
         """
     },
+
     "normal_price": {
         "name": "Normal price",
         "description": """
@@ -57,6 +58,19 @@ params = {
         <strong>Initial condition p₀</strong>: This is the first known value of the sequence.<br><br>
         <strong>Initial condition p₁</strong>: This is the second known value and is needed for second-order and higher equations.<br><br>
     """
+    },
+
+    "cobweb_func": {
+        "name": "Cobweb model with function",
+        "description": """
+        <strong>Function</strong>: This defines the mathematical function used to model supply or demand. For example, it can be a logistic function such as <code>f(x) = cos(x). </code><br><br>
+        <strong>Min value on X-axis</strong>: Specifies the minimum price value shown on the horizontal axis of the graph. It helps control the visible range of prices in the plot. <br><br>
+        <strong>Max value on X-axis</strong>: Specifies the maximum price value on the horizontal axis. This sets the upper bound for the graph’s price range. <br><br>
+        <strong>Min value on Y-axis</strong>: Defines the lowest quantity (demand or supply) displayed on the vertical axis. <br><br>
+        <strong>Max value on Y-axis</strong>: Sets the maximum quantity shown on the vertical axis, affecting the visible scale of the demand and supply curves. <br><br>
+        <strong>Seed</strong>: This is the initial price used as a starting point for the iteration process. It determines where the cobweb simulation begins. <br><br> 
+        <strong>Iterations</strong>: Indicates the number of steps (time periods) to simulate in the cobweb model. More iterations allow you to observe long-term behavior (e.g., convergence, divergence, cycles).
+        """
     }
 }
 
@@ -118,6 +132,19 @@ params_sk = {
         <strong>Rovnica</strong>: Do tohto poľa zadajte vlastnú diferenčnú rovnicu. Prosíme, aby ste dodržiavali nasledujúce podmienky:<br> - Na pravej strane rovnice sa nesmie nachádzať výraz <code>x</code>.<br> - Rovnica môže byť najviac druhého rádu, t. j. môže obsahovať členy ako <code>x(n+2)</code>.<br> - V rovnici sa nesmú opakovať výrazy s rovnakým indexom, ako napríklad <code>x(n+1)</code> alebo <code>x(n)</code>. <br><br><i>Príklad správneho zápisu:</i> <code>x(n+1) + 2*x(n) = 2*n</code> <br><em>Upozornenie:</em> Kalkulačka aktuálne podporuje riešenie rovníc maximálne druhého rádu a nemusí byť schopná vyriešiť zložité alebo neštandardné rovnice.<br><br>
         <strong>Počiatočná podmienka p₀</strong>: Prvá známa hodnota postupnosti. Je potrebná pri riešení rovníc prvého a vyššieho rádu.<br><br>
         <strong>Počiatočná podmienka p₁</strong>: Druhá známa hodnota, potrebná pri riešení rovníc druhého a vyššieho rádu.<br><br>
+        """
+    },
+
+    "cobweb_func": {
+        "name": "Pavučinový model s funkciou",
+        "description": """
+        <strong>Funkcia</strong>: Určuje matematickú funkciu, ktorou modelujeme dopyt alebo ponuku. Môže to byť napríklad logistická funkcia, ako napr. <code>f(x) = cos(x). </code><br><br>
+        <strong>Minimálna hodnota na osi X</strong>: Určuje najnižšiu hodnotu ceny zobrazenú na vodorovnej osi grafu. Pomáha nastaviť rozsah cien na grafe. <br><br>
+        <strong>Maximálna hodnota na osi X</strong>: Definuje najvyššiu hodnotu ceny na osi X. Slúži na obmedzenie cenového rozsahu zobrazeného na grafe. <br><br>
+        <strong>Minimálna hodnota na osi Y</strong>: Označuje najmenšie množstvo (dopytu alebo ponuky), ktoré sa zobrazí na zvislej osi. Umožňuje priblíženie alebo oddialenie zobrazenia. <br><br>
+        <strong>Maximálna hodnota na osi Y</strong>: Určuje najväčšie množstvo zobrazené na zvislej osi. Tým ovplyvňuje mierku a viditeľnosť kriviek dopytu a ponuky. <br><br>
+        <strong>Počiatočná hodnota</strong>: Je to počiatočná cena, z ktorej sa začína simulácia. Určuje východiskový bod pre konštrukciu pavúčej dynamiky.<br><br>
+        <strong>Iterácie</strong>: Udávajú počet krokov (časových období) v simulácii pavúčieho modelu. Viac iterácií umožňuje sledovať dlhodobé správanie (napr. konvergenciu, divergenciu, cykly).
         """
     }
 
