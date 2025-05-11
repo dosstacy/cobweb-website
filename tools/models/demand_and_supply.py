@@ -1,4 +1,4 @@
-from tools.models import go, np
+from tools.models import go, np, demand, supply
 
 class DemandSupply:
     def __init__(self, d_shift, d_slope, s_shift, s_slope, start_price, end_price, function, lang):
@@ -10,12 +10,6 @@ class DemandSupply:
         self.end_price = end_price
         self.function = function
         self.lang = lang
-
-    def linear_demand(self, price):
-        return self.d_shift + self.d_slope * price
-
-    def linear_supply(self, price):
-        return self.s_shift + self.s_slope * price
 
     def cos_demand(self, price):
         return self.d_shift + self.d_slope * np.cos(price)
@@ -44,8 +38,8 @@ class DemandSupply:
         if self.lang == "en":
             match self.function:
                 case "linear" | "lineárna":
-                    fig.add_trace(go.Scatter(x=self.linear_supply(p_range), y=p_range, mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
-                    fig.add_trace(go.Scatter(x=self.linear_demand(p_range), y=p_range, mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
+                    fig.add_trace(go.Scatter(x=supply(self.s_shift, self.s_slope, p_range), y=p_range, mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
+                    fig.add_trace(go.Scatter(x=demand(self.d_shift, self.d_slope, p_range), y=p_range, mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
                 case "cos":
                     fig.add_trace(go.Scatter(x=p_range, y=self.cos_demand(p_range), mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
                     fig.add_trace(go.Scatter(x=p_range, y=self.cos_supply(p_range), mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
@@ -60,8 +54,8 @@ class DemandSupply:
         else:
             match self.function:
                 case "lineárna":
-                    fig.add_trace(go.Scatter(x=self.linear_supply(p_range), y=p_range, mode='lines', name="Ponuka", line=dict(color="red"), showlegend=True))
-                    fig.add_trace(go.Scatter(x=self.linear_demand(p_range), y=p_range, mode='lines', name="Dopyt", line=dict(color="blue"), showlegend=True))
+                    fig.add_trace(go.Scatter(x=supply(self.s_shift, self.s_slope, p_range), y=p_range, mode='lines', name="Ponuka", line=dict(color="red"), showlegend=True))
+                    fig.add_trace(go.Scatter(x=demand(self.d_shift, self.d_slope, p_range), y=p_range, mode='lines', name="Dopyt", line=dict(color="blue"), showlegend=True))
                 case "cos":
                     fig.add_trace(go.Scatter(x=p_range, y=self.cos_demand(p_range), mode='lines', name="Ponuka", line=dict(color="red"), showlegend=True))
                     fig.add_trace(go.Scatter(x=p_range, y=self.cos_supply(p_range), mode='lines', name="Dopyt", line=dict(color="blue"), showlegend=True))

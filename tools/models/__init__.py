@@ -12,3 +12,13 @@ def draw_graph(time_steps, prices):
     figure = go.Figure(data=[trace], layout=layout)
 
     return figure
+
+def eq_price(s_shift, d_shift, d_slope, s_slope):
+    pe = (s_shift - d_shift) / (d_slope - s_slope)
+    return pe
+
+def demand(d_shift, d_slope, price):
+    return d_shift + d_slope * price
+
+def supply(s_shift, s_slope, price):
+    return s_shift + s_slope * price

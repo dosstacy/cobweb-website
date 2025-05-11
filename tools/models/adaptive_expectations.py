@@ -1,3 +1,5 @@
+from tools.models import eq_price
+
 class AdaptiveExpectations:
 
     def __init__(self, demand_shift, demand_slope, supply_shift, supply_slope, adapt_coeff, periods, start_price):
@@ -14,7 +16,7 @@ class AdaptiveExpectations:
         times = []
         pt.append(self.start_price)
 
-        equilibrium_price = (self.supply_shift - self.demand_shift) / (self.demand_slope - self.supply_slope)
+        equilibrium_price = eq_price(self.supply_shift, self.demand_shift, self.demand_slope, self.supply_slope)
         lam = ((self.supply_slope / self.demand_slope) - 1) * self.adapt_coeff + 1
         constant = self.start_price - equilibrium_price
 

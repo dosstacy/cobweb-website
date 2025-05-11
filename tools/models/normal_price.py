@@ -1,3 +1,5 @@
+from tools.models import eq_price
+
 class NormalPrice:
 
     def __init__(self, demand_shift, demand_slope, supply_shift, supply_slope, factor, periods, start_price):
@@ -14,7 +16,7 @@ class NormalPrice:
         times = []
         prices.append(self.start_price)
 
-        equilibrium_price = (self.supply_shift - self.demand_shift) / (self.demand_slope - self.supply_slope)
+        equilibrium_price = eq_price(self.supply_shift, self.demand_shift, self.demand_slope, self.supply_slope)
 
         r = (self.supply_slope * (1 - self.factor)) / self.demand_slope
         constant = self.start_price - equilibrium_price

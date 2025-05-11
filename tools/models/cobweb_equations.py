@@ -1,4 +1,4 @@
-from tools.models import go, np
+from tools.models import go, np, eq_price, demand, supply
 
 class EqCobweb:
     def __init__(self, d_shift, d_slope, s_shift, s_slope, n_iterations, initial_price):
@@ -10,18 +10,8 @@ class EqCobweb:
         self.initial_price = initial_price
         self.prices = [self.initial_price]
 
-    def eq_price(self):
-        pe = (self.s_shift - self.d_shift) / (self.d_slope - self.s_slope)
-        return pe
-
-    def demand(self, price):
-        return self.d_shift + self.d_slope * price 
-
-    def supply(self, price):
-        return self.s_shift + self.s_slope * price
-
     def find_eq_cobweb(self):
-        pe = self.eq_price()
+        pe = eq_price(self.s_shift, self.d_shift, self.d_slope, self.s_slope)
 
         for i in range(1, self.n_iterations + 1):
             price = (self.initial_price - pe) * (self.s_slope / self.d_slope) ** i + pe
@@ -33,8 +23,8 @@ class EqCobweb:
 
         fig = go.Figure()
 
-        fig.add_trace(go.Scatter(x=self.demand(p_range), y=p_range, mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
-        fig.add_trace(go.Scatter(x=self.supply(p_range), y=p_range, mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
+        fig.add_trace(go.Scatter(x=demand(self.d_shift, self.d_slope, p_range), y=p_range, mode='lines', name="Demand", line=dict(color="blue"), showlegend=True))
+        fig.add_trace(go.Scatter(x=supply(self.s_shift, self.s_slope, p_range), y=p_range, mode='lines', name="Supply", line=dict(color="red"), showlegend=True))
 
         q_equilibrium = self.s_shift + (self.s_slope * pe)
         fig.add_trace(
@@ -45,7 +35,7 @@ class EqCobweb:
         for i in range(len(self.prices) - 1):
             #horizontal
             fig.add_trace(go.Scatter(
-                x=[self.demand(self.prices[i]), self.supply(self.prices[i])],
+                x=[demand(self.d_shift, self.d_slope, self.prices[i]), supply(self.s_shift, self.s_slope, self.prices[i])],
                 y=[self.prices[i], self.prices[i]],
                 mode='lines', line=dict(color="black"),
                 showlegend=False
@@ -54,7 +44,7 @@ class EqCobweb:
             #vertical
             if i < len(self.prices) - 1:
                 fig.add_trace(go.Scatter(
-                    x=[self.supply(self.prices[i]), self.demand(self.prices[i+1])],
+                    x=[supply(self.s_shift, self.s_slope, self.prices[i]), demand(self.d_shift, self.d_slope, self.prices[i+1])],
                     y=[self.prices[i], self.prices[i + 1]],
                     mode='lines', line=dict(color="black"),
                     showlegend=False
