@@ -44,8 +44,8 @@ def find_func_cobweb_solution(data):
         func_cobweb = FuncCobweb(data["function"], data["min value on x-axis"], data["max value on x-axis"],
                              data["min value on y-axis"], data["max value on y-axis"], data["seed"], data["iterations"])
     else:
-        func_cobweb = FuncCobweb(data["funkcia"], data["minimálna hodnota na osi X"], data["maximálna hodnota na osi X"],
-                                 data["minimálna hodnota na osi Y"], data["maximálna hodnota na osi Y"], data["počiatočná hodnota"], data["iterácie"])
+        func_cobweb = FuncCobweb(data["funkcia"], data["minimálna hodnota na osi x"], data["maximálna hodnota na osi x"],
+                                 data["minimálna hodnota na osi y"], data["maximálna hodnota na osi y"], data["počiatočná hodnota"], data["iterácie"])
 
     graph_json = generate_graph(func_cobweb.find_func_cobweb())
 

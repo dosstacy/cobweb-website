@@ -12,16 +12,18 @@ document.querySelectorAll('.table-button').forEach(button => {
             let inputField;
             if (document.querySelector('#function')) {
                 inputField = document.querySelector('#function');
-            } else if (document.querySelector('#equation-input')) {
-                inputField = document.querySelector('#equation-input');
+            } else if (document.querySelector('#funkcia')) {
+                inputField = document.querySelector('#funkcia');
+            }else if (document.querySelector('#equation-input')) {
+                    inputField = document.querySelector('#equation-input');
+                }
+                let cursorPos = inputField.selectionStart;
+                let textBefore = inputField.value.substring(0, cursorPos);
+                let textAfter = inputField.value.substring(cursorPos);
+                inputField.value = textBefore + this.innerText + textAfter;
+                inputField.focus();
+                inputField.selectionStart = inputField.selectionEnd = cursorPos + this.innerText.length;
             }
-            let cursorPos = inputField.selectionStart;
-            let textBefore = inputField.value.substring(0, cursorPos);
-            let textAfter = inputField.value.substring(cursorPos);
-            inputField.value = textBefore + this.innerText + textAfter;
-            inputField.focus();
-            inputField.selectionStart = inputField.selectionEnd = cursorPos + this.innerText.length;
-        }
     });
 });
 
