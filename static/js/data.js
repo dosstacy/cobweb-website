@@ -378,12 +378,12 @@ function getMaxOrder(equationStr) {
     while ((match = regex.exec(equationStr)) !== null) {
         const offsetStr = match[1];
         const offset = offsetStr ? parseInt(offsetStr) : 0;
-        if (offset > maxOrder) {
-            maxOrder = offset;
+        if (Math.abs(offset) > maxOrder) {
+            maxOrder = Math.abs(offset);
         }
     }
     console.log(maxOrder);
-    return maxOrder;
+    return Math.abs(maxOrder);
 }
 
 function generateAnswerContainer(data) {

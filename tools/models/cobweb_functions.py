@@ -1,9 +1,6 @@
 from tools.models import symbols, sympify, lambdify, go, np
 from tools import convert_to_sympy
 
-## додати іконку для вкладки
-##TODO: додати розв'язок для n-1, n-2
-
 class FuncCobweb:
     def __init__(self, str_func, x_min, x_max, y_min, y_max, seed, iterates):
         self.str_func = str_func
