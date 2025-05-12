@@ -248,9 +248,9 @@ async function initCalculatorPage() {
                 isValid = false;
             }
 
-            const maxOrder = getMaxOrder(equation.value);
+            const maxOrder = getMaxOrder(equation.value, equation);
             console.log("Max order: " + maxOrder);
-            if(isValid) {
+            if(isValid && maxOrder !== -1000) {
                 if (maxOrder > 2) {
                     showError(equation, currentLang === "en" ? "Maximum allowed order - (n±2)" : "Maximálny povolený stupeň - (n±2)");
                     isValid = false;
@@ -268,6 +268,8 @@ async function initCalculatorPage() {
                         isValid = false;
                     }
                 }
+            } else {
+                isValid = false;
             }
 
             console.log("Is valid: " + isValid);
@@ -370,20 +372,32 @@ function hideError(inputElement) {
     errorMessage.classList.remove('show');
 }
 
-function getMaxOrder(equationStr) {
+function getMaxOrder(equationStr, eqField) {
     const regex = /[a-zA-Z]\(n([+-]\d+)?\)/g;
     let match;
     let maxOrder = 0;
+    let hasPositive = false;
+    let hasNegative = false;
 
     while ((match = regex.exec(equationStr)) !== null) {
         const offsetStr = match[1];
         const offset = offsetStr ? parseInt(offsetStr) : 0;
-        if (Math.abs(offset) > maxOrder) {
-            maxOrder = Math.abs(offset);
+
+        if (offset > 0) hasPositive = true;
+        if (offset < 0) hasNegative = true;
+
+        const absOffset = Math.abs(offset);
+        if (absOffset > maxOrder) {
+            maxOrder = absOffset;
         }
     }
-    console.log(maxOrder);
-    return Math.abs(maxOrder);
+
+    if (hasPositive && hasNegative) {
+        showError(eqField, currentLang === "en" ? "The equation must not contain both positive and negative shifts at n." : "Rovnica nesmie obsahovať zároveň kladné aj záporné posuny pri n.");
+        return -1000;
+    }
+
+    return maxOrder;
 }
 
 function generateAnswerContainer(data) {
