@@ -50,4 +50,8 @@ class Calculator:
         particular_simple = particular_solution.simplify()
         final_result = str(particular_simple)
 
+        if general_result is None or final_result is None:
+            raise ValueError("Result is None.")
+
+
         return general_result, final_result
