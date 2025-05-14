@@ -9,3 +9,4 @@ __pycache__/cobweb.cpython-312.pyc
 __pycache__/cobweb.cpython-313.pyc
 __pycache__/cobweb_equations.cpython-313.pyc
 __pycache__/adaptive_expectations.cpython-313.pyc
+secret.env
