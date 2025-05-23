@@ -31,9 +31,6 @@ def find_eq_cobweb_solution(data):
     graph_json = generate_graph(eq_cobweb.find_eq_cobweb())
     pp_graph_json = find_pp_dep(eq_cobweb)
 
-    print("First plot:", graph_json)
-    print("Second plot:", pp_graph_json)
-
     return jsonify({
         "graph_json": graph_json,
         "pp_graph_json": pp_graph_json

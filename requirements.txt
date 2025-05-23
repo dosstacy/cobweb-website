@@ -1,4 +1,4 @@
-Flask
-sympy
-plotly
-numpy
+flask~=3.0.3
+sympy~=1.13.2
+plotly~=5.24.1
+numpy~=1.26.4

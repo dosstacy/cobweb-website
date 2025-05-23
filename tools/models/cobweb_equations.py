@@ -58,6 +58,10 @@ class EqCobweb:
         else:
             fig.update_layout(xaxis_title="Množstvo", yaxis_title="Cena", template="plotly_white")
 
+        print("Demand: ")
+        print("X: " + str(demand(self.d_shift, self.d_slope, p_range)))
+        print("Y: " + str(p_range))
+
         return fig
 
     def return_periods_and_prices(self):
